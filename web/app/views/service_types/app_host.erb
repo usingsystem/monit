@@ -1,0 +1,4 @@
+<%=label :service_type, 'serviceable_id','<em>*</em>所属主机或应用：',:class => ' form-label'%>
+<span class="form-data">
+<%=select 'service_type', 'serviceable_id', [["请选择主机或应用类型",""]] + @host_types.collect{|x| [x.name, x.id]},{:selected=>@cell_id},{:class => " cel_second" }%>
+</span>

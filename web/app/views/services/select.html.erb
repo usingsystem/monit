@@ -1,0 +1,44 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("select") } %>
+      <%= t('select') + (@type ? t(@type) : "类型") %>
+    <% end %>
+    <% board_content do %>
+      <% if ['host', 'app', 'site', 'device'].include? @type %>
+        <%= render :partial => "select_#{@type}" %>
+      <% else %>
+        <div class="columns columns4 clearfix">
+          <div class="column">
+            <h4>创建网站类服务</h4>
+            <% form_tag ({:action => "select"}, :method => :get) do %>
+              <%=hidden_field_tag "type", "site" %>
+              <%=button_wrap(submit_tag "下一步", :name => nil) %>
+            <% end %>
+          </div>
+          <div class="column">
+            <h4>创建应用类服务</h4>
+            <% form_tag ({:action => "select"}, :method => :get) do %>
+              <%=hidden_field_tag "type", "app" %>
+              <%=button_wrap(submit_tag "下一步", :name => nil) %>
+            <% end %>
+          </div>
+          <div class="column">
+            <h4>创建主机类服务</h4>
+            <% form_tag ({:action => "select"}, :method => :get) do %>
+              <%=hidden_field_tag "type", "host" %>
+              <%=button_wrap(submit_tag "下一步", :name => nil) %>
+            <% end %>
+          </div>
+          <div class="column">
+            <h4>创建网络类服务</h4>
+            <% form_tag ({:action => "select"}, :method => :get) do %>
+              <%=hidden_field_tag "type", "device" %>
+              <%=button_wrap(submit_tag "下一步", :name => nil) %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

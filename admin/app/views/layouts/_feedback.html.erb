@@ -1,0 +1,40 @@
+<!--
+<%=stylesheet_link_tag 'contactable',:media=>'all' %>
+<%=javascript_include_tag 'jquery.validate.pack' %>
+<%=javascript_include_tag 'jquery.contactable' %>
+<% javascript_tag do %>
+  $(function(){
+  $('<div id="contact">').appendTo('body').contactable({
+    name: '名字',
+    email: 'Email',
+    message : 'Message',
+    subject : 'A contactable message',
+    recievedMsg : 'Thankyou for your message',
+    notRecievedMsg : 'Sorry but your message could not be sent, try again later',
+    disclaimer: '&nbsp;'
+    });
+    });
+  <%end%>
+  -->
+  <div id="feedback">
+    <%=link_to "反馈", feedback_path, :class => "trigger" %>
+    <% form_for :feedback, @feedback, :url => feedback_path, :html => {:id => "feedback_form"} do |f| -%>
+      <p>
+      <%= f.label 'subject', "问题类型：" %>
+      <%= f.select 'subject', ['错误', '建议', '问题', '其他'] %>
+      </p>
+      <!--
+      <p>
+      <%= f.label 'email', "Email：" %>
+      <%= f.text_field 'email' %>
+      </p>
+      <p>
+      -->
+      <%= f.label 'comment', "内容：" %>
+      <%= f.text_area 'comment' %>
+      </p>
+      <p>
+      <%= f.submit "确定" %>
+      </p>
+    <% end -%>
+  </div>

@@ -1,0 +1,36 @@
+/* courtesy Ian Darwin and Geoff Collyer, Softquad Inc. */
+/*[:dot, :neato, :twopi, :circo, :fdp]*/
+/*{:directed => :dot, :undirected => :neato, :radial => :twopi, :circular => :circo, :undirected2 => :fdp}*/
+graph <%= @map_id || :automap %> { 
+<% width = params[:width] %>
+graph [layout=fdp, ratio="fill", bgcolor="transparent", root="root", size="7.5, 6.3"];
+node [ratio="auto", shape="rect", color="transparent", fontcolor=black, fontsize=12, width="0.5", height="0.5", fixedsize=true];
+edge [color="#dddddd"];
+root [shape=circle, color="#dddddd", label="Monit", URL="<%= automap_business_path %>" layer="0" ];
+<% @hosts.each do |host| %>
+  <% host_id = "host_" + host.id.to_s %>
+  <%= host_id %> [ label="", URL="<%= url_for(host) %>", layer="1" ];
+  root -- <%= host_id %> ;
+  <% host.apps.each do |app| %>
+    <% app_id = "app_" + app.id.to_s %>
+    <%= app_id %> [ label="", URL="<%= url_for(app) %>", layer="2" ];
+    <%= host_id %> -- <%= app_id %> ;
+  <% end %>
+<% end %>
+
+subgraph cluster_2{
+color="transparent";
+<% @sites.each do |site| %>
+  <% site_id = "site_" + site.id.to_s %>
+  <%= site_id %> [ label="", URL="<%= url_for(site) %>", layer="1" ];
+  root -- <%= site_id %> ;
+<% end %>
+}
+
+<% @devices.each do |device| %>
+  <% device_id = "device_" + device.id.to_s %>
+  <%= device_id %> [ label="", URL="<%= url_for(device) %>", layer="1" ];
+  root -- <%= device_id %> ;
+<% end %>
+}
+

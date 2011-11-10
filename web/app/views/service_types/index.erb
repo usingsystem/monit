@@ -1,0 +1,57 @@
+<div class="wrap">
+  <% board :id => nil do %>
+    <% board_content do %>
+      <table class="grid" cellspacing="0">
+        <thead>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <%=th_tag "名称" %>
+            <%=th_tag "Alias" %>
+            <%=th_tag "所属主机或应用" %>
+            <%=th_tag "命令"%>
+            <%=th_tag " 采集频度(秒)" %>
+            <%=th_tag "告警阈值" %>
+            <%=th_tag "故障阈值"%>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <th colspan="7">
+              <% if @services && @services.length > 0 %>
+                <div class="page clearfix">
+                  <div class="stat ">显示<%=@services.total_entries %>个服务类型中的<%=@services.size %>个</div>
+                  <%=will_paginate @services%>
+                </div>
+              <%end%>
+            </th>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% if @services.size > 0 %>
+            <% @services.each do |service| %>
+              <tr>
+                <%=td_tag "", :class => "first" %>
+                <%=td_tag link_to(h(service.name),{:action=>"edit",:id=>service.id}) %>
+                <%=td_tag truncate_tag(h(service.alias))%>
+                <%#=td_tag truncate_tag(h(service.source_type))%>
+                <%=td_tag truncate_tag(h(service.source_name))%>
+                <%=td_tag h(service.command)%>
+                <%=td_tag h(service.check_interval) %>
+                <%#=td_tag truncate_tag(h(service.threshold_warning))%>
+                <%=td_tag h(service.threshold_warning)%>
+                <%=td_tag h(service.threshold_critical)%>
+                <%=td_tag "", :class => "last" %>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+</div>

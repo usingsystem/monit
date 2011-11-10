@@ -1,0 +1,20 @@
+<% @services.each do |service| %>
+  <div class="wrap">
+    <% board do %>
+      <% board_header do %>
+        <%= icon_status("service", service.status_name) %><%=h service.name %>
+      <% end %>
+      <% board_content do %>
+        <%#= format_time(service.last_check) %>
+        <%
+          metric = service.metric
+          now = Time.now
+          metric.history_views.each do |view|
+            view.data_url = data_service_view_url(service, view, :format => :csv)
+            concat render(:partial => "templates/#{view.template}", :locals => {:view => view })
+          end
+        %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

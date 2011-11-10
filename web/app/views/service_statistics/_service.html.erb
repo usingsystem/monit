@@ -1,0 +1,27 @@
+<div class="wrap clearfix" >
+   <div style="float: left;width: 35%;">
+    <% if @service_view and @service_view.rows.size %>
+      <%=render :partial => "templates/#{@service_view.template}", :locals => {:view => @service_view } %>
+    <% end %>
+  </div>
+  <div class="datagrid" style="float: right;width:60%;">
+  <table cellspacing="0">
+    <thead>
+      <tr>
+        <%=th_tag "服务类型"%>
+        <%=th_tag "数量"%>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @service_types.size > 0 %>
+        <% @service_types.each do |type| %>
+          <tr>
+            <%=td_tag h(type.name) %>
+            <%=td_tag h(type.count)%>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>

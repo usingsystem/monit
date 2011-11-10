@@ -1,0 +1,45 @@
+<div class="wrap">
+  <% board :id => nil do %>
+    <% board_content do %>
+      <table class="grid" cellspacing="0">
+        <thead>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <%=th_tag "所属主机"%>
+            <%=th_tag "名称"%>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <th colspan="2">
+              <% if @services && @services.length > 0 %>
+                <div class="page clearfix">
+                  <div class="stat ">显示<%=@services.total_entries %>个主机类型参数中的<%=@services.size %>个</div>
+                  <%=will_paginate @services%>
+                </div>
+              <%end%>
+            </th>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% if @services.size > 0 %>
+            <% @services.each do |service| %>
+              <tr>
+                <%=td_tag "", :class => "first" %>
+                <%=td_tag link_to(h(service.parent_name),{:action=>"edit",:id=>service.parent_id}) %>
+                <%=td_tag link_to(h(service.name.split('/').last),{:action=>"edit",:id=>service.id}) %>
+                <%=td_tag "", :class => "last" %>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,111 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      <%=h @order.body %>
+    <% end %>
+    <% board_content do %>
+      <div class="details">
+        <% unless @order.is_paid %>
+          <div class="ui-actions">
+            <span>
+              <span>
+                <%= link_to(icon("delete") + "取消定单", order_url(@order), :method => :delete,:confirm => "确认取消定单？", :class => "last")%>
+              </span>
+            </span>
+          </div>
+        <% end %>
+        <p>
+        <b><%= Order.human_attribute_name('out_trade_no') + t("monit_ui.label_suffix") %></b>
+        <%= @order.out_trade_no %>
+        </p>
+        <p>
+        <b><%= Order.human_attribute_name('created_at') + t("monit_ui.label_suffix") %></b>
+        <%= format_time(@order.created_at) %>
+        </p>
+        <p>
+        <b><%= Order.human_attribute_name('month_num') + t("monit_ui.label_suffix") %></b>
+        <%= @order.month_num %>个月
+        </p>
+        <p>
+        <b><%= Order.human_attribute_name('total_fee') + t("monit_ui.label_suffix") %></b>
+        ￥<%=h @order.total_fee %>
+        </p>
+        <p>
+        <b><%= Order.human_attribute_name('status') + t("monit_ui.label_suffix") %></b>
+        <%= @order.human_status_name %>
+        </p>
+        <p>
+        <b><%= Order.human_attribute_name('subject') + t("monit_ui.label_suffix") %></b>
+        <%= @order.subject %>
+        </p>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+<% unless @order.is_paid %>
+  <div class="wrap">
+    <% board do %>
+      <% board_header do %>
+        充值
+      <% end %>
+      <% board_content do %>
+        <p class="notice hide">
+        通常情况下，所有购买项目会在支付成功后立即自动生效。如果支付成功后由于银行数据同步延迟造成购买项目无法自动生效，请您<%= link_to("联系我们", contact_path) %>，告诉我们您的购买记录编号(<%= @order.out_trade_no %>)，我们会为您尽快处理。
+        </p>
+        <% if @operator.is_support_alipay %>
+          <p class="notice">
+          建议使用支付宝在线支付方式(支付成功后实时开通服务)
+          </p>
+          <div class="datagrid">
+            <h5>在线支付</h5>
+            <table cellspacing="0">
+              <tbody>
+                <tr>
+                  <td>
+                    <form action="<%= @order.alipay_url %>" method="post">
+                      <p>
+                      <span class="f1">￥<%=h @order.total_fee %></span>
+                      <%= link_to(image_tag("alipay_logo.gif", :title => "用支付宝购买", :alt => "用支付宝购买"), @order.alipay_url_from_gen) %>
+                      <%#= image_submit_tag("alipay_logo.gif", :title => "用支付宝购买") %>
+                      </p>
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
+        <% if @operator.is_support_bank %>
+          <div class="datagrid">
+            <h5>银行支付</h5>
+            <table cellspacing="0">
+              <tbody>
+                <tr>
+                  <th width=130>开户银行：</th><td><%= @operator.bank %></td>
+                </tr>
+                <tr>
+                  <th>开户名称：</th><td><%= @operator.bank_account_name %></td>
+                </tr>
+                <tr>
+                  <th>开户帐号：</th><td><%= @operator.bank_account %></td>
+                </tr>
+                <tr>
+                  <% unless @operator.bank_tax_number.blank? %>
+                    <th>税务登记：</th><td><%= @operator.bank_tax_number %></td>
+                  <% end %>
+                </tr>
+                <tr>
+                  <% unless @operator.bank_payment_number.blank? %>
+                    <th>现代化支付系统行号：</th><td><%= @operator.bank_payment_number %></td>
+                  <% end %>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+

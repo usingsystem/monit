@@ -1,0 +1,16 @@
+<div class="wrap">
+  <% board :id => nil do %>
+    <% board_header do %>
+      <%= t('plugins') %>
+    <% end %>
+    <% board_content do %>
+      <%=link_to "服务类型列表", :controller => "service_types" %><br>
+      <%=link_to "增加服务类型", :controller => "service_types", :action => "new" %><br><br>
+      <%=link_to "默认参数列表", :controller => "service_params" %><br>
+      <%=link_to "增加主机服务默认参数", :controller => "service_params", :action => "new" %><br>
+      <%=link_to "增加应用服务默认参数", :controller => "service_params", :action => "new" %><br><br>
+      <%=link_to "主机类型列表", :controller => "host_types" %><br>
+      <%=link_to "增加主机类型", :controller => "host_types", :action => "new" %><br><br>
+    <%end%>
+  <%end%>
+</div>

@@ -1,0 +1,65 @@
+<div class="wrap">
+  <% board  do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => "所有" }%>
+      <%= "套餐管理" %>
+    <% end %>
+    <% board_content do %>
+      <table class="grid" cellspacing="0">
+        <thead>
+          <tr>
+            <%=th_tag "", :class => "actions first" %>
+            <%=th_tag "类别"%>
+            <%=th_tag "名称"%>
+            <%=th_tag "最大服务数"%>
+            <%=th_tag "最大主机数"%>
+            <%=th_tag "最低监测频率"%>
+            <%=th_tag "单价"%>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <th colspan="6">
+              <% if@packages && @packages.length > 0 %>
+                <div class="page clearfix">
+                  <div class="stat ">共有<%=@packages.size%>个套餐</div>
+                </div>
+              <%end%>
+            </th>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% if @packages.size > 0 %>
+            <% @packages.each do |package| %>
+              <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'") %>>
+                <% td_tag :class => "actions first" do %>
+                  <%#*<div class="pop-wrap">%>
+                    <%#*<div class="pop">%>
+                      <%#*<div class="pop-inner">%>
+                        <%#= link_to(icon("delete2", :title => "删除"),  {:controller=>'/packages',:action => 'destroy', :id =>package.id,:redirect_to=>url_for(params)},{:confirm => "确认删除该套餐？",:method => :delete, :class => "last"}, {:class => 'delete', :title => "删除", :class => "last"})%>
+                        <%#= link_to(icon("edit2", :title => "修改"), edit_package_url(package, redirect_object))%>
+                        <%#*</div>%>
+                      <%#*</div>%>
+                    <%#*</div>%>
+                <% end %>
+                <%=td_tag link_to(h(package.human_category_name),package_path(package))%>
+                <%=td_tag h(package.name)+"<br />&nbsp;" %>
+                <%=td_tag h("#{package.max_services}")%>
+                <%=td_tag h("#{package.max_hosts}")%>
+                <%=td_tag h("#{package.min_check_interval/60}分钟")%>
+                <%=td_tag h("¥#{package.charge}/月")%>
+                <%=td_tag "", :class => "last" %>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,11 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("delete") } %>
+      <%= t('delete') + "运营商" %>
+    <% end %>
+    <% board_content do %>
+      暂时不支持删除运营商
+    <% end %>
+  <% end %>
+</div>

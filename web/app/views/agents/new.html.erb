@@ -1,0 +1,27 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("new") } %>
+      <%= t('new') + t('agents') %>
+    <% end %>
+    <% board_content do %>
+      <% if @hosts.size > 0 %>
+        <% form_for(@agent, :builder => ::UIFormBuilder) do |f| %>
+          <%= f.text_field :name, :required => true %>
+          <%= f.select :host_id, [["选择主机", ""]] + @hosts.collect { |x| [x.name, x.id] }, {}, :required => true, :help => "选择代理要安装的主机" %>
+          <%= f.submit t('create') %>
+        <% end %>
+      <% else %>
+        <p class="notice">
+        创建代理前需要创建一个主机
+        </p>
+        <div class="auto-padding">
+          <% form_tag new_host_path, :method => :get do %>
+            <%=button_wrap(submit_tag "新建主机", :name => nil) %>
+          <% end %>
+        </div>
+      <% end %>
+
+    <% end %>
+  <% end %>
+</div>

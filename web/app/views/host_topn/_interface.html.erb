@@ -1,0 +1,27 @@
+<% board :id => nil do %>
+  <% board_header do %>
+    接口带宽使用率TopN
+  <%end%>
+  <% board_content do %>
+    <table  width="90%" class="grid" cellspacing="0">
+      <thead>
+        <tr>
+          <%=th_tag "设备"%>
+          <%=th_tag "带宽使用率"%>
+        </tr>
+      </thead>
+      <% if @interface %>
+        <tbody>
+          <% if @interface.size > 0 %>
+            <% @interface.each do |type| %>
+              <tr>
+                  <%=td_tag type["name"]%>
+                  <%=td_tag ('%.2f' %(type["outusage"]))+'%'%>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      <%end%>
+    </table>
+  <% end %>
+<% end %>

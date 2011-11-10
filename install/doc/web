@@ -1,0 +1,41 @@
+netstat -ntl
+vim sources.list
+apt-get update
+
+#http://www.zalas.eu/setting-up-a-php-development-environment-with-nginx-on-ubuntu-1004
+
+apt-get install php5-cli php5-cgi php5-mysql
+apt-get install spawn-fcgi
+apt-get install mysql-server 
+apt-get install libmysqlclient15-dev
+apt-get install phpmyadmin
+apt-get install nginx
+
+#http://github.com/jnstq/rails-nginx-passenger-ubuntu
+wget http://rubyforge.org/frs/download.php/68719/ruby-enterprise-1.8.7-2010.01.tar.gz
+tar xvfz ruby-enterprise-1.8.7-2010.01.tar.gz
+cd ruby-enterprise-1.8.7-2010.01
+./installer
+export PATH=/opt/ruby/bin:$PATH
+
+gem install mysql
+gem install thin
+
+
+vim /etc/default/php-cgi
+
+PIDFILE="/var/run/php-cgi.pid"
+DAEMON="/usr/bin/php-cgi"
+SPAWN_FCGI="/usr/bin/spawn-fcgi"
+FCGI_PORT=9000
+FCGI_USER="www-data"
+FCGI_GROUP="www-data"
+FCGI_CHILDREN=3
+
+
+
+gem install cassandra
+apt-get install nginx --add-module=/opt/ruby/lib/ruby/gems/1.8/gems/passenger-2.2.11/ext/nginx
+
+--sbin-path=/usr/sbin --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --pid-path=/var/run/nginx.pid --lock-path=/var/lock/nginx.lock --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/body --http-proxy-temp-path=/var/lib/nginx/proxy --http-fastcgi-temp-path=/var/lib/nginx/fastcgi --with-debug --with-http_stub_status_module --with-http_flv_module --with-http_ssl_module --with-http_dav_module --with-http_gzip_static_module --with-mail --with-mail_ssl_module --with-ipv6 --add-module=/opt/ruby/lib/ruby/gems/1.8/gems/passenger-2.2.11/ext/nginx --with-pcre=/tmp/pcre-8.00
+

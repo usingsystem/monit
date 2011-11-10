@@ -1,0 +1,20 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      添加角色
+    <% end %>
+    <% board_content do %>
+     <% form_for @role, :builder =>::UIFormBuilder,:html => { :class => "form" } do |f| %>
+        <% field_set_tag nil, :style => "padding:1em;" do %>
+          <div class="li"><%= f.text_field :role_name,:required=>true %></div>
+          <div class="li"><%= f.label :permissions, "权限", :class => 'label', :required => true %> 
+         <%= render 'permissions', :selected_modules => {},:selected_name => {}, :selected_permissions => {}%>
+          </div>
+          <div class="li"><%= f.text_field :description %></div>
+          <div class="li actions" align="center"><%= f.submit t("new"), :name => nil %></div>
+        <% end %>
+      <%end%>
+    <% end %>
+  <% end %>
+</div>
+

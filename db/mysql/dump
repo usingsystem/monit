@@ -1,0 +1,11 @@
+#!/bin/sh
+
+#schema
+ssh hidden@s "mysqldump -uroot -ppublic  -R --triggers --events --no-data monit" > config/schema.sql;
+
+#config data
+CONFIG_TABLES="app_types disco_types host_types device_oids locales device_types service_metrics service_params service_entries service_types views view_items"
+ssh hidden@s "mysqldump -uroot -ppublic --skip-triggers --no-create-info monit $CONFIG_TABLES" > config/config.sql;
+
+#git add . ;
+#git commit . -m "$(date)";

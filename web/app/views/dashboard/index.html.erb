@@ -1,0 +1,39 @@
+<% content_for :head do %>
+  <%=stylesheet_link_tag 'dashboard',:media=>'all' %>
+<% end %>
+<h1 class="hide"><%= t('dashboard') %></h1>
+<div class="dashboard cloumns clearfix">
+  <!--
+  <% unless @host_count > 0 %>
+    <div class="wrap">
+      <div class="frist-step">
+        <h4>欢迎使用Moint</h4>
+        <p>
+        您首先需要新建一个主机
+        </p>
+        <div class="auto-padding">
+          <% form_tag new_host_path, :method => :get do %>
+            <%=button_wrap(submit_tag "新建主机", :name => nil) %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  -->
+  <div class="column">
+    <div class="column-inner">
+      <%= render :partial => 'system' %>
+      <%= render :partial => 'disco' if @disco_services.size > 0 %>
+      <%= render :partial => 'alert' %>
+    </div>
+  </div>
+  <div class="column column-last">
+    <div class="column-inner">
+      <%= render :partial => 'site' %>
+      <%= render :partial => 'host' %>
+      <%= render :partial => 'app' %>
+      <%= render :partial => 'device' %>
+      <%= render :partial => 'service' %>
+    </div>
+  </div>
+</div>

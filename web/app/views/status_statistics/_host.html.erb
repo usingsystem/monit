@@ -1,0 +1,29 @@
+<div class="wrap clearfix">
+  <div style="float: left;width: 35%;">
+    <% if @host_view and @host_view.rows.size %>
+      <%=render :partial => "templates/#{@host_view.template}", :locals => {:view => @host_view } %>
+    <% else %>
+      暂无数据
+    <% end %>
+  </div>
+  <div class="datagrid" style="float: right;width:60%;">
+    <table  cellspacing="0">
+      <thead>
+        <tr>
+          <%=th_tag "主机状态" %>
+          <%=th_tag "数量"%>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @host_status.size > 0 %>
+          <% @host_status.each do |status| %>
+            <tr>
+              <%=td_tag h(status.title) %>
+              <%=td_tag h(status.num)%>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

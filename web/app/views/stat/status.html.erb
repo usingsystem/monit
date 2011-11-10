@@ -1,0 +1,21 @@
+<% content_for :head do %>
+  <%=stylesheet_link_tag 'dashboard',:media=>'all' %>
+<% end %>
+<div class="dashboard cloumns clearfix">
+  <%board do%>
+    <%board_header do%>
+      统计报表
+    <%end%>
+      
+    <%board_content do %>
+      <%= tabs @tabs, 'status' %>
+      <div>
+        <%= render :partial => 'site_sta' %>
+        <%= render :partial => 'host_sta' %>
+        <%=render :partial=>'app_sta'%>
+        <%=render :partial=>'device_sta'%>
+        <%= render :partial => 'service_sta' %>
+      </div>
+    <%end%>
+  <%end%>
+</div>

@@ -1,0 +1,51 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= t('new') + @service_type.alias %>服务
+    <% end %>
+    <% board_content do %>
+      <% form_for(@service, :builder => ::UIFormBuilder, :html => { :class => "form" }) do |f| %>
+        <% field_set_tag "服务基本信息" do %>
+          <%@service_params.each do |param|%>
+            <div class="form-li clearfix">
+              <%=label_tag "service[params][#{param.name}]", "<em>*</em>" + param.alias + "：", :class => " form-label"%>
+              <span class="form-data">
+                <span class="text-wrap">
+                  <%=text_field_tag "service[params][#{param.name}]", param.default_value%>
+                </span>
+              </span>
+            </div>
+          <%end%>
+        <% end %>
+        <%if @thresholds.length > 0%>
+          <% field_set_tag "阈值信息" do %>
+            <%@resolved_thresholds.each_pair do |key, value|%>
+              <div style="width: 70%;margin-left:10%;">
+                <%first_threshold = value.first%>
+                <b>
+                  <%=check_box_tag "service[thresholds][#{first_threshold.name}][enabled]"%>
+                  <%=label_tag "service[thresholds][#{first_threshold.name}][enabled]", key%>
+                </b><hr>
+              </div>
+              <%value.each do |v|%>
+                <div class="form-li clearfix">
+                  <%=hidden_field_tag "service[thresholds][#{v.name}][name]" , v.metric_name%>
+                  <%=label_tag v.metric_name, "当" + v.metric_alias + "：", :class => " form-label"%>
+                  <%=select_tag "service[thresholds][#{v.name}][operator]", options_for_select(ServiceThreshold.operators, v.operator), {:class => "left"} %>
+                  <%=text_field_tag "service[thresholds][#{v.name}][value]", v.default_value, :style => "margin-left:10px;width: 80px;"%>
+                  <%=v.unit%>
+                </div>
+              <%end%>
+            <%end%>
+          <%end%>
+        <%end%>
+        <%= f.submit t('create') %>
+        <%= hidden_field_tag "service[serviceable_id]" ,params[:serviceable_id] %>
+        <%= hidden_field_tag "service[serviceable_type]" ,params[:serviceable_type] %>
+        <%= hidden_field_tag "service[command]" ,@service_type[:command] %>
+        <%= hidden_field_tag "service[check_interval]" ,@service_type[:check_interval]%>
+        <%= hidden_field_tag "service[type_id]" ,@service_type[:id] %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

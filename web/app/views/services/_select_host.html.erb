@@ -1,0 +1,27 @@
+<% 
+  host_id = @host && @host.id 
+  first = true
+%>
+<% if @hosts.size > 0 %>
+  <% form_tag({:action => "types" }, :method => "get", :class => "select-form" ) do |f| %>
+    <% @hosts.each do |a| %>
+      <p>
+      <%= radio_button_tag(:host_id, a.id, first || a.id == host_id)  + label_tag(:host_id, a.name, :for => ("host_id_" + a.id.to_s))  %>
+      </p>
+      <% first = false %>
+    <%end%>
+    <p class="actions">
+    <span class="button-wrap"><%= submit_tag t('next'), :name => nil %></span>
+    </p>
+  <% end %>
+<% else %>
+  <p class="notice">
+  创建服务前需要创建一个主机
+  </p>
+  <div class="auto-padding">
+    <% form_tag new_host_path, :method => :get do %>
+      <%=button_wrap(submit_tag "新建主机", :name => nil) %>
+    <% end %>
+  </div>
+<% end %>
+

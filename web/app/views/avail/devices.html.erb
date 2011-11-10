@@ -1,0 +1,30 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("device") } %>
+      可用率报表
+    <% end %>
+    <% board_content do %>
+      <%= tabs @tabs, 'device' %>
+      <div class="selector-wrap">
+        <p class="selector">
+          <% @dates.each do |d| %>
+            <%= link_to d[0] ,params.merge({:date=>d[1]}), :class => (d[1]==@date ? "selected" : nil) %>
+          <% end %>
+        </p>
+        <p class="selector">
+          <%= link_to t("all") + t("device"), devices_avail_path(:date=>@date), :class =>(params[:device_id].blank? ? "selected" : nil) %>
+          <% @devices.each do |n| %>
+            <%= link_to n.name, device_avail_path(n,:date=>@date), :class =>(n.id.to_s ==params[:device_id] ? "selected" : nil) %>
+          <% end %>
+        </p>
+      </div>
+      <% if @chart_view && @data_view %>
+        <%=render :partial => "templates/#{@chart_view.template}", :locals => {:view => @chart_view } %>
+        <%=render :partial => "templates/#{@data_view.template}", :locals => {:view => @data_view } %>
+      <%else%>
+        <p class="notice">还未添加主机</p>
+      <%end%>
+    <% end %>
+  <%end%>
+</div>

@@ -1,0 +1,26 @@
+<table class="table" cellspacing="0">
+  <thead>
+    <tr>
+      <%=th_tag (Service.human_attribute_name 'name'), :style => "width: 140px" %>
+      <%=th_tag (Service.human_attribute_name 'status'), :style=> "width: 50px" %>
+      <%=th_tag (Service.human_attribute_name 'type_id'), :style=> "width: 120px" %>
+      <%=th_tag (Service.human_attribute_name 'last_check'), :style => "width: 100px" %>
+      <%=th_tag (Service.human_attribute_name 'summary') %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @services.each do |service| %>
+      <tr>
+        <%
+          url = service
+          #url = host_service_path(@host, service) if @host
+        %>
+        <%=td_tag link_to service.name, url,:class=>controlled("services/show") %>
+        <%=td_tag h(t("status.service." + service.status_name)), :class => "status status-service-" + service.status_name %>
+        <%=td_tag service.type.alias %>
+        <%=td_tag format_time(service.last_check, true)%>
+        <%=td_tag content_tag(:div, service.summary, :class=>'truncate') %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

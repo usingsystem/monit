@@ -1,0 +1,103 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "plan" %>
+  <%= stylesheet_link_tag "tenant" %>
+<% end %>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      <%= "帐户信息" %>
+    <% end %>
+    <% board_content do %>
+      <% if @tenant.is_paid? %>
+        <div class="plan">
+          <ul class="ul usagebars clearfix">
+            <li class="first">
+            <dl>
+              <dt><em>余额</em></dt>
+              <dd>¥<%= @tenant.balance %> <%= link_to "账单", bills_path %></dd>
+            </dl>
+            </li>
+            <% per = @hosts_num*100/@package.max_hosts %>
+            <li>
+            <dl class="<%= per > 70 ? (per >= 100 ? "over" : "reaching") : ""  %>">
+              <dt>
+              <em><%= @hosts_num %></em>/<%= @package.max_hosts %><span><%=t('hosts')%></span>
+              </dt>
+              <dd>
+              <% per = per > 100 ? 100 : per %>
+              <span style="width: <%= per %>%;"><%= per %>%</span>
+              </dd>
+            </dl>
+            </li>
+            <% per = @services_num*100/@package.max_services %>
+            <li>
+            <dl class="<%= per > 70 ? (per >= 100 ? "over" : "reaching") : ""  %>">
+              <dt>
+              <em><%= @services_num %></em>/<%= @package.max_services %><span><%=t('services')%></span>
+              </dt>
+              <dd>
+              <% per = per > 100 ? 100 : per %>
+              <span style="width: <%= per %>%;"><%= per %>%</span>
+              </dd>
+            </dl>
+            </li>
+          </ul>
+        </div>
+        <div class="plans-<%= @package.css_name %>">
+          <div class="plan planpro plan-final">
+            <div class="price">
+              <span class="symbol">￥</span>
+              <span class="amount"><%= @package.charge %></span>
+              <span class="duration">/月</span>
+            </div>
+            <%=link_to("更换套餐", packages_path, :class=>"button")%>
+            <%=link_to("续费", new_order_path(:package_id => @package.id), :class=>"button") if @package.category != 0 %>
+            <h3>您正在使用<strong><%= @package.human_category_name %></strong>套餐</h3>
+            <p>开始时间：<%= l(@tenant.begin_at) %> 到期时间：<%= @package.category == 0 ? "不限" : l(@tenant.end_at) %></p>
+          </div>
+        </div>
+      <% else %>
+        <div class="plan">
+          <ul class="ul usagebars clearfix">
+            <li class="first">
+            <dl>
+              <dt><em>帐户余额</em></dt>
+              <dd>¥<%= @tenant.balance %> <%= link_to "账单", bills_path %></dd>
+            </dl>
+            </li>
+            </li>
+          </ul>
+          <p>
+          您选择的<strong> <%= @package.human_category_name %> </strong>还未付费，您需要在<strong><%= l(@tenant.expired_at, :format => :long) %></strong>之前为你的<%= link_to "定单", orders_path %>付费，或者另选<%= link_to "套餐", packages_path %>。过期未支付会立即转为免费版。          
+          </p>
+        </div>
+        <ul class="ul clearfix">
+          <li>
+          <% form_tag (orders_path, :method => :get) do %>
+            <p>
+            <%=button_wrap(submit_tag "定单付费", :name => nil) %>
+            </p>
+          <% end %>
+          </li>
+          <li>
+          <% form_tag (packages_path, :method => :get) do %>
+            <p>
+            <%=button_wrap(submit_tag "购买套餐", :name => nil) %>
+            </p>
+          <% end %>
+          </li>
+          <li>
+          <% form_tag (to_free_tenant_path, :onsubmit => "//return confirm('')") do %>
+            <p>
+            <%= redirect_tag %>
+            <%=button_wrap(submit_tag "立即试用免费版", :name => nil) %>
+            </p>
+          <% end %>
+          </li>
+        </ul>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+

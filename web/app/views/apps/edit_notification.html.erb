@@ -1,0 +1,27 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("edit") } %>
+      <%= t('edit') + t('apps') %>
+    <% end %>
+    <% board_content do %>
+      <p class="notice">
+      批量更新<%=t('app')%>告警通知
+      </p>
+      <% form_for(@app, :builder => ::UIFormBuilder, :url => batch_update_apps_path, :html => { :class => "form", :method => :put }) do |f| %>
+        <%= redirect_tag %>
+        <% field_set_tag "筛选#{t('app')}" do %>
+          <ul class="ul list-table">
+            <% @apps.each do |app| %>
+              <li>
+              <%= f.wrap_label(check_box_tag("ids[#{app.id}]", "", true), app.name, "ids_#{app.id}") %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+        <%=render :partial => "notifications/setting", :locals => {:f => f, :source => "app", :types => ["down", "recovery"] } %>
+        <%= f.submit t('update') %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

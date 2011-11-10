@@ -1,0 +1,51 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      运营商信息
+    <% end %>
+    <% board_content do %>
+    <%# if @show %>
+    <%#*<div class="wrap">%>
+    <%#*<p class="notice">%>
+    <%#*您的jabber账号：%>
+    <%#= @user.username %>
+    <%#*@user.monit.cn%>
+    <%#*</p>%>
+    <%#*</div>%>
+    <%# end %>
+      <% form_for @operator, :builder => ::UIFormBuilder, :url => operator_path, :html => { :class => "form" } do |f| %>
+        <%= hidden_field_tag :redirect_to, params[:redirect_to] %>
+        <% field_set_tag "基本信息" do%>
+          <%= f.text_field :host,:disabled=>true,:help=>"不能修改" %>
+          <%= f.text_field :email%>
+          <%= f.text_field :telphone %>
+          <%= f.text_field :contact %>
+          <%= f.text_field :descr %>
+        <%end%>
+        <% field_set_tag "网站信息" do%>
+          <%= f.text_field :title %>
+          <%= f.text_field :logo_url%>
+          <%= f.text_field :biglogo_url%>
+
+          <%= f.text_area :page_contact,:style=>"width:31em;height:10em;"%>
+          <%= f.text_area :page_about,:style=>"width:31em;height:10em;"%>
+          <%= f.text_area :footer,:style=>"width:31em;height:10em;"%>
+        <%end%>
+        <% field_set_tag f.wrap_label(f.check_box(:is_support_bank), "是否支持银行支付", "operator_is_support_bank") do %>
+          <%= f.text_field :bank%>
+          <%= f.text_field :bank_account_name%>
+          <%= f.text_field :bank_account%>
+          <%= f.text_field :bank_tax_number%>
+          <%= f.text_field :bank_payment_number%>
+        <% end %>
+        <% field_set_tag f.wrap_label(f.check_box(:is_support_alipay), "是否支持支付宝", "operator_is_support_alipay") do %>
+          <%= f.text_field :alipay_email%>
+          <%= f.text_field :alipay_partner%>
+          <%= f.text_field :alipay_key%>
+        <% end %>
+        <%= f.submit t("update"), :name => nil %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+

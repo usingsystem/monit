@@ -1,0 +1,38 @@
+<% board do %>
+  <% board_header do %>
+    最近注册租户
+  <% end %>
+  <% board_content do %>
+    <div class="datagrid">
+      <table cellspacing="0">
+        <% if @recent_tenants.present? %>
+          <thead>
+            <tr>
+              <%= th_tag Tenant.human_attribute_name("name") %>
+              <%=th_tag t("packages") %>
+              <%= th_tag Tenant.human_attribute_name("created_at") %>
+            </tr>
+          </thead>
+          <tbody>
+            <% @recent_tenants.each do |tenant| %>
+              <tr class="<%= cycle("odd", "even") %>">
+                <%= td_tag tenant.name %>
+                <%=td_tag tenant.package ? tenant.package.title : "免费版" %>
+                <%= td_tag format_time(tenant.created_at) %>
+              </tr>
+            <%end%>
+
+          </tbody>
+        <%else%>
+          <tr class="first">
+            <% td_tag :colspan =>3 do %>
+            <p class="notice">
+              列表显示最近注册租客，现在还没有租客。
+            </p>
+          <% end %>
+          </tr>
+        <%end%>
+      </table>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,1 @@
+<%= render "automap.rdot", :format => "rdot" %>

@@ -1,0 +1,40 @@
+<% board do %>
+  <% board_header do %>
+    最近注册运营商
+  <% end %>
+  <% board_content do %>
+    <div class="datagrid">
+      <table cellspacing="0">
+        <% if @recent_operators.present? %>
+          <thead>
+            <tr>
+              <%= th_tag Operator.human_attribute_name("host") %>
+              <%#= th_tag Operator.human_attribute_name('title') %>
+              <%= th_tag Operator.human_attribute_name('contact') %>
+              <%=th_tag Operator.human_attribute_name('amount')  %>
+            </tr>
+          </thead>
+          <tbody>
+            <% @recent_operators.each do |operator| %>
+              <tr class="<%= cycle("odd", "even") %>">
+                <%= td_tag operator.host %>
+                <%#= td_tag operator.title %>
+                <%= td_tag operator.contact %>
+                <%= td_tag operator.amount || 0 %>
+              </tr>
+            <%end%>
+
+          </tbody>
+        <%else%>
+          <tr class="first">
+            <% td_tag :colspan =>3 do %>
+            <p class="notice">
+              列表显示最近注册运营商，现在还没有运营商。
+            </p>
+          <% end %>
+          </tr>
+        <%end%>
+      </table>
+    </div>
+  <% end %>
+<% end %>

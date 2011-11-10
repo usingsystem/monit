@@ -1,0 +1,10 @@
+<div id="footer">
+  <p class="clearfix">
+  <%= @operator.footer %>
+  </p>
+  <% if RAILS_ENV == 'development' %>
+    <p>
+    <%= link_to 'Theme steelblue', {:controller => 'themes', :action => "steelblue"} %>
+    </p>
+  <% end %>
+</div>

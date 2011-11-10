@@ -1,0 +1,4 @@
+#!/bin/sh
+DATE=$(date "+%Y-%m-%d_%H:%M:%S")
+mysqldump -uroot -ppublic  -R --triggers --events monit > monit_local_$DATE.sql;
+ssh hidden@s "mysqldump -uroot -ppublic  -R --triggers --events monit" > monit_$DATE.sql;

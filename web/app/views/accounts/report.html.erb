@@ -1,0 +1,21 @@
+<div class="wrap">
+  <% board :id => nil do %>
+    <% board_header do %>
+      报表通知设置
+    <% end %>
+    <% board_content do %>
+      <% form_for @user, :builder => ::UIFormBuilder, :url => {:action => 'update_report'},:html=>{:class=>'form'} do |f|%>
+        <% f.wrap_field 'daily', { :label => "支持日报" } do %>
+          <%= f.check_box :daily %>
+        <% end %>
+        <% f.wrap_field 'weekly', { :label => "支持周报" } do %>
+          <%= f.check_box :weekly %>
+        <% end %>
+        <% f.wrap_field 'monthly', { :label => "支持月报" } do %>
+          <%= f.check_box :monthly %>
+        <% end %>
+        <%= f.submit "确定" %>
+      <% end %>
+    <%end%>
+  <%end%>
+</div>

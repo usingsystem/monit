@@ -1,0 +1,40 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      <%= icon_status("app", @app.status_name) %><%=h @app.name %>
+    <% end %>
+    <% board_content do %>
+      <%= tabs [["base", "详细信息", {:controller => 'apps',:action=>'show',:id=>@app.id}],["config", "参数信息", {:controller => 'apps',:action=>'config',:id=>@app.id}]], 'config' %>
+      <% if @info %>
+        <% @info.each do |k,v| %>
+          <div class="datagrid" style="margin-top: 10px">
+            <h5><%=k%></h5>
+            <table cellspacing="0">
+              <thead>
+                <tr>
+                  <%= th_tag "参数名称" %>
+                  <%= th_tag "参数值" %>
+                </tr>
+              </thead>
+              <tbody>
+                <% v.each do |k,v| %>
+                  <tr <%= @first_false ? "" : ((@first_false = true) && " class='first'")%>>
+                    <%= td_tag h(k) %>
+                    <%= td_tag h(v) %>
+                  </tr>
+                <%end%>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
+      <% end %>
+
+    <% end %>
+  <% end %>
+</div>
+
+
+
+
+

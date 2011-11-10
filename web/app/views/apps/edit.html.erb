@@ -1,0 +1,24 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("edit") } %>
+      <%= t('edit') + t('applications') %>
+    <% end %>
+    <% board_content do %>
+      <p class="notice">
+      修改<%= link_to @app.name, @app %>
+      </p>
+      <% form_for(@app, :builder => ::UIFormBuilder, :html => { :class => "form" }) do |f| %>
+        <% field_set_tag "基本设置" do %>
+          <%= f.text_field :name, :required => true %>
+          <%#= f.select :host_id, [["选择主机", ""]] + @hosts.collect { |x| [x.name, x.id] }, {}, :required => true %>
+          <% path = "apps/" + @app.type.view + "_form" %>
+          <%= render :partial => path, :locals => { :f => f } if partial_exist? path %>
+          <%= f.select :group_id, [['无','']] + @groups.collect { |x| [x.name, x.id] }  %>
+        <% end %>
+        <%=render :partial => "notifications/setting", :locals => {:f => f, :source => "app", :types => ["down", "recovery"] } %>
+        <%= f.submit t('update') %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,64 @@
+#!/usr/bin/env lua
+
+-- check mysql table handler
+-- author: ery.lee@gmail.com from monit.cn
+
+require("plugin")
+
+-- do check
+function check(opts) 
+  require "luasql.mysql"
+  env = assert (luasql.mysql())
+  con = assert (env:connect("mysql", opts["username"], opts["password"], opts["host"], tonumber(opts["port"])))
+  -- retrieve status
+  cur = assert (con:execute"show global status where Variable_name = 'Com_select' or Variable_name like  'Handler_%'")
+  row = cur:fetch ({}, "a")
+  metrics = {}
+  while row do
+    metrics[string.lower(row.Variable_name)] = row.Value
+    row = cur:fetch (row, "a")
+  end
+  -- print result
+  scan_rate = tonumber(metrics["handler_read_rnd_next"]) / tonumber(metrics["com_select"])
+  print(string.format("OK - handler scan rate = %.2f", scan_rate))
+  counters = {}
+  for k,v in pairs(metrics) do
+    if string.find(k, "handler") then 
+      table.insert(counters, k)
+    end
+  end
+  print("count-metrics: "..string.join(counters, ",").."\n") 
+  print("metric:handler_scan_rate: "..scan_rate)
+  for k,v in pairs(metrics) do
+    if k ~= "com_select" then
+      print(string.format("metric:%s: %s", k, v))
+    end
+  end
+  -- close everything
+  cur:close()
+  con:close()
+  env:close()
+end
+
+-- usage
+function usage() 
+  print("usage: check_mysql_handler --host=Host --username=User --password=Password --port=Port")
+end
+
+-- parse arguments
+opts = getopt(arg, {"host", "password", "username", "port"})
+if not opts["port"] then opts["port"] = "3306" end
+for i, o in ipairs({"host", "password", "username"}) do
+  if not opts[o] then
+    print(string.format("UNKNOWN - miss argument = '%s'\n", o))
+    usage()
+    return
+  end
+end
+
+status, err = pcall(check, opts) 
+if not status then
+  print("UNKNOWN - plugin internal error\n")
+  print(err)
+end
+

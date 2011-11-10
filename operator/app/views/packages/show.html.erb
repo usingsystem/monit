@@ -1,0 +1,27 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      <%=@package.name%>
+    <% end %>
+    <% board_content do %>
+      <%=detail(@package,:name,:max_services,:max_hosts)%>
+      <div class="details">
+        <p>
+          <b>最低监测频率:</b> <%=@package.min_check_interval/60%>分钟
+        </p>
+        <p>
+          <b>邮件报表:</b>
+          <%if @package.report==0%>
+            日报
+          <%elsif @package.report==1%>
+            周报
+          <%elsif @package.report==2%>
+            月报
+          <%end%>
+        </p>
+      </div>
+      <%=detail(@package,:multi_regional,:customer_support,:data_retention,:sms_num,:special_features,:charge)%>
+    <%end%>
+  <%end%>
+</div>

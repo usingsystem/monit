@@ -1,0 +1,2 @@
+
+*/2 * * * * root cd /opt/monit/web && rake notification:sendmail

@@ -1,0 +1,12 @@
+Monit node.
+To start:
+cd /opt/monit/node
+./start
+
+To get status:
+./status
+
+To stop:
+cd /opt/monit/node
+./stop
+

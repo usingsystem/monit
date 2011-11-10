@@ -1,0 +1,11 @@
+<% form_for @service, :builder => ::UIFormBuilder, :html => { :class => "form" } do |f| %>
+  <%= f.text_field :name , { :required => true }%>
+  <%= f.text_field :alias, { :required => true }%>
+  <%= f.radio_button_group :param_type, [["绝对值", "1"], ["变量值", "2"]], { :required => true }  %>
+  <%= f.text_field :default_value %>
+  <%= f.radio_button_group :unit, [["int", "int"], ["string", "string"]], { :required => true }  %>
+  <%= f.select :type_id, [["选择服务类型", ""]] + @service_types.collect { |x| [x.alias, x.id] }, {}, { :required => true }  %>  <%= f.submit ["new","create"].include?(controller.action_name) ? t("create") : t("update"), :name => nil %>
+<% end %>
+
+
+

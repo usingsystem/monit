@@ -1,0 +1,39 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("select") } %>
+      <%= t('select') + t('apps') %>
+    <% end %>
+    <% board_content do %>
+      <% if @hosts.size > 0 %>
+        <% form_tag({:action => "new" }, :method => "get", :class => "select-form" ) do |f| %>
+          <% 
+            a = filter_params(params)
+            a.delete(:type_id)
+          %>
+          <% a.each do |k,v| %>
+            <%= hidden_field_tag k, v %>
+          <% end %>
+          <% @checked = @app_types.first.id if @app_types.size > 0 %>
+          <% @app_types.each do |type| %>
+            <p>
+            <%= radio_button_tag(:type_id, type.id, type.id == @checked)  + label_tag(:type_id, (type.name + content_tag(:span, type.remark)), :for => ("type_id_" + type.id.to_s))  %>
+            </p>
+          <%end%>
+          <p class="actions">
+          <span class="button-wrap"><%= submit_tag t('next'), :name => nil %></span>
+          </p>
+        <% end %>
+      <% else %>
+        <p class="notice">
+        创建应用前需要创建一个主机
+        </p>
+        <div class="auto-padding">
+          <% form_tag new_host_path, :method => :get do %>
+            <%=button_wrap(submit_tag "新建主机", :name => nil) %>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

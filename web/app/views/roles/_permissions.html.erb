@@ -1,0 +1,59 @@
+<%content_for :head do%>
+  <script type="text/javascript">
+    $(function(){
+      $("#permssion-check tr").each(function(){
+        var el = $(this);
+        el.find('.parent input:checkbox').click(function(){
+          el.find('.child input:checkbox').attr("checked", this.checked);
+        });
+      });
+    });
+
+    $(function(){
+      $("#permssion-check tr").each(function(){
+        var el = $(this);
+        el.find('.moduelparent input:checkbox').click(function(){
+          el.find('.parent input:checkbox').attr("checked",this.checked);
+          el.find('.child input:checkbox').attr("checked", this.checked);
+
+        });
+      });
+    });
+  </script>
+<%end%>
+<table  id="permssion-check" style="width:80.6%;">
+  <% @perm_modules.each do |name, perm_name| %>
+    <tr>
+      <td rowspan="<%=perm_name.size%>" style="width:10em; vertical-align:top;" align="center" class="moduelparent" ><%= check_box :modules, name,:class=> "parent1",:tempsrc => name,:checked => selected_modules[name] %> <%= t(name) %></td>
+      <% i = true %>
+      <% perm_name.each do |key ,permissions| %>
+        <% if i %>
+          <% unless name.nil? %>
+            <td style="width:10em; vertical-align:top;text-align:left;" class=" parent <%="p"+name%>"><%= check_box :modules,key,:checked => selected_name[key] %> <%=key %></td>
+          <% end %>
+          <td style="vertical-align:top;text-align:left;" class=" child permission">
+            <% permissions.each_index do |i| %>
+              <%p = permissions[i]%>
+              <div style="float:left;width:180px;" align="left" >
+                <%=check_box :permissions,"#{p.id}", :checked => selected_permissions[p.id] %> <%= p.description %>
+              </div>
+            <% end %>
+          </td>
+        </tr>
+      <% else %>
+        <tr>
+          <td style="width:10em; vertical-align:top;text-align:left;" class=" parent <%="p"+name%>"><%= check_box :modules, key,:checked => selected_name[key] %> <%=key  %></td>
+          <td style="vertical-align:top;text-align:left;" class="child">
+            <% permissions.each_index do |i| %>
+              <%p = permissions[i]%>
+              <div style="float:left;width:180px;" align="left" class=" permission" >
+                <%=check_box :permissions,"#{p.id}", :checked => selected_permissions[p.id]%> <%= p.description%>
+              </div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      <% i = false %>
+    <% end %>
+  <% end %>
+</table>

@@ -1,0 +1,19 @@
+<% board :id => nil do %>
+  <% board_header do %>
+    <%= t('host') %>
+  <% end %>
+  <% board_content do %>
+    <div class="show-status">
+      <% if @host_count > 0 %>
+        <%= status_link 'host', @host_status,@host_count %>
+        <p>
+        <%= image_tag status_chart(@host_status), :alt => "#{t("host")}状态统计" %>
+        </p>
+      <% else %>        
+        <p>
+        统计主机的运行状态。现在还没有主机，<%= link_to "添加一个", new_host_path %>
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

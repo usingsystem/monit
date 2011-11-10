@@ -1,0 +1,25 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("edit") } %>
+      <%= "配置SNMP" %>
+    <% end %>
+    <% board_content do %>
+      <div class="notice">
+        <p>您正在配置<%= link_to @host.name, @host %>的SNMP服务</p>
+        <p>
+        您需要在服务上运行SNMP代理，然后填入服务器上的配置参数。
+        <%= extlink_to "SNMP代理安装和配置方法参考这里", "http://blog.monit.cn/?tag=net-snmp" %>。
+        </p>
+      </div>
+      <% form_for(@host, :builder => ::UIFormBuilder, :html => { :class => "form" }) do |f| %>
+        <%#= f.radio_button_group :is_support_snmp, [["打开", 1], ["关闭", 0]], {:help => "要支持SNMP采集请选择打开，默认关闭" } %>
+        <%= f.text_field :port, :style => "width:100px;", :required => true, :help => "SNMP代理程序的监听端口默认为161" %>
+        <%= f.radio_button_group :snmp_ver, [["V1", "v1"], ["V2c", "v2c"]], { :required => true } %>
+        <%= f.text_field :community, :style => "width:200px;", :required => true , :help => "访问SNMP代理的字符串" %>
+
+        <%= f.submit t('create') %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

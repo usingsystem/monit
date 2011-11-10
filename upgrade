@@ -1,0 +1,11 @@
+#!/bin/sh
+cd /opt/monit/cloud
+git pull
+cd /opt/monit/node
+git pull
+cd /opt/monit/smarta
+git pull
+cd /opt/monit/plugins
+git pull
+cd /opt/monit
+#make

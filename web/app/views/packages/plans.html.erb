@@ -1,0 +1,40 @@
+<% @display_sign_button = true %>
+<%= render :partial => 'welcome/header', :locals => { :title => "选择套餐" } %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "plan" %>
+<% end %>
+
+<div id="doc-wrap" >
+  <div id="doc" class="clearfix">
+    <div class="wrap plans-yellow">
+      <div class="plan planpro">
+        <div class="price">
+          <span class="symbol">￥</span>
+          <span class="amount"><%= @free_package.charge %></span>
+          <span class="duration">/月</span>
+        </div>
+        <%=signup_link("注册免费账号", @free_package.id, :class=>"button")%>
+        <h3><%= @free_package.human_category_name %></h3>
+        <p><strong><%= @free_package.max_services %></strong>个服务，<strong><%= @free_package.max_hosts %></strong> 台主机，最低<%= @free_package.min_check_interval/60 %>分钟监测频率，适合中小网站客户。</p>
+      </div>
+    </div>
+    <div class="plans">
+      <h2><%= t("package_category.standard") %></h2>
+      <div class="cloumns columns<%= @standard_packages.size %> clearfix">
+        <% @standard_packages.each do |package| %>
+          <div class="plans-blue column">
+            <%=render "plan", :package => package, :link => signup_link("马上注册", package.id,:class=>"button") %>
+          </div>
+        <% end %>
+      </div>
+      <h2><%= t("package_category.enterprise") %></h2>
+      <div class="cloumns columns<%= @enterprise_packages.size %> clearfix">
+        <% @enterprise_packages.each do |package| %>
+          <div class="plans-green column">
+            <%=render "plan", :package => package, :link => signup_link("马上注册", package.id,:class=>"button") %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

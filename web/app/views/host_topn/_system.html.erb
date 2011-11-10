@@ -1,0 +1,24 @@
+<div class="datagrid" style=" margin-top: 8px">
+  <h5>系统负载TopN</h5>
+  <table cellspacing="0">
+    <thead>
+      <tr>
+        <%=th_tag "主机"%>
+        <%=th_tag "一分钟平均负载"%>
+      </tr>
+    </thead>
+    <% if @system %>
+      <tbody>
+        <% if @system.size > 0 %>
+          <% @system.each do |type| %>
+            <tr>
+              <%=td_tag type["name"]%>
+              <%=td_tag ('%.2f' %(type["load1"]))+'%'%>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    <%end%>
+  </table>
+</div>
+

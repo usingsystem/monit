@@ -1,0 +1,17 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      统计报表
+    <% end %>
+      
+    <% board_content do %>
+      <%= tabs @tabs,'stat' %>
+      <div>
+        <%= render :partial => 'object' %>
+        <%= render :partial => 'host' %>
+        <%=render :partial=>'app'%>
+        <%=render :partial=>'device'%>
+      </div>
+    <% end %>
+  <% end %>
+</div>

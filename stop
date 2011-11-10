@@ -1,0 +1,11 @@
+#!/bin/sh
+#cd /opt/monit/errdb/
+#./stop
+cd /opt/monit/cloud/
+./stop
+cd /opt/monit/node/
+./stop node
+./stop node1
+./stop node2
+cd /opt/monit/smarta/
+./stop

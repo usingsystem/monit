@@ -1,0 +1,27 @@
+<% 
+  site_id = @site && @site.id 
+  first = true
+%>
+<% if @sites.size > 0 %>
+  <% form_tag({:action => "types" }, :method => "get", :class => "select-form" ) do |f| %>
+    <% first = true %>
+    <% @sites.each do |a| %>
+      <p>
+      <%= radio_button_tag(:site_id, a.id, first || a.id == site_id)  + label_tag(:site_id, a.name, :for => ("site_id_" + a.id.to_s))  %>
+      </p>
+      <% first = false %>
+    <%end%>
+    <p class="actions">
+    <span class="button-wrap"><%= submit_tag t('next'), :name => nil %></span>
+    </p>
+  <% end %>
+<% else %>
+  <p class="notice">
+  创建服务前需要创建一个网站
+  </p>
+  <div class="auto-padding">
+    <% form_tag new_site_path, :method => :get do %>
+      <%=button_wrap(submit_tag "新建网站", :name => nil) %>
+    <% end %>
+  </div>
+<% end %>

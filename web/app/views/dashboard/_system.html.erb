@@ -1,0 +1,47 @@
+<% board do %>
+  <% board_header do %>
+    <%= t("dashboard_system") %>
+  <% end %>
+  <% board_content do %>
+    <% if current_user.is_admin? %>
+      <% if @tenant.is_paid? %>
+        <p class="board-subt">
+        <span class="link"><%=inlink_to '帐户', tenant_path %></span>
+        <%= @package.title %> 
+        </p>
+      <% else %>
+        <p class="notice">
+        <% day = @tenant.expired_at - Date.today %>
+        您预定的<%= @package.title%>还未付费，未付费之前您不能添加服务，请尽快付费，系统会在<strong><%= day > 0 ? "#{day}天后" : "今天" %></strong>(<%=l(@tenant.expired_at,:format => :long) %>)将你的套餐转为免费版本。<br /><%= link_to '定单付费', orders_path %> <%= link_to '查看帐户', tenant_path %>
+        </p>
+      <% end %>
+      <% if @tenant.is_need_charge_notice? %>
+        <% day_num = @tenant.end_at - Date.today %>
+        <p class="notice">
+        您的套餐将在<%= day_num > 0 ? "#{day_num}天后" : "今天" %>到期，请尽快 <%=link_to("续费", new_order_path(:package_id => @package.id)) %> 或 <%=link_to("更换套餐", packages_path)%>。
+        </p>
+      <% end %>
+    <% end %>
+    <table class="resource">
+      <tr>
+        <td class="title"><%=link_to "#{t("site")}<span>#{@site_count}</span>个" , sites_path %></td>
+        <td><%=inlink_to t('add'), new_site_path %></td>
+        <td class="title"><%=link_to "#{t("app")}<span>#{@app_count}</span>个" , apps_path %></td>
+        <td><%=inlink_to t('add'), new_app_path %></td>
+      </tr>
+      <tr>
+        <td class="title"><%=link_to "#{t("host")}<span>#{@host_count}</span>个" , hosts_path %></td>
+        <td><%=inlink_to t('add'), new_host_path %></td>
+        <td class="title"><%=link_to "#{t("service")}<span>#{@service_count}</span>个" , services_path %></td>
+        <td><%=inlink_to t('add'), new_service_path %></td>
+      </tr>
+      <tr>
+        <td class="title"><%=link_to "#{t("network")}#{t("device")}<span>#{@device_count}</span>个" , devices_path %></td>
+        <td><%=inlink_to t('add'), new_device_path %></td>
+        <td class="title"></td>
+        <td></td>
+      </tr>
+
+    </table>
+  <% end %>
+<% end %>

@@ -1,0 +1,4 @@
+#!/usr/bin/sh
+sudo gem install cassandra
+sudo gem install rmagick
+sudo gem install scruffy

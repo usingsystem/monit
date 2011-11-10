@@ -1,0 +1,59 @@
+<div class="wrap">
+  <% board  do %>
+    <% board_header do %>
+      <%= "分组管理" %>
+    <% end %>
+    <% board_content do %>
+      <table class="grid" cellspacing="0">
+        <thead>
+          <tr>
+            <%=th_tag "", :class => "actions first" %>
+            <%=th_tag "名称"%>
+            <%=th_tag "描述"%>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <th colspan="2">
+              <% if@groups && @groups.length > 0 %>
+                <div class="page clearfix">
+                  <div class="stat ">显示<%=@groups.total_entries %>个主机类型参数中的<%=@groups.size %>个</div>
+                  <%=will_paginate @groups%>
+                </div>
+              <%end%>
+            </th>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% if @groups.size > 0 %>
+            <% @groups.each do |group| %>
+              <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'") %>>
+                <% td_tag :class => "actions first" do %>
+                  <%unless group.id==1%>
+                <div class="pop-wrap">
+                  <div class="pop">
+                    <div class="pop-inner">
+                      <%= link_to(icon("delete2", :title => "删除"),  {:controller=>'/groups',:action => 'destroy', :id =>group.id,:redirect_to=>url_for(params)},{:confirm => "确认删除该接入点？",:method => :delete, :class => controlled("groups/destroy")}, {:class => 'delete', :title => "删除", :class => controlled("groups/destroy")})%>
+                      <%= link_to(icon("edit2", :title => "修改"), edit_group_url(group, redirect_object),:class=>controlled("groups/edit"))%>
+                    </div>
+                  </div>
+                </div>
+              <%end%>
+            <% end %>
+            <%=td_tag h(group.id==1? group.name : group.name[group.name.index('/')..-2]) %>
+            <%=td_tag h(group.descr)%>
+            <%=td_tag "", :class => "last" %>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,103 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      趋势图表
+    <% end %>
+    <% board_content do %>
+      <%=render :partial=>"select"%>
+      <% if @history_views %>
+        <% @history_views.each do |view| %>
+          <% if view.rows.size > 0 %>
+            <%=render :partial => "templates/#{view.template}", :locals => {:view => view } %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <%end%>
+</div>
+
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      趋势报表
+    <% end %>
+    <% board_content do %>
+      <div class="datagrid">
+        <h5>统计报告</h5>
+        <table cellspacing="0">
+          <thead>
+            <tr>
+              <%=th_tag "指标名称"%>
+              <%=th_tag "最大"%>
+              <%=th_tag "最小"%>
+              <%=th_tag "平均"%>
+              <%=th_tag "最近"%>
+            </tr>
+          </thead>
+          <tbody>
+            <% if !@result.nil? %>
+              <% @result.each do |k,v| %>
+                <%unless k=='parent_key'%>
+                  <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'")%>>
+                    <%=td_tag h(k)%>
+                    <%=td_tag number_with_precision(v["max"], :precision => 2)%>
+                    <%=td_tag number_with_precision(v["min"], :precision => 2)%>
+                    <%=td_tag number_with_precision(v["avg"], :precision => 2)%>
+                    <%=td_tag number_with_precision(v["last"], :precision => 2)%>
+                  </tr>
+                <%end%>
+              <% end %>
+            <%else%>
+              <tr>
+                <%=td_tag "暂无数据"%>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <%end%>
+  <%end%>
+</div>
+
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <span style="z-index: 100px;"><%=link_to "导出",{:controller=>"trends",:object=>"#{@object}",:instance=>"#{@instance}",:serviceid=>"#{@serviceid}",:date=>"#{@date}",:format=>"xls"}%></span>
+    <% end %>
+    <% board_content do %>
+      <div class="datagrid">
+        <h5>详细统计报告</h5>
+        <table cellspacing="0">
+          <thead>
+            <tr>
+              <% if @column && @column.length>0 %>
+                <% @column.each do |key| %>
+                  <%=th_tag h(key)%>
+                <%end%>
+              <%end%>
+            </tr>
+          </thead>
+          <tbody>
+            <% if !@history_result1.nil? %>
+              <% @history_result1.each do |k| %>
+                <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'")%>>
+                  <%=td_tag Time.at(k[0].to_i)%>
+                  <% time=k[0] %>
+                  <% k.each do |v| %>
+                    <% if v!=time %>
+                      <%=td_tag number_with_precision(v, :precision => 2)%>
+                    <%end%>
+                  <%end%>
+                </tr>
+              <% end %>
+            <%else%>
+              <tr>
+                <%=td_tag "暂无数据"%>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <%end%>
+  <%end%>
+</div>

@@ -1,0 +1,17 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      统计报表
+    <% end %>
+    <% board_content do %>
+      <%= tabs [["object", "资源统计报告", {:controller => 'object_statistics'}], ["status", "状态统计报告", {:controller => 'status_statistics'}], ["service", " 服务统计报告", {:controller => 'service_statistics'}]], 'object' %>
+      <div>
+        <%= render :partial => 'object' %>
+        <%= render :partial => 'host' %>
+        <%=render :partial=>'app'%>
+        <%=render :partial=>'device'%>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+

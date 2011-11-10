@@ -1,0 +1,81 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      <%= "运营商－#{@operator.host}" %>
+    <% end %>
+    <% board_content do %>
+      <div class="details">
+        <p>
+          <b><%= Operator.human_attribute_name('host') + t("monit_ui.label_suffix") %></b>
+          <%= @operator.host %>
+        </p>
+        <p>
+          <b><%= Operator.human_attribute_name('title') + t("monit_ui.label_suffix") %></b>
+          <%= @operator.title %>
+        </p>
+        <p>
+          <b><%= Operator.human_attribute_name('contact') + t("monit_ui.label_suffix") %></b>
+          <%= @operator.contact %>
+        </p>
+        <p>
+          <b><%= Operator.human_attribute_name('telphone') + t("monit_ui.label_suffix") %></b>
+          <%=h @operator.telphone %>
+        </p>
+        <p>
+          <b><%= Operator.human_attribute_name('email') + t("monit_ui.label_suffix") %></b>
+          <%= @operator.email %>
+        </p>
+        <p>
+          <b><%= Operator.human_attribute_name('is_support_bank') + t("monit_ui.label_suffix") %></b>
+          <%=@operator.is_support_bank ? "是" : "否"%>
+        </p>
+        <p>
+          <b><%= Operator.human_attribute_name('is_support_alipay') + t("monit_ui.label_suffix") %></b>
+          <%=@operator.is_support_alipay ? "是" : "否"%>
+        </p>
+        <p>
+          <b><%= Operator.human_attribute_name('created_at') + t("monit_ui.label_suffix") %></b>
+          <%= @operator.created_at %>
+        </p>
+        <p>
+          <b><%= Operator.human_attribute_name('amount') + t("monit_ui.label_suffix") %></b>
+          <%= @operator.amount || 0 %>
+        </p>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      手动充值
+    <% end %>
+    <% board_content do %>
+
+      <p class="notice">
+        最小手动充值额度1，最大手动充值额度为10000。
+      </p>
+      <div class="datagrid">
+        <h5><%="为运营商－#{@operator.host}充值"%></h5>
+
+        <table cellspacing="0">
+          <% @bill.amount=nil %>
+          <% form_for(@bill, :builder => ::UIFormBuilder, :url => recharge_operator_path(@operator), :html => { :class => "form",:method=>:post }) do |f| %>
+            <tbody>
+              <tr>
+                <td>
+                  <%= f.text_field(:amount,:style => "width:50px;")%>
+                </td>
+                <td>  <%=f.submit "充值",:confirm=>"确认充值？",:name=>nil  %></td>
+              </tr>
+            </tbody>
+          <%end%>
+        </table>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+

@@ -1,0 +1,10 @@
+#!/bin/sh
+echo "drop database if exists monit2;create database monit2;" | mysql -uroot -ppublic monit;
+echo "Drop ok."
+mysqldump -uroot -ppublic  -R --triggers --events monit | mysql -uroot -ppublic monit2;
+echo "Monit2."
+echo "drop database if exists monit;create database monit;" | mysql -uroot -ppublic monit2;
+echo "Drop ok."
+ssh hidden@s "mysqldump -uroot -ppublic  -R --triggers --events monit" | mysql -uroot -ppublic monit;
+echo "Monit."
+

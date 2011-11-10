@@ -1,0 +1,19 @@
+<% board :id => nil do %>
+  <% board_header do %>
+    <%= t('app') %>
+  <% end %>
+  <% board_content do %>
+    <div class="show-status">
+      <% if @app_count > 0 %>
+        <%= status_link 'app', @app_status, @app_count %>
+        <p>
+        <%= image_tag status_chart(@app_status), :alt => "#{t("app")}状态统计" %>
+        </p>
+      <% else %>
+        <p>
+        统计应用的运行状态。现在还没有应用，<%= link_to "添加一个", new_app_path %>
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,51 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      可用率报表
+    <% end %>
+    <% board_content do %>
+      <%= tabs [["site", "网站", {:controller => 'site_availabilities'}],["host", "主机", {:controller => 'host_availabilities'}],["app", "应用", {:controller => 'app_availabilities'}],["device", "网络", {:controller => 'device_availabilities'}],["service", "服务", {:controller => 'service_availabilities'}]], 'site' %>
+      <div class="selector-wrap">
+        <p class="selector">
+          <% dates=[['最近24小时(Last 24 hours)','last24hours'],['今天(Today)','today'],['昨天(Yesterday)','yesterday'],['本周(This Week)','thisweek'],['最近7天(Last 7 days)','last7days'],['本月(This Month)','thismonth'],['最近30天(Last 30 days)','last30days']] %>
+          <% dates.each do |d| %>
+            <%= link_to d[0] ,{:controller=>:site_availabilities,:date=>d[1],:siteid=>@siteid}, :class => (d[1]==@date ? "selected" : nil) %>
+          <% end %>
+        </p>
+        <p class="selector">
+          <%@sites.each do |n| %>
+            <%= link_to n.name, {:controller=>:site_availabilities,:action=>:show,:siteid=>n.id,:date=>@date},:class =>(n.id.to_s ==@siteid ? "selected" : nil) %>
+          <% end %>
+        </p>
+      </div>
+      <div class="datagrid">
+        <table cellspacing="0">
+          <thead>
+            <tr>
+              <%=th_tag "网站"%>
+              <%=th_tag "正常"%>
+              <%=th_tag "故障"%>
+              <%=th_tag "未监控"%>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @result.size > 0 %>
+              <% @result.each do |v| %>
+                  <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'")%>>
+                    <%=td_tag (link_to h(v["name"]),{:controller=>:site_availabilities,:action=>:show,:siteid=>v["id"],:date=>@date})%>
+                    <%=td_tag ('%.1f' %(v["ok"]*100))+"%"%>
+                    <%=td_tag ('%.1f' %(v["critical"]*100))+"%"%>
+                    <%=td_tag ('%.1f' %(v["pending"]*100))+"%"%>
+                  </tr>
+                <%end%>
+            <%else%>
+              <tr>
+                <%=td_tag "暂无数据"%>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  <%end%>
+</div>

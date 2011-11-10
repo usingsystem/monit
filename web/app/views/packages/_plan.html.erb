@@ -1,0 +1,20 @@
+<div class="plan column-inner">
+  <h3>
+    <div class="price">
+      <span class="symbol">￥</span><span class="amount"><%= package.charge %></span><span class="duration">/月</span>
+    </div>
+    <%= package.name %>
+  </h3>
+  <div class="rule"></div>
+  <ul class="bigpoints">
+    <li><strong><%= package.max_services %></strong>个服务</li>
+    <li><strong><%= package.max_hosts %></strong>个主机</li>
+    <li><strong><%= package.sms_num %></strong>条短信</li>
+    <li><strong><%= package.multi_regional %></strong>个多点监测</li>
+    <li><strong><%= package.special_features%></strong></li>
+  </ul>
+  <ul class="smallpoints">
+    <li> 最低<strong><%= package.min_check_interval/60 %></strong>分钟监测频率</li>
+  </ul>
+  <%= link %>
+</div>

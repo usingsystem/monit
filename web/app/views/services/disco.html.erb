@@ -1,0 +1,47 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => "发现" } %>
+      <%= "发现" + t('services') %>
+    <% end %>
+    <% board_content do %>
+      <p class="notice">
+      当创建主机后，系统将自动发现一些可监控此主机的服务，您可以确认添加此服务。
+      </p>
+      <div class="ui-actions">
+        <span>
+          <span>
+            <%= link_to "确认所有", create_all_disco_services_path,:class=>("services/create_all_disco") %>
+            <%= link_to "忽略所有", destroy_all_disco_services_path, :class =>("services/destroy_all_disco") %>
+          </span>
+        </span>
+      </div>
+      <table class="table" cellspacing="0">
+        <thead>
+          <tr>
+            <%=th_tag "操作", :style => "width: 80px" %>
+            <%=th_tag "名称", :style => "width: 70px" %>
+            <%=th_tag "发现时间", :class => "time" %>
+            <%=th_tag Service.human_attribute_name('serviceable_type'), :style=> "width: 150px" %>
+            <%=th_tag "描述" %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @disco_services.each do |service| %>
+            <tr>
+              <%td_tag do %>
+                <%= link_to "确认", {:controller => "services", :action => "create_from_disco", :id => service.id },:class=>controlled("services/create_all_disco"), :method => :post %>
+                <%= link_to "忽略", {:controller => "services", :action => "destroy_disco", :id => service.id },:class=>("services/destroy_all_disco"), :method => :delete %>
+              <% end %>
+              <%=td_tag service.name %>
+              <%=td_tag format_time(service.created_at) %>
+              <%=td_tag link_to(service.serviceable.name, service.serviceable) %>
+              <%=td_tag service.summary %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+</div>
+

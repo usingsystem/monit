@@ -1,0 +1,41 @@
+<% board do %>
+  <% board_header do %>
+    近期订单
+  <% end %>
+  <% board_content do %>
+
+    <div class="datagrid">
+      <table cellspacing="0">
+     
+          <% if @recent_orders.present? %>
+        <thead>
+          <tr>
+            <%= th_tag Order.human_attribute_name("out_trade_no") %>
+            <%= th_tag t("tenant") %>
+            <%= th_tag Order.human_attribute_name("total_fee") %>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <% @recent_orders.each do |order| %>
+            <tr class="<%= cycle("odd", "even") %>">
+              <%= td_tag order.out_trade_no%>
+              <%= td_tag order.tenant_name %>
+              <%= td_tag order.total_fee %>
+            </tr>
+          <%end%>
+            
+        </tbody>
+        <%else%>
+              <tr class="first">
+                <% td_tag :colspan =>3 do %>
+                  <p class="notice">
+                  列表显示近期订单，现在还没有订单。
+                  </p>
+                <% end %>
+              </tr>
+            <%end%>
+      </table>
+    </div>
+  <% end %>
+<% end %>

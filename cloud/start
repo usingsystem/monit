@@ -1,0 +1,34 @@
+#!/bin/bash
+
+#define default configuration
+POLL=true
+SMP=auto
+ERL_MAX_PORTS=32000
+ERL_PROCESSES=250000
+ERL_MAX_ETS_TABLES=1400
+ERLANG_NODE=monit
+ROOTDIR=/opt/monit/cloud
+ERRDB=errdb
+
+# define environment variables
+MONIT_HOME=$ROOTDIR
+DATETIME=`date "+%Y%m%d-%H%M%S"`
+SASL_LOG_PATH="$ROOTDIR/var/log/master_sasl.log"
+ERL_CRASH_DUMP="$ROOTDIR/var/log/erl_crash_$DATETIME.dump"
+MONIT_DB="$ROOTDIR/var/data/$ERLANG_NODE"
+MONIT_SLAVES=2
+MONIT_CONFIG_PATH="$ROOTDIR/etc/monit/monit"
+MONIT_LOG_LEVEL=4
+MONIT_LOG_PATH="$ROOTDIR/var/log/monit.log"
+
+# export global variables
+export MONIT_HOME
+export SASL_LOG_PATH
+export ERL_MAX_PORTS
+export ERL_MAX_ETS_TABLES
+export ERL_CRASH_DUMP
+
+[ -d "$MONIT_DB" ] || mkdir -p "$MONIT_DB"
+
+erl -noinput -detached -smp $SMP +P $ERL_PROCESSES +K $POLL -sname $ERLANG_NODE -pa $ROOTDIR/ebin -mnesia dir "\"$MONIT_DB\"" -config $MONIT_CONFIG_PATH -errdb $ERRDB -boot start_sasl -s reloader start -s monit start -slaves $MONIT_SLAVES -log_level $MONIT_LOG_LEVEL -log_path $MONIT_LOG_PATH
+

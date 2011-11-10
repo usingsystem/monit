@@ -1,0 +1,27 @@
+<% 
+  device_id = @device && @device.id 
+  first = true
+%>
+<% if @devices.size > 0 %>
+  <% form_tag({:action => "types" }, :method => "get", :class => "select-form" ) do |f| %>
+    <% @devices.each do |a| %>
+      <p>
+      <%= radio_button_tag(:device_id, a.id, first || a.id == device_id)  + label_tag(:device_id, a.name, :for => ("device_id_" + a.id.to_s))  %>
+      </p>
+      <% first = false %>
+    <%end%>
+    <p class="actions">
+    <span class="button-wrap"><%= submit_tag t('next'), :name => nil %></span>
+    </p>
+  <% end %>
+<% else %>
+  <p class="notice">
+  创建服务前需要创建一个设备
+  </p>
+  <div class="auto-padding">
+    <% form_tag new_device_path, :method => :get do %>
+      <%=button_wrap(submit_tag "新建设备", :name => nil) %>
+    <% end %>
+  </div>
+<% end %>
+

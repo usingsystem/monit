@@ -1,0 +1,27 @@
+<% board :id => nil do %>
+  <% board_header do %>
+    磁盘IoTopN
+  <%end%>
+  <% board_content do %>
+    <table  width="90%" class="grid" cellspacing="0">
+      <thead>
+        <tr>
+          <%=th_tag "主机"%>
+          <%=th_tag ""%>
+        </tr>
+      </thead>
+      <% if @diskio %>
+        <tbody>
+          <% if @diskio.size > 0 %>
+            <% @diskio.each do |type| %>
+              <tr>
+                  <%=td_tag type["name"]+"/"+type["service"]%>
+                  <%=td_tag ('%.2f' %(type["avg"]))%>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      <%end%>
+    </table>
+  <% end %>
+<% end %>

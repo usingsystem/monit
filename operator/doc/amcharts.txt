@@ -1,0 +1,13 @@
+#parse
+#env rails
+require "xmlsimple"
+config = XmlSimple.xml_in("t.xml", {'KeyToSymbol' => true,'ForceArray' => false})
+
+#cdata_section
+#env vim
+'<,'>s/,/,\r/g
+%s/"\s*\\n\s*/cdata_section\("/g
+%s/\s*\\n\s*"/")/g
+:%s/{}/nil/g
+:%s/{\:/{\r:/g
+

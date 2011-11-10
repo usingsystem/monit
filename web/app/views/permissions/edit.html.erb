@@ -1,0 +1,68 @@
+<h1>Editing permission</h1>
+
+<% form_for(@permission) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :id %><br />
+    <%= f.text_field :id %>
+  </p>
+  <p>
+    <%= f.label :tenant_id %><br />
+    <%= f.text_field :tenant_id %>
+  </p>
+  <p>
+    <%= f.label :order_seq %><br />
+    <%= f.text_field :order_seq %>
+  </p>
+  <p>
+    <%= f.label :module_name %><br />
+    <%= f.text_field :module_name %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label :controller_name %><br />
+    <%= f.text_field :controller_name %>
+  </p>
+  <p>
+    <%= f.label :action_name %><br />
+    <%= f.text_field :action_name %>
+  </p>
+  <p>
+    <%= f.label :default_permission %><br />
+    <%= f.text_field :default_permission %>
+  </p>
+  <p>
+    <%= f.label :method %><br />
+    <%= f.text_field :method %>
+  </p>
+  <p>
+    <%= f.label :module_text %><br />
+    <%= f.text_field :module_text %>
+  </p>
+  <p>
+    <%= f.label :format %><br />
+    <%= f.text_field :format %>
+  </p>
+  <p>
+    <%= f.label :created_at %><br />
+    <%= f.datetime_select :created_at %>
+  </p>
+  <p>
+    <%= f.label :updated_at %><br />
+    <%= f.datetime_select :updated_at %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @permission %> |
+<%= link_to 'Back', permissions_path %>

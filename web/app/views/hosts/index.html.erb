@@ -1,0 +1,137 @@
+<% @type_name = Host.human_attribute_name 'type_id' %>
+<% @group_name = Host.human_attribute_name 'group_id' %>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("all") } %>
+      <%= Host.human_name %>
+    <% end %>
+    <% board_content do %>
+      <div class="filters clearfix">
+        <%= status_tabs @status_tab, @current_status_name, {} %>
+        <div>
+          <% form_tag(url_for(:action => "index"), :method=>:get) do%>
+            <%
+            a = filter_params(params)
+            a.delete(:type)
+            a.delete(:group)
+          %>
+            <% a.each do |k,v| %>
+              <%= hidden_field_tag k, v %>
+            <% end %>
+            <p class="last">
+              <label>显示方式：</label>
+              <span><%= link_to icon('list-current', :title => '列表'), filter_params(params, :view => nil) %> <%= link_to icon('icon', :title => '图标'), filter_params(params, :view => 'icon') %></span>
+            </p>
+            <p>
+              <label><%= @type_name %>：</label>
+              <span><%= select_tag('type','<option value=''>所有</option>' + options_from_collection_for_select(@host_types, 'name', 'name', params[:type]))%></span>
+            </p>
+            <p>
+              <label><%= @group_name %>：</label>
+              <span><%= select_tag('group', '<option value=''>所有</option>' + options_from_collection_for_select(@groups, 'name', 'name', params[:group]))%></span>
+            </p>
+
+            <p class="actions js-hide">
+              <%= tag('input', :type =>'submit', :value =>'过滤', :name => nil, :class => 'submit' )%>
+            </p>
+          <% end %>
+        </div>
+      </div>
+
+      <% form_tag(url_for(:action => "index"), :method => :get) do%>
+        <%= redirect_tag url_for(params) %>
+        <table class="grid" cellspacing="0">
+          <thead>
+            <tr>
+              <% th_tag :class => "actions first" do %>
+            <div class="pop-wrap">
+              <div class="pop">
+                <div class="pop-inner">
+                  <div class="ui-actions">
+                    <span>
+                      <span>
+                        <%= link_to("通知设置", edit_notification_hosts_path, :class => "last")%>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <%= check_box_tag "all", "" %>
+          <% end %>
+          <%=th_tag sort_link_to("name", Host.human_attribute_name("name"), params), :style => "width:100px;" %>
+          <%=th_tag Host.human_attribute_name("status"), :style => "width:50px;" %>
+          <%=th_tag sort_link_to("addr", Host.human_attribute_name("addr"), params), :style => "width:120px;" %>
+          <%=th_tag @type_name, :style => "width:80px;" %>
+          <%=th_tag @group_name, :style => "width:80px;" %>
+      <%#=th_tag Host.human_attribute_name("app_num"), :style => "width:60px;" %>
+          <%=th_tag sort_link_to("last_check", Host.human_attribute_name("last_check"), params), :class => "time" %>
+          <%=th_tag Host.human_attribute_name("service_num"), :class => "num" %>
+          <%=th_tag Host.human_attribute_name("summary") %>
+          <%=th_tag "", :class => "last" %>
+          </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <%=th_tag "", :class => "first" %>
+              <th colspan="8">
+                <% if @hosts && @hosts.length > 0 %>
+                  <div class="page clearfix">
+                    <div class="stat">显示<%=@hosts.total_entries %>个主机中的<%=@hosts.size %>个</div>
+                    <%=will_paginate @hosts%>
+                  </div>
+                <%end%>
+              </th>
+              <%=th_tag "", :class => "last" %>
+            </tr>
+          </tfoot>
+          <tbody>
+            <% if @hosts.size > 0 %>
+              <% @hosts.each do |host| %>
+                <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'") %>>
+                  <% td_tag :class => "actions first" do %>
+                <div class="pop-wrap">
+                  <div class="pop">
+                    <div class="pop-inner">
+                      <%= link_to(icon("delete2", :title => "删除"), confirm_host_url(host, redirect_object), :class => controlled("hosts/destroy"))%>
+                      <%= link_to(icon("edit2", :title => "修改"), edit_host_url(host, redirect_object),:class=>controlled("hosts/edit"))%>
+                    </div>
+                  </div>
+                </div>
+                <%= check_box_tag "ids[#{host.id}]", "" %>
+              <% end %>
+              <%td_tag do  %>
+                <%= link_to(h(host.name), host,:class=>controlled("hosts/show")) %>
+              <% end %>
+              <%=td_tag h(t("status.host." + host.status_name)), :class => "status status-host-" + host.status_name %>
+              <%=td_tag h(host.addr) %>
+              <%=td_tag type_link_to(h(host.type.name), filter_params(params)) %>
+              <% if host.group.nil? %>
+                <%=td_tag inlink_to("设置分组", edit_host_url(host, redirect_object),:class=>controlled("hosts/edit"))%>
+              <%else%>
+                <%=td_tag group_link_to(h(host.group.name),filter_params(params)) %>
+              <%end%>
+              <%=td_tag format_time(host.last_check, true) %>
+          <%#=td_tag link_to(h(host.apps.size), :controller => "apps", :host_id => host.id) %>
+              <%=td_tag link_to(h(host.services.size), {:controller => "services", :host_id => host.id},:class=>controlled("services/show")) %>
+              <%=td_tag(content_tag :div, host.summary, :class => "truncate") %>
+              <%=td_tag "", :class => "last" %>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr class="first">
+              <% td_tag :colspan => 10 do %>
+              <p class="notice">
+                列表显示主机，现在还没有主机，<%= link_to "添加一个", new_host_path,:class=>controlled("hosts/new") %>
+              </p>
+            <% end %>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+

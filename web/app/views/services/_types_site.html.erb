@@ -1,0 +1,48 @@
+<div class="notice">
+  <p>
+  您正在为<%= h(@site.name) %> 添加监控服务
+  </p>
+</div>
+<div class="columns64 columns clearfix">
+  <div class="column">
+    <div class="column-inner">
+      <% form_tag({:action => "new" }, :method => "get", :class => "select-form" ) do %>
+        <% 
+          a = filter_params(params)
+          a.delete(:type_id)
+        %>
+        <% a.each do |k,v| %>
+          <%= hidden_field_tag k, v %>
+        <% end %>
+        <% @checked = @service_types.first.id if @service_types.size > 0 %>
+        <h4>选择服务类型：</h4>
+        <% @service_types.each do |type| %>
+          <p>
+          <%= radio_button_tag(:type_id, type.id, type.id == @checked)  + label_tag(:type_id, (type.alias + content_tag(:span, type.remark)), :for => ("type_id_" + type.id.to_s))  %>
+          </p>
+        <%end%>
+        <p class="actions">
+        <span class="button-wrap"><%= submit_tag t('next'), :name => nil %></span>
+        </p>
+      <% end %>
+
+    </div>
+  </div>
+  <div class="column column-last">
+    <div class="column-inner list">
+      <h4>已监控服务：</h4>
+      <ul class="ol">
+        <%
+          services = @site.services
+        %>
+        <% if services.size > 0 %>
+          <% services.each do |service| %>
+            <li><%= link_to service.name, service %></li>
+          <% end %>
+        <% else %>
+          <li class="gray">暂无。</li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

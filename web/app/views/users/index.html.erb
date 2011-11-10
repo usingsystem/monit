@@ -1,0 +1,66 @@
+<div class="wrap">
+  <% board  do %>
+    <% board_header do %>
+      <%= "所有用户" %>
+    <% end %>
+  
+    <% board_content do %>
+      <table class="grid" cellspacing="0">
+        <thead>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <%=th_tag sort_link_to("login", User.human_attribute_name("login"), params),:style=>"width:150px;"%>
+            <%=th_tag sort_link_to("name", User.human_attribute_name("name"), params),:style=>"width:150px;" %>
+            <%=th_tag sort_link_to("group_id",User.human_attribute_name("group_id"),params),:style=>"width:150px;"%>
+            <%=th_tag sort_link_to("email", User.human_attribute_name("email"), params)%>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <th colspan="4">
+              <% if@users && @users.length > 0 %>
+                <div class="page clearfix">
+                  <div class="stat ">显示<%=@users.total_entries %>个用户中的<%=@users.size %>个</div>
+                  <%=will_paginate @users%>
+                </div>
+              <%end%>
+            </th>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% if @users.size > 0 %>
+            <% @users.each do |user| %>
+              <tr <%= @first_false ? "" : ((@first_false = true) && " class='first'") %>>
+                <% td_tag :class => "actions first" do %>
+              <div class="pop-wrap">
+                <div class="pop">
+                  <div class="pop-inner">
+                    <%= link_to(icon("delete2", :title => "删除"),  {:controller=>'/users',:action => 'destroy', :id =>user.id,:redirect_to=>url_for(params)},{:confirm => "确认删除该用户？",:method => :delete, :class => controlled("users/destroy")}, {:class => 'delete', :title => "删除", :class => controlled("users/destroy")})%>
+                    <%= link_to(icon("edit2", :title => "修改"), edit_user_url(user, redirect_object),:class=>controlled("users/edit"))%>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <%=td_tag h(user.login) %>
+            <%=td_tag h(user.name)%>
+            <% if user.group.nil? %>
+              <%=td_tag  link_to("设置分组", edit_user_url(user, redirect_object),:class=>controlled("users/edit"))%>
+            <%else%>
+              <%=td_tag h(user.group.name)%>
+            <% end %>
+            <%=td_tag h(user.email)%>
+            <%=td_tag "", :class => "last" %>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+</div>

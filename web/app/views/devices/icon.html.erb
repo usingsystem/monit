@@ -1,0 +1,104 @@
+<% @type_name = Device.human_attribute_name 'type_id' %>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("all") } %>
+      <%= Device.human_name %>
+    <% end %>
+    <% board_content do %>
+      <div class="filters clearfix">
+        <%= status_tabs @status_tab, @current_status_name, {} %>
+        <div>
+          <% form_tag(url_for(:action => "index"), :method=>:get) do%>
+            <% 
+              a = filter_params(params)
+              a.delete(:type)
+            %>
+            <% a.each do |k,v| %>
+              <%= hidden_field_tag k, v %>
+            <% end %>
+            <p class="last">
+            <label>显示方式：</label>
+            <span><%= link_to icon('list', :title => '列表'), filter_params(params, :view => nil) %> <%= link_to icon('icon-current', :title => '图标'), filter_params(params, :view => 'icon') %></span>
+            </p>
+            <p>
+            <label><%= @type_name %>：</label>
+            <span><%= select_tag('type', options_from_collection_for_select(@device_types, 'name', 'name', params[:type]))%></span>
+            </p>
+            <p class="actions js-hide">
+            <%= tag('input', :type =>'submit', :value =>'过滤', :name => nil, :class => 'submit' )%>
+            </p>
+          <% end %>
+        </div>
+      </div>
+
+      <table class="grid" cellspacing="0">
+        <thead>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <% th_tag do %>
+              <div class="cutline">
+                <% Device.status.each do |s| %>
+                  <span><%= icon("device-" + s) + t("status.device." + s) %></span>
+                <% end %>
+              </div>
+            <% end %>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <% th_tag do %>
+              <% if @devices && @devices.length > 0 %>
+                <div class="page clearfix">
+                  <div class="stat">显示<%=@devices.total_entries %>个主机中的<%=@devices.size %>个</div>
+                  <%=will_paginate @devices%>
+                </div>
+              <%end%>
+            <%end%>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr class="first">
+            <% td_tag :colspan => 3 do %>
+              <% if @devices.size > 0 %>
+                <ul class="ul view-icon">
+                  <% @devices.each do |device| %>
+                    <li class="<%= cycle "left", "center", "right"%>">
+                    <div class="inner <%=type_class_for device.type.name %>">
+                      <p class="title">
+                      <%= icon_status("device", device.status_name) %>
+                      <%= link_to(h(device.name), device) %>
+                      </p>
+                      <%
+                        services = device.services
+                        if services.size > 5
+                          show_more = true
+                          services = services[0..4]
+                        end
+                      %>
+                      <% services.each do |service| %>
+                        <p>
+                        <%= icon_status("service", service.status_name) %>
+                        <%= link_to(h(service.name), service) %>
+                        </p>
+                      <% end %>
+                    </div>
+                    </li>
+                  <% end %>
+                </ul>
+              <% else %>
+                <p class="notice">
+                暂无主机，<%= link_to t('add'), new_device_path %>
+                </p>
+              <% end %>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+</div>
+

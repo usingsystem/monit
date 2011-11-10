@@ -1,0 +1,21 @@
+#!/bin/sh
+#cd /opt/monit/errdb/
+#rm ./var/log/*
+#./start
+cd /opt/monit/cloud/
+rm ./var/log/*
+./start
+cd /opt/monit/node/
+rm ./var/log/*
+taskset 01 ./start node
+taskset 02 ./start node1
+taskset 03 ./start node2
+./cluster node node1
+./cluster node node2
+sleep 10
+cd /opt/monit/cloud/
+./monit_ctl run
+sleep 10
+cd /opt/monit/smarta/
+rm ./var/log/*
+./start

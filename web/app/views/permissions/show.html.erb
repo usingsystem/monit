@@ -1,0 +1,73 @@
+<p>
+  <b>Id:</b>
+  <%=h @permission.id %>
+</p>
+
+<p>
+  <b>Tenant:</b>
+  <%=h @permission.tenant_id %>
+</p>
+
+<p>
+  <b>Order seq:</b>
+  <%=h @permission.order_seq %>
+</p>
+
+<p>
+  <b>Module name:</b>
+  <%=h @permission.module_name %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @permission.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @permission.description %>
+</p>
+
+<p>
+  <b>Controller name:</b>
+  <%=h @permission.controller_name %>
+</p>
+
+<p>
+  <b>Action name:</b>
+  <%=h @permission.action_name %>
+</p>
+
+<p>
+  <b>Default permission:</b>
+  <%=h @permission.default_permission %>
+</p>
+
+<p>
+  <b>Method:</b>
+  <%=h @permission.method %>
+</p>
+
+<p>
+  <b>Module text:</b>
+  <%=h @permission.module_text %>
+</p>
+
+<p>
+  <b>Format:</b>
+  <%=h @permission.format %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%=h @permission.created_at %>
+</p>
+
+<p>
+  <b>Updated at:</b>
+  <%=h @permission.updated_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_permission_path(@permission) %> |
+<%= link_to 'Back', permissions_path %>

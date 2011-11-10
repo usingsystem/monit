@@ -1,0 +1,40 @@
+<%
+  if @views.size > 0
+    left = []
+    right = []
+    while @views.size > 0
+      left.push @views.shift
+      right.push @views.shift if @views.size > 0
+    end
+  %>
+  <div class="cloumns clearfix">
+    <div class="column">
+      <div class="column-inner">
+        <% left.each do |view| %>
+          <% board do %>
+            <% board_header do %>
+              <%= "当前#{view.name}TOP#{@n}" %>
+            <% end %>
+            <% board_content do %>
+              <%= render :partial => "templates/#{view.template}", :locals => {:view => view } %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="column column-last">
+      <div class="column-inner">
+        <% right.each do |view| %>
+          <% board do %>
+            <% board_header do %>
+              <%= "当前#{view.name}TOP#{@n}" %>
+            <% end %>
+            <% board_content do %>
+              <%= render :partial => "templates/table", :locals => {:view => view } %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

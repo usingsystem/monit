@@ -1,0 +1,24 @@
+<table class="table" cellspacing="0">
+  <thead>
+    <tr>
+      <%=th_tag "操作", :style => "width: 80px" %>
+      <%=th_tag "名称", :style => "width: 70px" %>
+      <%=th_tag "发现时间", :class => "time" %>
+      <%=th_tag "描述" %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @disco_services.each do |service| %>
+      <tr>
+        <%td_tag do %>
+          <%= link_to "确认", {:controller => "services", :action => "create_from_disco", :id => service.id }, :method => :post %> 
+          <%= link_to "忽略", {:controller => "services", :action => "destroy_disco", :id => service.id }, :method => :delete %> 
+        <% end %>
+        <%=td_tag service.name %>
+        <%=td_tag format_time(service.created_at) %>
+        <%=td_tag service.summary %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

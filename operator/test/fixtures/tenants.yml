@@ -1,0 +1,23 @@
+kehao:
+  id: 100
+  name: kehao
+  email: kehao.qiu@gmail.com
+  operator_id: 1
+  package_id : 1
+  package_category: 2
+  balance: 0
+notfree:
+  id: 101
+  name: notfree
+  email: nofree@gmail.com
+  operator_id: 0
+  package_id : 3
+  package_category: 1
+  balance: 200
+  begin_at: <%=32.days.ago.to_s(:db) %>
+  month_num: 3
+  end_at: <%=(Date.today+3.months).to_s(:db)%>
+  current_month: 1
+  current_paid_at: <%=Date.today.to_s(:db) %>
+  is_pay_account: 1
+  next_paid_at: <%=(Date.today+1.month).to_s(:db) %>

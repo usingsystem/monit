@@ -1,0 +1,69 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("all") } %>
+      <%= t("alert") %>
+    <% end %>
+    <% board_content do %>
+      <div class="filters clearfix">
+        <%= status_tabs @status_tab, @current_status_name, {} %>
+      </div>
+      <table class="grid" cellspacing="0">
+        <thead>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <%=th_tag sort_link_to("occured_at", Alert.human_attribute_name('occured_at'), params), :class => "time" %>
+            <%=th_tag (Alert.human_attribute_name 'severity'), :style=> "width: 60px" %>
+            <%#=th_tag (Alert.human_attribute_name 'status'), :style=> "width: 50px" %>
+            <%#=th_tag (Alert.human_attribute_name 'name'), :style => "width: 120px" %>
+            <%=th_tag (Alert.human_attribute_name 'source_name'), :style => "width: 220px" %>
+            <%=th_tag (Alert.human_attribute_name 'occur_count'), :style => "width: 60px" %>
+            <%=th_tag sort_link_to("last_check", Alert.human_attribute_name('last_check'), params), :class => "time" %>
+            <%=th_tag (Alert.human_attribute_name 'summary') %>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th class="first">&nbsp;</th>
+            <th colspan="6">
+              <% if @alerts && @alerts.length > 0 %>
+                <div class="page clearfix">
+                  <div class="stat">显示<%=@alerts.total_entries %>个告警中的<%=@alerts.size %>个</div>
+                  <%=will_paginate @alerts%>
+                </div>
+              <%end%>
+            </th>
+            <th class="last">&nbsp;</th>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% if @alerts.size > 0 %>
+            <% @alerts.each do |alert| %>
+              <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'") %>>
+                <%=td_tag "", :class => "first" %>
+                <%=td_tag format_time(alert.occured_at, true) %>
+                <%#=td_tag h(alert.human_severity_name) %>
+                <%=td_tag h(alert.human_severity_name), :class => "status status-alert-" + alert.severity_name %>
+                <%#=td_tag h(alert.human_status_name), :class => "status status-#{alert.object_name}-" + alert.status_name %>
+                <%=td_tag icon_status(alert.object_name, alert.status_name) + link_to(alert.source.name, alert.source) + (alert.service ? " / " + link_to(alert.service.name, alert.service) : "") %>
+                <%=td_tag alert.occur_count %>
+                <%=td_tag format_time(alert.last_check, true) %>
+                <%=td_tag(content_tag :div, alert.summary, :class => "truncate") %>
+                <%=td_tag "", :class => "last" %>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr class="first">
+              <% td_tag :colspan => 8 do %>
+                <p class="notice">
+                暂无告警
+                </p>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+</div>

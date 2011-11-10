@@ -1,0 +1,11 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => "物理拓扑" } %>
+      <%= "物理拓扑" %>
+    <% end %>
+    <% board_content do %>
+      <center><%= image_tag "physics.jpg" , :alt => "物理拓扑" %></center>
+    <% end %>
+  <% end %>
+</div>

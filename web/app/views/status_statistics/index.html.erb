@@ -1,0 +1,20 @@
+<% content_for :head do %>
+  <%=stylesheet_link_tag 'dashboard',:media=>'all' %>
+<% end %>
+<div class="dashboard cloumns clearfix">
+  <%board do%>
+    <%board_header do%>
+      统计报表
+    <%end%>
+    <%board_content do %>
+      <%= tabs [["object", "资源统计报告", {:controller => 'object_statistics'}], ["status", "状态统计报告", {:controller => 'status_statistics'}], ["service", " 服务统计报告", {:controller => 'service_statistics'}]], 'status' %>
+      <div>
+        <%= render :partial => 'site' %>
+        <%= render :partial => 'host' %>
+        <%=render :partial=>'app'%>
+        <%=render :partial=>'device'%>
+        <%= render :partial => 'service' %>        
+      </div>
+    <%end%>
+  <%end%>
+</div>

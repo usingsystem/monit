@@ -1,0 +1,27 @@
+<% board :id => nil do %>
+  <% board_header do %>
+    接口发送流量TopN
+  <%end%>
+  <% board_content do %>
+    <table   width="90%" class="grid" cellspacing="0">
+      <thead>
+        <tr>
+          <%=th_tag "主机"%>
+          <%=th_tag "发送（Kbps）"%>
+        </tr>
+      </thead>
+      <% if @outoctets %>
+        <tbody>
+          <% if @outoctets.size > 0 %>
+            <% @outoctets.each do |type| %>
+              <tr>
+                  <%=td_tag type["name"]+"-"+type["service"]%>
+                  <%=td_tag ('%.2f' %(type["outoctets"]))%>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      <%end%>
+    </table>
+  <% end %>
+<% end %>

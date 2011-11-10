@@ -1,0 +1,24 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+       服务类型
+    <% end %>
+    <% board_content do %>
+      <% form_for(:service,@service,:url=>"new") do |f| %>
+        <%= f.error_messages %>
+        <p>
+          <% @service_types.each_index do |i| %>
+            <%service_type = @service_types[i]%>
+            <%= f.radio_button :type_id,service_type.id,:checked => i==0?"checked":""  %><%=f.label service_type.name%><br>
+            <span class="tips">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=service_type.remark%></span><br>
+          <%end%>
+        </p>
+        <%= hidden_field_tag "service[serviceable_id]" ,@service[:serviceable_id] %>
+        <%= hidden_field_tag "service[serviceable_type]" ,@service[:serviceable_type] %>
+        <p>
+          <%= f.submit t('next') %>
+        </p>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

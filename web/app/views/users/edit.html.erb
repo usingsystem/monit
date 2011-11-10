@@ -1,0 +1,19 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      用户信息
+    <% end %>
+      
+    <% board_content do %>
+      <% form_for @user, :builder => ::UIFormBuilder, :url => user_path, :html => { :class => "form" } do |f| %>
+        <%= hidden_field_tag :redirect_to, params[:redirect_to] %>
+        <%= f.text_field :name, :required=>true %>
+        <%= f.text_field :email, :required => true, :help => "接收故障通知信息，性能报告" %>
+        <%= f.text_field :mobile, :required=>true %>
+        <%= f.select :group_id, @groups.collect { |x| [x.name, x.id] }, {}, {:style=>"width:350px;",:multiple=>"true",:name=>"user[group_id]"}  %>
+        <%= f.submit t("update"), :name => nil %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+

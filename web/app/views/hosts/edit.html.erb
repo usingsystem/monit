@@ -1,0 +1,27 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("edit") } %>
+      <%= t('edit') + t('hosts') %>
+    <% end %>
+    <% board_content do %>
+      <% form_for(@host, :builder => ::UIFormBuilder, :html => { :class => "form" }) do |f| %>
+        <%= redirect_tag %>
+        <% field_set_tag "基本设置" do %>
+          <%= f.text_field :name, :required => true %>
+          <%= f.text_field :addr, :required => true %>
+          <%= f.select :type_id, [["选择类型", ""]] + @host_types.collect { |x| [x.name, x.id] }, {}, { :required => true }  %>
+          <%= f.select :agent_id, [["Monit服务器", ""]] + @agents.collect { |x| [x.human_username, x.id] }, { :help => "内网主机需要选择一个本地安装的代理来监控"} %>
+          <%= f.select :group_id, [['无','']] + @groups.collect { |x| [x.name, x.id] }%>
+        <% end %>
+        <% field_set_tag "SNMP设置", :id => "snmp" do %>
+          <%= f.text_field :port, :style => "width:100px;", :required => true, :help => "SNMP代理程序的监听端口默认为161" %>
+          <%= f.radio_button_group :snmp_ver, [["V1", "v1"], ["V2c", "v2c"]], { :required => true } %>
+          <%= f.text_field :community, :style => "width:200px;", :required => true , :help => "访问SNMP代理的字符串" %>
+        <% end %>
+        <%=render :partial => "notifications/setting", :locals => {:f => f, :source => "host", :types => ["down", "unreachable", "recovery"] } %>
+        <%= f.submit t('update') %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

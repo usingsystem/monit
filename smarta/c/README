@@ -1,0 +1,39 @@
+This is strophe, our XMPP client library.
+
+Our goals are:
+
+    * usable quickly
+    * well documented
+    * reliable
+
+== Build Instructions ==
+./bootstrap.sh
+./configure
+make
+
+== Requirements ==
+
+Libstrophe requires libresolv on UNIX systems. Make sure you include 
+if you are compiling by hand.
+
+It also uses expat for XML processing, but a current copy is included in the
+expat/ directory of the SVN checkout
+
+== Design ==
+
+xmpp connection should be a FSM
+
+wait_for_stream/2, 
+stream_opened/2, 
+wait_for_sasl_response/2,
+wait_for_stream_features/2,
+wait_for_bind_response/2,
+wait_for_session_response/2,
+stream_error/2, 
+stream_closed/2, 
+wait_for_legacy_auth_method/2,
+wait_for_auth_result/2,
+session_establised/2, 
+
+
+

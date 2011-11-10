@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<%=I18n.locale%>" lang="<%=I18n.locale%>">
+  <%=render :partial=>'layouts/head'%>
+  <body>
+    <% if logged_in? %>
+      <%= extlink_to t('feedback'), ideas_path, :id => "feedback-trigger" %>
+    <% end %>
+    <div id="wrapper">
+      <%=render :partial=> logged_in? ? 'layouts/header' : 'layouts/header_nologin' %>
+      <div class="wrap">
+        <div id="content" class="clearfix">
+          <div id="sidebar">
+            <div id="menu">
+              <ul id="dashboard-menu" class="menu">
+                <% menu_item_tag('dashboard', t('dashboard'), dashboard_path, {:class => "first"}) do %>
+                  <ul>
+                    <%= submenu_item_tag('dashboard-index', t('dashboard'), {:controller => 'dashboard', :action => 'index'}) %>
+                    <%= submenu_item_tag('business-automap', "监控视图", :controller => 'business', :action => 'automap') %>
+                    <%= submenu_item_tag('top', "常用TOPN", :controller => 'site_topn', :action => 'top') %>
+                  </ul>
+                <% end %>
+              </ul>
+              <ul id="main-menu" class="menu">
+                <!--
+                <% menu_item_tag('business', t('business'), {:controller => 'business', :action => 'index'}, {:class => 'first'} ) do %>
+                    <ul>
+  <%#= submenu_item_tag('business-index', t('all') + t('business'), :controller => 'business', :action => 'index') %>
+                  <%= submenu_item_tag('business-automap', "监控视图", :controller => 'business', :action => 'automap') %>
+  <%#= submenu_item_tag('business-index', "业务拓扑", :controller => 'business', :action => 'index') %>
+  <%#= submenu_item_tag('business-physics', "物理拓扑", :controller => 'business', :action => 'physics') %>
+  <%#= submenu_item_tag('business-new', t('add') + t('business'), :controller => 'business', :action => 'index') %>
+                    </ul>
+                <% end %>
+                -->
+                <% menu_item_tag('sites', t('sites'), {:controller => 'sites', :action => 'index'}, {:class => 'first'}) do %>
+                  <ul>
+                    <%= submenu_item_tag('sites-index', t('all') + t('sites'), :controller => 'sites', :action => 'index') %>
+                    <%= submenu_item_tag('sites-new', t('add') + t('sites'), :controller => 'sites', :action => 'new') %>
+                  </ul>
+                <% end %>
+                <% menu_item_tag('hosts', t('hosts'), :controller => 'hosts', :action => 'index') do %>
+                  <ul>
+                    <%= submenu_item_tag('hosts-index', t('all') + t('hosts'), :controller => 'hosts', :action => 'index') %>
+                    <%= submenu_item_tag('hosts-new', t('add') + t('hosts'), :controller => 'hosts', :action => 'new') %>
+                    <%= submenu_item_tag('agents-index', t('all') + t('agents'), :controller => 'agents', :action => 'index') %>
+                    <%= submenu_item_tag('agents-new', t('new') + t('agents'), :controller => 'agents', :action => 'new') %>
+                  </ul>
+                <% end %>
+                <% menu_item_tag('applications', t('applications'), :controller => 'apps', :action => 'index') do %>
+                  <ul>
+                    <%= submenu_item_tag('applications-index', t('all') + t('applications'), :controller => 'apps', :action => 'index') %>
+                    <%= submenu_item_tag('applications-new', t('add') + t('applications'), :controller => 'apps', :action => 'new') %>
+                  </ul>
+                <% end %>
+                <% menu_item_tag('networks', t('networks'), devices_path) do %>
+                  <ul>
+                    <%= submenu_item_tag('devices-index', t('all') + t('devices'), devices_path) %>
+                    <%= submenu_item_tag('devices-new', t('add') + t('devices'), new_device_path) %>
+                  </ul>
+                <% end %>
+                <% menu_item_tag('services', t('services'), {:controller => 'services', :action => 'index'}, {:class => 'last'}) do %>
+                  <ul>
+                    <%= submenu_item_tag('services-index', t('all') + t('services'), :controller => 'services', :action => 'index') %>
+                    <%= submenu_item_tag('services-disco', "发现服务", disco_services_path) %>
+                    <%= submenu_item_tag('services-new', t('add') + t('services'), :controller => 'services', :action => 'new') %>
+                  </ul>
+                <% end %>
+              </ul>
+              <ul class="menu menu-low">
+                <% menu_item_tag('alerts', t('alerts'), alerts_path, {:class => 'first' }) do %>
+                  <ul>
+                    <%= submenu_item_tag('alerts-index', "当前告警", alerts_path) %>
+                    <%= submenu_item_tag('notifications-index', "告警通知", notifications_path) %>
+                  </ul>
+
+                <% end %>
+                <% menu_item_tag('reports', t('reports'), sites_avail_path) do %>
+                  <ul>
+                    <%= submenu_item_tag('reports-availability',"可用率报表", sites_avail_path) %>
+                    <%= submenu_item_tag('reports-top', "TOPN报表", :controller => 'site_topn', :action => 'index') %>
+                    <%= submenu_item_tag('reports-trend', "趋势报表", :controller => 'trends', :action => 'index') %>
+                    <%= submenu_item_tag('reports-statistics', "统计报表", :controller => 'stat', :action => 'index') %>
+                    <%= submenu_item_tag('user-report', "报表通知", report_account_path) %>
+                  </ul>
+                <% end %>
+                <% if current_user.is_admin? %>
+                  <% menu_item_tag('accounts', '帐户', :controller => 'tenants', :action => 'show') do %>
+                    <ul>
+                      <%= submenu_item_tag('tenant', "帐户信息", :controller => 'tenants', :action => 'show') %>
+                      <%= submenu_item_tag('packages', "购买套餐", :controller => 'packages', :action => 'index') %>
+                      <%= submenu_item_tag('bills', "我的账单", :controller => 'bills', :action => 'index') %>
+                      <%= submenu_item_tag('orders', "我的定单", :controller => 'orders', :action => 'index') %>
+                      <%= submenu_item_tag('user-index',"所有用户", :controller => 'users', :action => 'index') %>
+                      <%= submenu_item_tag('user-new', "添加用户", :controller => 'users', :action => 'new') %>
+                      <%=submenu_item_tag("groups_new","添加分组",:controller=>'groups',:action=>'new')%>
+                      <%=submenu_item_tag("groups","分组管理",:controller=>'groups',:action=>'index')%>
+                    </ul>
+                  <% end %>
+                <% end %>
+
+                <% menu_item_tag('settings', t('settings'), {:controller => 'accounts', :action => 'edit'}, {:class => 'last'}) do %>
+                  <ul>
+                    <%= submenu_item_tag('user-edit', t('user_info'), :controller => 'accounts', :action => 'edit') %>
+                    <%#= submenu_item_tag('user-notify', "通知设置", :controller => 'accounts', :action => 'notify') %>
+                    <%= submenu_item_tag('user-password', t('edit') + t('password'), :controller => 'accounts', :action => 'password') %>
+                    <%=submenu_item_tag("logm-operations","操作日志",:controller=>'logm_operations',:action=>'index')%>
+                    <%=submenu_item_tag("securities","安全日志",:controller=>'logm_securities',:action=>'index')%>
+                  </ul>
+                <% end %>
+
+              </ul>
+            </div>
+          </div>
+          <div id="widebar">
+
+
+            <% unless flash[:notice].blank? %>
+              <div class="wrap content-notice">
+                <p class="notice notice-success">
+                  <%= flash[:notice] %>
+                </p>
+              </div>
+            <% end %>
+
+            <% unless flash[:error].blank? %>
+              <div class="wrap content-notice">
+                <p class="notice notice-error">
+                  <%= flash[:error] %>
+                </p>
+              </div>
+            <% end %>
+
+
+            <%=yield%>
+          </div>
+        </div>
+      </div>
+      <%=render :partial=>'layouts/footer'%>
+    </div>
+    <%=render :partial=>'layouts/analytics'%>
+  </body>
+</html>

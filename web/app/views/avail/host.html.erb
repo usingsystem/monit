@@ -1,0 +1,34 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      可用率报表
+    <% end %>
+    <% board_content do %>
+      <%= tabs @tabs, 'host' %>
+      <div class="selector-wrap">
+        <p class="selector">
+        <% @dates.each do |d| %>
+          <%= link_to d[0] ,params.merge({:date=>d[1]}), :class => (d[1]==@date ? "selected" : nil) %>
+        <% end %>
+        </p>
+        <p class="selector">
+        <%= link_to t("all") + t("host"), hosts_avail_path(:date=>@date), :class =>(params[:host_id].blank? ? "selected" : nil) %>
+        <% @hosts.each do |n| %>
+          <%= link_to n.name, host_avail_path(n,:date=>@date), :class =>(n.id.to_s == params[:host_id] ? "selected" : nil) %>
+        <% end %>
+        </p>
+      </div>
+      <%=render :partial => "templates/#{@history_chart_view.template}", :locals => {:view => @history_chart_view } %>
+      <div class="columns columns37 clearfix">
+        <div class="column">
+          <%=render :partial => "templates/#{@total_chart_view.template}", :locals => {:view => @total_chart_view } %>
+        </div>
+        <div class="column column-last">
+          <%=render :partial => "templates/#{@history_view.template}", :locals => {:view => @history_view } %>
+        </div>
+      </div>
+    <% end %>
+  <%end%>
+</div>
+

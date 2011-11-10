@@ -1,0 +1,70 @@
+#encoding:utf-8
+free:
+  id: 1
+  operator_id: 0
+  category: 0
+  name : 免费
+  max_services: 5
+  max_hosts: 2
+  charge: 0
+  min_check_interval: 10
+
+base1:
+  id: 2
+  operator_id: 0
+  category: 1
+  name : 10监控器
+  max_services: 10
+  max_hosts: 3
+  charge: 6
+  min_check_interval: 5
+
+base２:
+  id: 3
+  operator_id: 0
+  category: 1
+  name: 25监控器
+  max_services: 25
+  max_hosts: 5
+  charge: 15
+  min_check_interval: 5
+
+base3:
+  id: 4
+  operator_id: 0
+  category: 1
+  name: 50监控器
+  max_services: 50
+  max_hosts: 10
+  charge: 26
+  min_check_interval: 5
+
+advanced1:
+  id: 5
+  operator_id: 0
+  category: 2
+  name: 50监控器
+  max_services: 50
+  max_hosts: 10
+  charge: 45
+  min_check_interval: 2
+
+advanced2:
+  id: 6
+  operator_id: 0
+  category: 2
+  name: 100监控器
+  max_hosts: 25
+  max_services: 100
+  charge: 86
+  min_check_interval: 2
+
+advanced3:
+  id: 7
+  operator_id: 0
+  category: 2
+  name: 250监控器
+  max_services: 250
+  max_hosts: 50
+  charge: 198
+  min_check_interval: 2

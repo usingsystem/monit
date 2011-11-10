@@ -1,0 +1,24 @@
+<div class="datagrid" style=" margin-top: 8px">
+  <h5>接口带宽总占用率TopN</h5>
+  <table cellspacing="0">
+    <thead>
+      <tr>
+        <%=th_tag "设备"%>
+        <%=th_tag "带宽总占用率"%>
+      </tr>
+    </thead>
+    <% if @interface %>
+      <tbody>
+        <% if @interface.size > 0 %>
+          <% @interface.each do |type| %>
+            <tr>
+              <%=td_tag type["name"]+"/"+type["service"]%>
+              <%=td_tag ('%.2f' %(type["usage"]))+'%'%>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    <%end%>
+  </table>
+</div>
+

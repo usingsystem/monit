@@ -1,0 +1,29 @@
+<div class="wrap clearfix">
+  <div style="float: left;width: 35%;">
+    <% if @object_view and @object_view.rows.size %>
+      <%=render :partial => "templates/#{@object_view.template}", :locals => {:view => @object_view } %>
+    <% else %>
+      暂无数据
+    <% end %>
+  </div>
+  <div class="datagrid" style="float: right;width:60%;">
+    <table cellspacing="0">
+      <thead>
+        <tr>
+          <%=th_tag "类型" %>
+          <%=th_tag "数量"%>
+        </tr>
+      </thead>
+      <tbody>
+       <% if @objects.length > 0 %>
+        <% @objects.each do |k,v| %>
+          <tr>
+            <%=td_tag h(k) %>
+            <%=td_tag h(v)%>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

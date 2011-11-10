@@ -1,0 +1,31 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("new") } %>
+      <%= t('new') + t('devices') %>
+    <% end %>
+    <% board_content do %>
+      <% form_for(@device, :builder => ::UIFormBuilder, :html => { :class => "form" }) do |f| %>
+        <% field_set_tag "基本设置" do %>
+          <%= f.text_field :name, :required => true, :help => "设备唯一名称" %>
+          <%= f.text_field :addr, :required => true, :help => "设备主机名、ip或域名，例如：192.168.1.1" %>
+          <%= f.select :type_id, [["选择类型", ""]] + @device_types.collect { |x| [x.name, x.id] }, {}, { :required => true, :help => "设备类型" }  %>
+          <%= f.select :agent_id, [["Monit服务器", ""]] + @agents.collect { |x| [x.human_username, x.id] }, { :help => "内网设备需要选择一个本地安装的代理来监控"} %>
+          <%= f.select :group_id, [['无','']] + @groups.collect { |x| [x.name, x.id] }  %>
+        <% end %>
+        <div class="notice">
+          <p>
+            Monit默认采用SNMP协议监控设备性能，您需要在服务上运行SNMP代理，然后填入SNMP配置参数。
+            <%= extlink_to "SNMP代理安装和配置方法参考这里", "http://blog.monit.cn/?tag=snmp" %>。
+          </p>
+        </div>
+        <% field_set_tag "SNMP设置", :id => "snmp" do %>
+          <%= f.text_field :port, :style => "width:100px;", :required => true, :help => "SNMP代理程序的监听端口默认为161" %>
+          <%= f.radio_button_group :snmp_ver, [["V1", "v1"], ["V2c", "v2c"]], { :required => true } %>
+          <%= f.text_field :community, :style => "width:200px;", :required => true , :help => "访问SNMP代理的字符串" %>
+        <% end %>
+        <%= f.submit t('create') %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

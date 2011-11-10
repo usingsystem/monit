@@ -1,0 +1,10 @@
+#打开mysql远程连接 my.cnf
+#bind-address           = 127.0.0.1
+
+#建立远程帐号
+GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP ON *.* TO 'test'@'%'  IDENTIFIED BY 'public' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'test'@'%'  IDENTIFIED BY 'public' WITH GRANT OPTION;
+
+#建立远程连接测试帐号
+GRANT ALL PRIVILEGES ON *.* TO 'monit'@'%.opengoss.net'  IDENTIFIED BY 'public' WITH GRANT OPTION;
+#FLUSH PRIVILEGES;

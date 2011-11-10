@@ -1,0 +1,13 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("select") } %>
+      <%= t('select') + t('services') %>
+    <% end %>
+    <% board_content do %>
+      <div id="service-types">
+        <%= render :partial => "types_#{@type}" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,106 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      运营商详细信息
+    <% end %>
+    <% board_content do %>
+      
+      <div class="details">
+        <p>
+          <b><%= Operator.human_attribute_name('host') + t("monit_ui.label_suffix") %></b>
+          <%=h @operator.host%>
+        </p>
+        <p>
+          <b><%= Operator.human_attribute_name('title') + t("monit_ui.label_suffix") %></b>
+          <%=h @operator.title%>
+        </p>
+        <p>
+          <b><%= Operator.human_attribute_name('amount') + t("monit_ui.label_suffix") %></b>
+          <%=(@operator.amount || 0)%>
+        </p>
+
+        <% if @operator.email.present? %>
+          <p>
+            <b><%= Operator.human_attribute_name('email') + t("monit_ui.label_suffix") %></b>
+            <%=(@operator.email)%>
+          </p>
+        <%end%>
+
+        <p>
+          <b><%= Operator.human_attribute_name('contact') + t("monit_ui.label_suffix") %></b>
+          <%=(@operator.contact.present? ? @operator.contact : "暂无")%>
+        </p>
+        <p>
+          <b><%= Operator.human_attribute_name('telphone') + t("monit_ui.label_suffix") %></b>
+          <%=(@operator.telphone.present? ? @operator.telphone : "暂无")%>
+        </p>
+        <p>
+          <b><%= Operator.human_attribute_name('is_support_bank') + t("monit_ui.label_suffix") %></b>
+          <%=(@operator.is_support_bank ? "是" : "否")%>
+        </p>
+        <% if @operator.is_support_bank %>
+
+
+          <p>
+            <b><%= Operator.human_attribute_name('bank') + t("monit_ui.label_suffix") %></b>
+            <%=(@operator.bank)%>
+          </p>
+
+          <p>
+            <b><%= Operator.human_attribute_name('bank_account_name') + t("monit_ui.label_suffix") %></b>
+            <%=(@operator.bank_account_name)%>
+          </p>
+
+          <p>
+            <b><%= Operator.human_attribute_name('bank_account') + t("monit_ui.label_suffix") %></b>
+            <%=(@operator.bank_account)%>
+          </p>
+
+          <p>
+            <b><%= Operator.human_attribute_name('bank_tax_number') + t("monit_ui.label_suffix") %></b>
+            <%=(@operator.bank_tax_number)%>
+          </p>
+
+          <p>
+            <b><%= Operator.human_attribute_name('bank_payment_number') + t("monit_ui.label_suffix") %></b>
+            <%=(@operator.bank_payment_number)%>
+          </p>
+
+        <%end%>
+
+        <p>
+          <b><%= Operator.human_attribute_name('is_support_bank') + t("monit_ui.label_suffix") %></b>
+          <%=(@operator.is_support_alipay ? "是" : "否")%>
+        </p>
+        <% if @operator.is_support_alipay %>
+
+
+          <p>
+            <b><%= Operator.human_attribute_name('alipay_email') + t("monit_ui.label_suffix") %></b>
+            <%=(@operator.alipay_email)%>
+          </p>
+
+          <p>
+            <b><%= Operator.human_attribute_name('alipay_partner') + t("monit_ui.label_suffix") %></b>
+            <%=(@operator.alipay_partner)%>
+          </p>
+
+          <p>
+            <b><%= Operator.human_attribute_name('alipay_key') + t("monit_ui.label_suffix") %></b>
+            <%=(@operator.alipay_key)%>
+          </p>
+
+
+
+        <%end%>
+        <p>
+          <b><%= Operator.human_attribute_name('created_at') + t("monit_ui.label_suffix") %></b>
+          <%=format_time(@operator.created_at)%>
+        </p>
+
+      </div>
+    <% end %>
+  <% end %>
+</div>
+

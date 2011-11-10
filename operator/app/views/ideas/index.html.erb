@@ -1,0 +1,100 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag 'ideas', :media => 'all' %>
+<% end %>
+<%= render :partial => 'welcome/header', :locals => { :title => t('feedback') } %>
+<div id="doc-wrap">
+  <div id="doc" class="clearfix">
+    <div class="body clearfix">
+      <%=render :partial=>"type"%>
+      <div class="right_template">
+        <% unless flash[:notice].blank? %>
+          <div class="wrap content-notice">
+            <p class="notice notice-success"> <%= flash[:notice] %></p>
+          </div>
+        <% end %>
+        <% unless flash[:error].blank? %>
+          <div class="wrap content-notice">
+            <p class="notice notice-error">
+              <%= flash[:error] %>
+            </p>
+          </div>
+        <% end %>
+        <% form_for @idea do |f| %>
+          <p>
+            <%= f.label 'type_id', "问题类型：" %>
+            <%= f.select 'type_id',@idea_types.collect{|c| [c.name,c.id]} %>
+        </p>
+        <p>
+          <%= f.label 'title', "标题：" %>
+          <%= f.text_field 'title' %>
+        </p>
+        <p>
+          <%= f.label 'content', "内容：" %>
+          <%= f.text_area 'content' %>
+        </p>
+        <p>
+          <label>&nbsp;</label>
+          <%= f.submit "确定" %>
+        </p>
+      <% end -%>
+
+        <div id="ideas">
+          <div style="margin-bottom:10px;">
+          <% order=params[:order] %>
+            <span class="<%= order=='top'? 'current-category':''%>" style="margin:20px;">
+            <%=link_to "票数",:action=>:index,:type_id=>params[:type_id],:order=>"top"%>
+            </span>
+            <span class="<%= order=='recent'? 'current-category':'' %>">
+            <%=link_to "时间",:action=>:index,:type_id=>params[:type_id],:order=>"recent"%>
+            </span>
+          </div>
+        <% for idea in @ideas %>
+          <div class="idea">
+            <%
+            @votes=IdeaVote.find(:all,:conditions=>["idea_id=? and user_id=?",idea.id,current_user.id])
+          %>
+            <% if @votes.length>0 %>
+              <div class="voting" style="padding-top:30px;">
+                <label class="f3"><%=idea.num%></label><br/>(票)
+              </div>
+            <% else %>
+              <div class="voting">
+                <p class="agree"><%=link_to "赞成",{:controller => "ideas", :action=>"argee_vote",:idea_id=>"#{idea.id}"},{:method => "post"} %></p>
+                <p>
+                  <label class="f3"><%=idea.num%></label><br/>(票)
+                </p>
+                <p class="disagree"><%=link_to "反对",{:controller => "ideas",:action=>"dis_vote",:idea_id=>"#{idea.id}"},{:method=>"post"} %></p>
+              </div>
+            <%end%>
+            <div class="content">
+              <p><%if idea.user_id==@current_user.id%>
+                  <label class="f2"><%=link_to idea.title, idea %></label><span class="distance"><%=link_to "修改",:action=>:edit,:id=>"#{idea.id}"%></span>
+                <%else%><label class="f2"><%=link_to idea.title,idea%></label><%end%><br/><%=idea.user.name%>
+              </p>
+              <p  class="wordwrap"><%=idea.content%></p>
+              <p>
+                <%@comments=idea.comments.size%>
+                <%if @comments> 0%>
+                  <%=link_to "#{@comments} 条评论",idea%><span class="distance" style="color:#999999"><%=idea.updated_at.strftime("%Y-%m-%d")%></span>
+                <%else%>
+                  <%=link_to "发表评论",idea%> &nbsp;&nbsp;<span style="color:#999999"><%=idea.updated_at.strftime("%Y-%m-%d")%></span>
+                <%end%>
+              </p>
+            </div>
+          </div>
+        <%end%>
+          <div class="idea" style="margin-top:13px;">
+          <% if @ideas && @ideas.length > 0 %>
+            <div class="page clearfix">
+              <div class="stat" style="padding-left:10px;">显示<%=@ideas.total_entries %>条评论中的<%=@ideas.size %>条</div>
+              <%=will_paginate @ideas%>
+            </div>
+          <%else%>
+            <div class="stat" style="padding-left:10px;">当前没有记录</div>
+          <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

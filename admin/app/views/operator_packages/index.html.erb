@@ -1,0 +1,76 @@
+<div class="wrap">
+  <% board  do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => "所有" }%>
+      <%= "套餐管理" %>
+    <% end %>
+    <% board_content do %>
+      <table class="grid" cellspacing="0">
+        <thead>
+          <tr>
+            <%=th_tag "", :class => "actions first" %>
+            <%=th_tag "类别",:style=>"width:80px;"%>
+            <%=th_tag "名称"%>
+            <%=th_tag "最大服务数",:style=>"width:80px;"%>
+            <%=th_tag "最大主机数",:style=>"width:80px;"%>
+            <%=th_tag "最低监测频率",:style=>"width:80px;"%>
+            <%=th_tag "多地域监测",:style=>"width:80px;"%>
+            <%=th_tag "邮件报表"%>
+            <%=th_tag "客服支持"%>
+            <%=th_tag "数据保存"%>
+            <%=th_tag "赠送短信"%>
+            <%=th_tag "特殊功能"%>
+            <%=th_tag "单价"%>
+            <%=th_tag "操作"%>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <th colspan="13">
+              <% if@packages && @packages.length > 0 %>
+                <div class="page clearfix">
+                  <div class="stat ">共有<%=@packages.size%>个套餐</div>
+                </div>
+              <%end%>
+            </th>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% if @packages.size > 0 %>
+            <%@packages.each do |package|%>
+              <tr>
+                <%=td_tag "",:class => "actions first" %>
+                <%=td_tag h(package.human_category_name)%>
+                <%=td_tag h(package.name)+"<br />&nbsp;" %>
+                <%=td_tag h("#{package.max_services}")%>
+                <%=td_tag h("#{package.max_hosts}")%>
+                <%=td_tag h("#{package.min_check_interval/60}分钟")%>
+                <%=td_tag h("#{package.multi_regional}台")%>
+                <%if package.report==0%>
+                <%=td_tag "日报"%>
+                <%elsif package.report==1%>
+                 <%=td_tag "周报"%>
+                <%elsif package.report==2%>
+                 <%=td_tag "月报"%>
+                <%end%>
+                <%=td_tag h("#{package.customer_support}")%>
+                <%=td_tag h("#{package.data_retention}个月")%>
+                <%=td_tag h("#{package.sms_num}条")%>
+                <%=td_tag h(package.special_features.blank? ? '无': package.special_features)%>
+                <%=td_tag h("¥#{package.charge}/月")%>
+                <%=td_tag(link_to "修改",edit_operator_package_path(@operator,package))%>
+                <%=td_tag "", :class => "last" %>
+              </tr>
+            <%end%>
+          <% else %>
+            <tr>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+</div>

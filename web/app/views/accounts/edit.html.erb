@@ -1,0 +1,30 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      个人信息
+    <% end %>
+    <% board_content do %>
+      <% if @show %>
+        <div class="wrap">
+          <p class="notice">
+          您的jabber账号：<%= @user.username %>@user.monit.cn
+          </p>
+        </div>
+      <% end %>
+      <% form_for @user, :builder => ::UIFormBuilder, :url => account_path, :html => { :class => "form" } do |f| %>
+        <%= hidden_field_tag :redirect_to, params[:redirect_to] %>
+        <%#= f.text_field :login %>
+        <%= f.text_field :name , :required=>true%>
+        <%= f.text_field :email, :required => true, :help => "接收故障通知信息，性能报告" %>
+        <%#= f.text_field :birthday%>
+        <%#= f.text_field :phone %>
+        <%= f.text_field :mobile , :required=>true%>
+        <%= f.text_field :company %>
+        <%#= f.text_field :department %>
+        <%#= f.text_field :job %>
+        <%= f.submit t("update"), :name => nil %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+

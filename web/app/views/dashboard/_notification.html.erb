@@ -1,0 +1,38 @@
+<% board do %>
+  <% board_header do %>
+    <%= t('notification') %>
+  <% end %>
+  <% board_content do %>
+    <ul class="ol feed">
+      <%if @notifications.size == 0 %>
+        没有通知
+      <%else%>
+        <% 
+          date_titles = ["今天", "昨天", "前天"]
+          today = Date.today
+          last_title = nil 
+        %>
+        <%@notifications.each do |noti|%>
+          <% 
+            time = noti.occured_at 
+            date = time.to_date 
+            n = today - date
+            title = date_titles[n] ? date_titles[n] : date
+          %>
+          <% if title != last_title %>
+            <li class="date"><%= title %></li>
+            <% last_title = title %>
+          <% end %>
+          <li>
+          <span title="<%= t("status.notification." + noti.level_name) %>"><%= icon_status("alert", noti.level_name) %></span>
+          <span class="datetime"><%=noti.occured_at.to_s(:time) %></span>
+          <%= link_to(noti.source.name, noti.source) + (noti.service ? " / " + link_to(noti.service.name, noti.service) : "") + " " + noti.human_level_name %>
+          </li>
+        <%end%>
+        <p class="more">
+        <%= link_to "更多", notifications_url %>
+        </p>
+      <%end%>
+    </ul>
+  <% end %>
+<% end %>

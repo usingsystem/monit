@@ -1,0 +1,53 @@
+<% content_for :head do %>
+  <% javascript_tag do %>
+  <% end %>
+<% end %>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      <%= @n_title %>报表
+    <% end %>
+    <% board_content do %>
+      <%= tabs @tabs, 'host' %>
+      <div class="selector-wrap">
+        <p class="selector">
+        <% @dates.each do |d| %>
+          <%= link_to d[0] ,params.merge({:date=>d[1]}), :class => (d[1]==@date ? "selected" : nil) %>
+        <% end %>
+        </p>
+        <p class="selector">
+        <% @host_types.each do |n| %>
+          <%= link_to n.name, host_type_top_path(n,:date=>@date), :class =>(n.id == @host_type.id ? "selected" : nil) %>
+        <% end %>
+        </p>
+      </div>
+      <%
+        left = []
+        right = []
+        while @service_types.size > 0
+          left.push @service_types.shift
+          right.push @service_types.shift if @service_types.size > 0
+        end
+      %>
+      <div class="cloumns clearfix">
+        <div class="column">
+          <div class="column-inner">
+            <% left.each do |type| %>
+              <div id="service_type_<%=type.id%>"><%= link_to "Loading...", service_type_top_path(type, :date => @date, :format => :ajax), :class=> "remote" %></div>
+            <% end %>
+          </div>
+        </div>
+        <div class="column column-last">
+          <div class="column-inner">
+            <% right.each do |type| %>
+              <div id="service_type_<%=type.id%>"><%= link_to "Loading...", service_type_top_path(type, :date => @date, :format => :ajax), :class=> "remote" %></div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+
+    <% end %>
+  <%end%>
+</div>

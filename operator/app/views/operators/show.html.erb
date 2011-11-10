@@ -1,0 +1,31 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      运营商账户信息
+    <% end %>
+    <% board_content do %>
+      <div class="details">
+        <p>
+        <b><%= Operator.human_attribute_name('host') + t("monit_ui.label_suffix") %></b>
+        <%=h @operator.host%>
+        </p>
+         <p>
+        <b><%= Operator.human_attribute_name('title') + t("monit_ui.label_suffix") %></b>
+        <%=h @operator.title%>
+        </p>
+        <p>
+        <b><%= Operator.human_attribute_name('amount') + t("monit_ui.label_suffix") %></b>
+        <%=(@operator.amount || 0)%>
+        </p>
+        <% if @operator.email.present? %>
+        <p>
+        <b><%= Operator.human_attribute_name('email') + t("monit_ui.label_suffix") %></b>
+        <%=(@operator.email)%>
+        </p>
+        <%end%>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+

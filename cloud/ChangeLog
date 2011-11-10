@@ -1,0 +1,39 @@
+2010/04/28 erylee <ery.lee@gmail.com>
+
+    * src/monit_ctl.erl: support log rotation
+
+2010/03/28
+support agents
+
+2010/02/18
+add erlopt 
+
+2010/02/14
+master/node/worker architecture
+
+2010/01/28
+add check_apache_status, check_nginx_status, check_lighttpd_status
+
+2010/01/26:
+support status_type and attempts
+support thresholds check
+
+2010/01/18:
+0.1.0 release
+
+2010/01/15:
+add shell: start, stop, monit_ctl
+add monit_ctl.erl
+mv monit_runner monit_task
+update monit_sched.erl, monit_event.erl, monit_agent.erl
+
+2010/01/14:
+add sample plugins
+
+2010/01/06:
+mysql: handle mysql timeout to avoid crash the whole application.
+
+2010/01/06:
+0.1 initial release
+
+

@@ -1,0 +1,98 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag 'ideas', :media => 'all' %>
+<% end %>
+<%= render :partial => 'welcome/header', :locals => { :title => t('feedback') } %>
+<div id="doc-wrap">
+  <div id="doc" class="clearfix">
+    <div class="body clearfix">
+      <%=render :partial=>"type"%>
+      <div class="right_template">
+        <% unless flash[:notice].blank? %>
+          <div class="wrap content-notice">
+            <p class="notice notice-success"> <%= flash[:notice] %></p>
+          </div>
+        <% end %>
+        <% unless flash[:error].blank? %>
+          <div class="wrap content-notice">
+            <p class="notice notice-error">
+              <%= flash[:error] %>
+            </p>
+          </div>
+        <% end %>
+        <div id="ideas">
+          <% for idea in @idea %>
+            <div class="idea">
+              <%
+              @votes=IdeaVote.find(:all,:conditions=>["idea_id=? and user_id=?",idea.id,current_user.id])
+            %>
+              <% if @votes.length>0 %>
+                <div class="voting">
+                  <label class="f3"><%=idea.num%></label><br/>(票)
+                </div>
+              <% else %>
+                <div class="voting">
+                  <p class="agree"><%=link_to "赞成",{:controller => "ideas", :action=>"argee_vote",:idea_id=>"#{idea.id}"},{:method => "post"} %></p>
+                  <p>
+                    <label class="f3"><%=idea.num%></label><br/>(票)
+                  </p>
+                  <p class="disagree"><%=link_to "反对",{:controller => "ideas",:action=>"dis_vote",:idea_id=>"#{idea.id}"},{:method=>"post"} %></p>
+                </div>
+              <%end%>
+              <div class="content">
+                <p>
+                  <label class="f2"><%=idea.title%></label>
+                </p>
+                <p  class="wordwrap"><%=idea.content%></p>
+                <p>
+                 <%=link_to "发表评论","#comment"%> &nbsp;&nbsp;<span style="color:#999999"><%=idea.updated_at.strftime("%Y-%m-%d")%></span>
+                </p>
+              </div>
+            </div>
+          <%end%>
+          <br/>
+          <div class="idea">
+            <h4>已有评论(<%=@idea_comments.length%>)</h4>
+            <%for idea_comment in @idea_comments%>
+              <div class="idea1" id="idea-comment-<%= idea_comment.id %>">
+                <p>
+                  <%if idea_comment.user_id==@current_user.id%>
+                    <%=idea_comment.user.name%>&nbsp;&nbsp;说:<span class="distance"><%=link_to "删除",idea_comment,:method=>:delete%></span>
+                  <%else%>
+                    <%=idea_comment.user.name%>&nbsp;&nbsp;说:
+                  <%end%>
+                </p>
+                <p>
+                  <label class="wordwrap"><%=idea_comment.content%></label>
+                </p>
+                <p>
+                  <label style="color:#999999"><%=idea_comment.updated_at.strftime("%Y-%m-%d")%></label>
+                </p>
+              </div>
+            <%end%>
+
+            <div class="idea1" style="margin-top:13px;">
+              <% if @idea_comments && @idea_comments.length > 0 %>
+                <div class="page clearfix">
+                  <div class="stat" style="padding-left:10px;">显示<%=@idea_comments.total_entries %>条评论中的<%=@idea_comments.size %>条</div>
+                  <%=will_paginate @idea_comments%>
+                </div>
+              <%else%>
+                <div class="stat" style="padding-left:10px;">当前没有记录</div>
+              <%end%>
+            </div>
+
+            <div class="idea1" style="padding-bottom:7px;" id="comment">
+              <% form_for IdeaComment.new do |f| %>
+                <h4><%= f.label :content,"发表评论" %></h4>
+                <%=f.hidden_field :idea_id,:value=>@idea_id%>
+                <%= f.text_area :content %><br/>
+                <span style="margin-left:18px;"><%= f.submit "确定" %></span>
+              <%end%>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<% board do %>
+  <% board_header do %>
+    查收注册信
+  <% end %>
+  <% board_content do %>
+    <% @email = @user.email %>
+    <% 
+      d = {
+        "gmail.com" => ["Gmail", "http://www.gmail.com"],
+        "qq.com" => ["QQ", "http://mail.qq.com"]
+      }
+      domain = @email[/@(\S+)/, 1]
+      domain = d[domain] if domain
+    %>
+    <p>
+    确认信已经发往你的邮箱 <b><%= @email %></b> , 需要你点击邮件中的链接来完成注册。
+    </p>
+    <%
+    %>
+    <% if domain %>
+      <p>
+      <%= link_to "登录 #{domain[0]} 邮箱查收确认信 &raquo;", domain[1], :target => "_blank" %>
+      </p>
+    <% end %>
+    <h4>
+      没收到确认信怎么办？
+    </h4>
+    <ol>
+      <li>看看Email地址有没有写错。</li>
+      <li>看看是否在邮箱垃圾箱里。</li>
+      <li>稍等几分钟再看看。</li>
+      <!--<li>若10分钟内没收到确认信，重发一封。</li>-->
+      <li>若10分钟内没收到确认信，请暂时更换其它邮箱注册。</li>
+    </ol>
+  <% end %>
+<% end %>

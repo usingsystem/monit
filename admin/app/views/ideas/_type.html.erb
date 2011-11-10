@@ -1,0 +1,12 @@
+<%
+  type_id =params[:type_id]
+%>
+<div class="left_template">
+  <h3>分类</h3>
+  <ul>
+  <li class="<%=type_id.to_i==0 ? 'current-category':'' %>"><%=link_to "所有类型",:action=>:index%></li>
+  <% for type in @idea_types%>
+    <li class="<%= type.id == type_id.to_i ? 'current-category':'' %>"><%=link_to "#{type.name}(#{type.num})",:action=>:index,:type_id=>type.id%></li>
+  <%end%>
+  </ul>
+</div>

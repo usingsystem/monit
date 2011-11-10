@@ -1,0 +1,58 @@
+<div class="wrap">
+  <% board  do %>
+    <% board_header do %>
+      <%= "角色管理" %>
+    <% end %>
+
+    <% board_content do %>
+      <table class="grid" cellspacing="0">
+        <thead>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <%=th_tag  Role.human_attribute_name("role_name")%>
+            <%=th_tag  Role.human_attribute_name("description")%>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <th colspan="2">
+              <% if@roles && @roles.length > 0 %>
+                <div class="page clearfix">
+                  <div class="stat ">显示<%=@roles.total_entries %>个角色中的<%=@roles.size %>个</div>
+                  <%=will_paginate @roles%>
+                </div>
+              <%end%>
+            </th>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% if @roles.size > 0 %>
+            <% @roles.each do |role| %>
+              <tr <%= @first_false ? "" : ((@first_false = true) && " class='first'") %>>
+                <% td_tag :class => "actions first" do %>
+              <div class="pop-wrap">
+                <div class="pop">
+                  <div class="pop-inner">
+                    <%= link_to(icon("delete2", :title => "删除"),  {:controller=>'/roles',:action => 'destroy', :id =>role.id,:redirect_to=>url_for(params)},{:confirm => "确认删除该角色？",:method => :delete, :class =>controlled("roles/destroy")}, {:class => 'delete', :title => "删除", :class => "last"})%>
+                    <%= link_to(icon("edit2", :title => "修改"),edit_role_url(role, redirect_object))%>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <%=td_tag h(role.role_name) %>
+            <%=td_tag h(role.description)%>
+            <%=td_tag "", :class => "last" %>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+</div>

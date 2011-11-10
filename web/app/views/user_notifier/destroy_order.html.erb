@@ -1,0 +1,38 @@
+<p>
+  亲爱的<%= @tenant.name %>：
+</p>
+<p>
+</p>
+<p>
+  感谢对"<%= @operator.title %>"的支持，您取消了订单：
+</p>
+
+
+<table>
+  <thead>
+    <tr>
+      <th> <%= Order.human_attribute_name('out_trade_no')%></th>
+      <th><%=Order.human_attribute_name('created_at')%></th>
+      <th><%=Order.human_attribute_name('month_num')%></th>
+      <th><%= Order.human_attribute_name('total_fee')%></th>
+      <th><%= Order.human_attribute_name('status')%></th>
+      <th><%=  Order.human_attribute_name('subject')%></th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> <%= @order.out_trade_no %></td>
+      <td> <%= format_time(@order.created_at) %></td>
+      <td>  <%= @order.month_num %>个月</td>
+      <td>  ￥<%=h @order.total_fee %></td>
+      <td>   <%= @order.human_status_name %></td>
+      <td><%= @order.subject %></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>&nbsp;</p>
+<p>
+  (这是一封自动产生的email，请勿回复。)
+</p>

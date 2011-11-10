@@ -1,0 +1,22 @@
+<% content_for :head do %>
+  <%=stylesheet_link_tag 'threshold',:media=>'all' %>
+<% end %>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("edit") } %>
+      <%= t('edit') + t('services') %>
+    <% end %>
+    <% board_content do %>
+      <p class="notice">
+      批量更新<%=t('service')%>告警阈值
+      </p>
+      <% form_for(@service, :builder => ::UIFormBuilder, :url => batch_update_services_path, :html => { :class => "form", :method => :put }) do |f| %>
+        <%= redirect_tag %>
+        <%= render :partial => "selector", :locals => { :f => f } %>
+        <%= render :partial => "threshold", :locals => { :f => f } %>
+        <%= f.submit t('update') %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

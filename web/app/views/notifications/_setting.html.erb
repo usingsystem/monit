@@ -1,0 +1,11 @@
+<% field_set_tag f.wrap_label(f.check_box(:notifications_enabled), "告警通知", "#{source}_notifications_enabled"), :id=> "notification" do %>
+  <% f.wrap_field 'notifications', { :label => "通知类型" } do %>
+    <% types.each do |t| %>
+      <%= f.wrap_label(f.check_box("notify_on_#{t}"), t("status.notification.#{source}.#{t}"), "#{source}_notify_on_#{t}") %>
+    <% end %>
+  <% end %>
+  <%= f.select :first_notification_delay, AlertNotification.delay_select, {}, :prepend => "故障产生后", :append => "发送通知" %>
+  <%= f.select :notification_interval, AlertNotification.intervals_select, {}, :prepend => "故障持续时，间隔", :append => "重发通知"%>
+  <%= f.text_field :notification_times, :style => "width:50px;", :help => "设为0时不限次数", :append => "次", :prepend => "故障持续时，可重复发送" %>
+<% end %>
+

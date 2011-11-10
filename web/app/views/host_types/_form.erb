@@ -1,0 +1,7 @@
+<% form_for @host_type, :builder => ::UIFormBuilder, :html => { :class => "form" } do |f| %>
+  <%= f.text_field :name , { :required => true, :help => "如填写Ubuntu,所选主机为/host/Linux，会自动生成 /host/Linux/Ubuntu" }%>
+  <%= f.select :parent_id, [["选择服务类型", ""]] + @host_types.collect { |x| [x.name, x.id] }, {}, { :required => true }  %>  <%= f.submit ["new","create"].include?(controller.action_name) ? t("create") : t("update"), :name => nil %>
+<% end %>
+
+
+

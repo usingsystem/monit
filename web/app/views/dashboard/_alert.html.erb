@@ -1,0 +1,38 @@
+<% board do %>
+  <% board_header do %>
+    <%= t('alert') %>
+  <% end %>
+  <% board_content do %>
+    <ul class="ol feed">
+      <%if @alerts.size == 0 %>
+        没有告警
+      <%else%>
+        <% 
+          date_titles = ["今天", "昨天", "前天"]
+          today = Date.today
+          last_title = nil 
+        %>
+        <%@alerts.each do |alert|%>
+          <% 
+            time = alert.changed_at 
+            date = time.to_date 
+            n = today - date
+            title = date_titles[n] ? date_titles[n] : date
+          %>
+          <% if title != last_title %>
+            <li class="date"><%= title %></li>
+            <% last_title = title %>
+          <% end %>
+          <li>
+          <span title="<%= t("status.alert." + alert.severity_name) %>"><%= icon_status("alert", alert.severity_name) %></span>
+          <span class="datetime"><%=alert.changed_at.to_s(:time) %></span>
+          <%= link_to(alert.source.name, alert.source) + (alert.service ? " / " + link_to(alert.service.name, alert.service) : "") + " " + alert.human_severity_name %>
+          </li>
+        <%end%>
+        <p class="more">
+        <%= link_to "更多", alerts_path %>
+        </p>
+      <%end%>
+    </ul>
+  <% end %>
+<% end %>

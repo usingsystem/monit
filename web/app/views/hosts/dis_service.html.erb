@@ -1,0 +1,25 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      服务类型
+    <% end %>
+    <% board_content do %>
+      <% form_for(:dis_service,nil,:url=>"create_dis_service") do |f| %>
+        <%= f.error_messages %>
+        <p class="f4">
+          <% @service_types.each_index do |i| %>
+            <%service_type = @service_types[i]%>
+            <%= f.check_box  service_type.id.to_s%><%=f.label service_type.id.to_s ,service_type.name%><br>
+            <span class="tips">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=service_type.remark%></span><br>
+          <%end%>
+        </p>
+        <%= hidden_field_tag "serviceable_type" ,1 %>
+        <%= hidden_field_tag "serviceable_id" ,@host[:id] %>
+        <p>
+          <%= f.submit t('next') %>
+        </p>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+

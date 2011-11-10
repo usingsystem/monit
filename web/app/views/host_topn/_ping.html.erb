@@ -1,0 +1,24 @@
+<div class="datagrid" style=" margin-top: 8px">
+  <h5>PING平均时延TopN</h5>
+  <table cellspacing="0">
+    <thead>
+      <tr>
+        <%=th_tag "主机"%>
+        <%=th_tag "PING平均时延"%>
+      </tr>
+    </thead>
+    <% if @ping %>
+      <tbody>
+        <% if @ping.size > 0 %>
+          <% @ping.each do |type| %>
+            <tr>
+              <%=td_tag type["name"]%>
+              <%=td_tag ('%.2f' %(type["rta"]))%>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    <%end%>
+  </table>
+</div>
+

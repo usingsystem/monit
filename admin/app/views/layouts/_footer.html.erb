@@ -1,0 +1,26 @@
+
+  <div id="footer">
+    <p class="clearfix">
+      <span id="copyright">
+        Monit © 2010 <%= link_to "苏ICP备10047828号", "http://www.miibeian.gov.cn", :target => "_blank" %>
+      </span>
+      <span>
+        <%=link_to '博客', "http://blog.monit.cn", :target => "_blank" %>
+        <span class="pipe"> · </span>
+        <%=link_to t('about'), "http://www.monit.cn/about", :target => "_blank" %>
+        <span class="pipe"> · </span>
+        <%=link_to t('contact'), "http://www.monit.cn/contact" , :target => "_blank" %>
+        <span class="pipe"> · </span>
+        <%=link_to '加入我们', "http://www.monit.cn/jobs", :target => "_blank"  %>
+        <span class="pipe"> · </span>
+        <%=link_to t('terms'), "http://www.monit.cn/terms", :target => "_blank"  %>
+      </span>
+    </p>
+  </div>
+
+
+<% if RAILS_ENV == 'development' %>
+  <p>
+    <%= link_to 'Theme steelblue', {:controller => 'themes', :action => "steelblue"} %>
+  </p>
+<% end %>

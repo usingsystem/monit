@@ -1,0 +1,125 @@
+#!/bin/bash
+
+#define default configuration
+POLL=true
+SMP=disable
+ERL=./bin/erl
+ERL_MAX_PORTS=32000
+ERL_PROCESSES=250000
+ERL_MAX_ETS_TABLES=1400
+NODE_NAME=smarta
+ROOTDIR=`cd $(dirname $0); pwd`
+
+# define environment variables
+SMARTA_HOME=$ROOTDIR
+DATETIME=`date "+%Y%m%d-%H%M%S"`
+SASL_LOG_PATH="$ROOTDIR/var/log/${NODE_NAME}_sasl.log"
+ERL_CRASH_DUMP="$ROOTDIR/var/log/erl_crash_$DATETIME.dump"
+SMARTA_SO_PATH="$ROOTDIR/priv/lib"
+SMARTA_DB="$ROOTDIR/var/data/$NODE_NAME"
+SMARTA_CONFIG_PATH="$ROOTDIR/etc/smarta/smarta"
+SMARTA_LOG="$ROOTDIR/var/log"
+SMARTA_LOG_LEVEL=4
+SMARTA_LOG_PATH="$SMARTA_LOG/${NODE_NAME}.log"
+RUNAPP=smarta
+CTLAPP=smarta_ctl
+
+# export global variables
+export SMARTA_HOME
+export SMARTA_SO_PATH
+export SASL_LOG_PATH
+export ERL_MAX_PORTS
+export ERL_MAX_ETS_TABLES
+export ERL_CRASH_DUMP
+
+ERLANG_OPTS="-smp $SMP +P $ERL_PROCESSES +K $POLL"
+
+[ -d $SMARTA_DB ] || mkdir -p $SMARTA_DB
+[ -d $SMARTA_LOG ] || mkdir -p $SMARTA_LOG
+
+# start server
+start ()
+{
+    $ERL \
+      $ERLANG_OPTS \
+      -sname $NODE_NAME \
+      $NAME $ERLANG_NODE \
+      -noinput -detached \
+      #-pa $EBINS \
+      -boot start_sasl \
+      -mnesia dir "\"$SMARTA_DB\"" \
+      -config $SMARTA_CONFIG_PATH  \
+      -kernel error_logger \{file,\"$WG_LOG_PATH\"\} \
+      -sasl sasl_error_logger \{file,\"$SASL_LOG_PATH\"\} \
+      -s reloader start \
+      -s ${RUNAPP} start -log_level $SMARTA_LOG_LEVEL -log_path $SMARTA_LOG_PATH \
+      $ARGS "$@"
+}
+
+stop() 
+{
+    $ERL \  
+      -noinput -sname smarta_ctl \
+      #-pa $EBINS \
+      -s smarta_ctl -extra smarta stop
+ }
+
+# start interactive server
+live ()
+{
+    echo "--------------------------------------------------------------------"
+    echo ""
+    echo "IMPORTANT: node is going to start in LIVE (interactive) mode."
+    echo "All log messages will be shown in the command shell."
+    echo "You can interact with the node if you know how to use it."
+    echo "Please be extremely cautious with your actions,"
+    echo "and exit immediately if you are not completely sure."
+    echo ""
+    echo "To exit this LIVE mode and stop node, press:"
+    echo "  q().  and press the Enter key"
+    echo ""
+    echo "--------------------------------------------------------------------"
+    echo "Press any key to continue"
+    read foo
+    echo ""
+    $ERL \  
+      -noinput -sname smarta_ctl \
+      #-pa $EBINS \
+      -s smarta_ctl -extra smarta status
+}
+
+# common control function
+ctl ()
+{
+    $ERL \
+      $NAME ctl_"$ERLANG_NODE" \
+      -noinput \
+      -boot start_clean \
+      -pa $EBINS \
+      -s ${CTLAPP}  -extra $ERLANG_NODE $@
+    result=$?
+    case $result in
+    0) :;;
+    *) usage;;
+    esac
+    return $result
+}
+
+# display ctl usage
+usage ()
+{
+    echo ""
+    echo "Commands to start an smarta node:"
+    echo "  start  Start smarta"
+    echo "  stop   Stop smarta"
+    echo "  live   Start an node in live (interactive) mode"
+    echo ""
+    echo ""
+}
+
+case $ARGS in
+    ' start') start;;
+    ' stop') stop;;
+    ' live') live;;
+    *) ctl $ARGS;;
+esac

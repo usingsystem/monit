@@ -1,0 +1,29 @@
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>
+    <%= controller.title ? "#{controller.title} - Monit运营平台" : "Monit运营平台" %>
+  </title>
+  <meta name="keywords" content="Monit,主机监控,服务器监控,网络监控,数据库监控,进程监控,应用监控,网站监控,,服务监控,业务监控,云监控,监控云,网管,IT网管" />
+  <meta name="description" content="MONIT监控云提供对互联网网站(Site)、业务(Business)、主机(Host)、网络(Network)、 应用(Application)和服务(Service)的全方位在线监控管理服务。Monit为广大互联网网站、业务运营商和中小企业IT网络，提供创新的、简单的、低成本的可用性(Availability)、故障(Fault)与性能(Performance)监测服务。 " />
+  <meta name="google-site-verification" content="gCzJmlbARy1L89fLIQLMY8b3OA4zJWg3gFB4Wsbo5g4" />
+  <%=stylesheet_link_tag 'core', 'layout', 'icons', 'types', 'status', 'scaffold', 'feedback', :cache => "base", :media=>'all' %>
+  <%=javascript_include_tag 'jquery-1.3.2.min', 'jquery.scrollTo-min', 'swfobject', 'init', :cache => "base" %>
+  <% if @import_js_google_api %>
+    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <% end %>
+  <!-- view api end -->
+
+  <%= yield :head %>
+  <% javascript_tag do %>
+    document.write('<style type="text/css">body #wrapper .js-hide{display: none};</style>');
+    <% if logged_in? %>
+      jQuery(function(){
+      //轮询
+      $('#services-summary').load('/dashboard/summary.ajax');
+      window.setInterval(function(){
+      $('#services-summary').load('/dashboard/summary.ajax');
+      },30000);
+      });
+    <% end %>
+  <% end %>
+</head>

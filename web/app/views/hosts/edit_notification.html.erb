@@ -1,0 +1,27 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("edit") } %>
+      <%= t('edit') + t('hosts') %>
+    <% end %>
+    <% board_content do %>
+      <p class="notice">
+      批量更新<%=t('host')%>告警通知
+      </p>
+      <% form_for(@host, :builder => ::UIFormBuilder, :url => batch_update_hosts_path, :html => { :class => "form", :method => :put }) do |f| %>
+        <%= redirect_tag %>
+        <% field_set_tag "筛选#{t('host')}" do %>
+          <ul class="ul list-table">
+            <% @hosts.each do |host| %>
+              <li>
+              <%= f.wrap_label(check_box_tag("ids[#{host.id}]", "", true), host.name, "ids_#{host.id}") %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+        <%=render :partial => "notifications/setting", :locals => {:f => f, :source => "host", :types => ["down", "unreachable", "recovery"] } %>
+        <%= f.submit t('update') %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

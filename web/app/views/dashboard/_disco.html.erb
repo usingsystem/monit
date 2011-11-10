@@ -1,0 +1,32 @@
+<% board do %>
+  <% board_header do %>
+    发现
+  <% end %>
+  <% board_content do %>
+    <p class="notice">
+    系统自动发现了一些可监控的服务，您可以确认添加。 
+    </p>
+    <div class="ui-actions">
+      <span>
+        <span>
+          <%= link_to "确认所有", create_all_disco_services_path %>
+          <%= link_to "忽略所有", destroy_all_disco_services_path, :class => "last" %>
+        </span>
+      </span>
+    </div>
+    <ul class="ol feed">
+      <%@disco_services.each do |service|%>
+        <li>
+        在 <%=link_to(service.serviceable.name, service.serviceable)%> 上发现 <%=service.name %> 服务
+        <%= link_to "确认", {:controller => "services", :action => "create_from_disco", :id => service.id }, :method => :post %> 
+        <%= link_to "忽略", {:controller => "services", :action => "destroy_disco", :id => service.id }, :method => :delete %> 
+        </li>
+      <% end %>
+      <% if @disco_services.size == 10 %> 
+        <p class="more">
+        <%= link_to "更多", disco_services_path %>
+        </p>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>

@@ -1,0 +1,12 @@
+2010/04/02
+refactor design of smarta.
+
+2010/04/02
+support service discovery
+
+2010/03/06
+git rm -r src/core src/elog src/sesnmp
+
+2010/02/18
+agent initial release
+

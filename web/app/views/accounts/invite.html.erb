@@ -1,0 +1,31 @@
+<div class="clearfix">
+  <div class="entry-left">
+    <h3>
+      <%=icon("signup") %>新用户注册
+    </h3>
+    <div class="entry-notice">
+      <p>&nbsp;</p>
+      <p class="f4">
+      <%= @msg %>
+      </p>
+    </div>
+  </div>
+  <div class="entry-right">
+    <h4>
+      注册会员后您可以
+    </h4>
+    <ul>
+      <li>实时监控主机服务运行状态</li>
+      <li>及时得到主机服务故障通知</li>
+      <li>统计服务性能合理分配资源</li>
+    </ul>
+    <h4>
+      已有账号？
+    </h4>
+    <div>
+      <% form_tag login_path, :method => :get do %>
+        <%=button_wrap(submit_tag '返回登录', :name => nil) %>
+      <% end %>
+    </div> 
+  </div>
+</div>

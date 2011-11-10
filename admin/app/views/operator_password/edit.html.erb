@@ -1,0 +1,18 @@
+<div class="wrap">
+  <% board :id => nil do %>
+    <% board_header do %>
+      修改密码
+    <% end %>
+    <% board_content do %>
+      <%
+      @operator.password = @operator.password_confirmation = @operator.old_password = nil
+      %>
+      <% form_for @operator, :builder => ::UIFormBuilder, :url =>operator_password_path(@operator) ,:html=>{:method=>:put,:class=>'form'} do |f|%>
+        <%= f.password_field :old_password,:label=>"旧密码", :required => true %>
+        <%= f.password_field :password, :label=>"新密码", :required => true%>
+        <%= f.password_field :password_confirmation, :required => true%>
+        <%= f.submit "确定" %>
+      <% end %>
+    <%end%>
+  <%end%>
+</div>

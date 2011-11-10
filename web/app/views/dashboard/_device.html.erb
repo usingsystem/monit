@@ -1,0 +1,19 @@
+<% board do %>
+  <% board_header do %>
+    <%= t('network') %>
+  <% end %>
+  <% board_content do %>
+    <div class="show-status">
+      <% if @device_count > 0 %>
+        <%= status_link 'device', @device_status, @device_count %>
+        <p>
+        <%= image_tag status_chart(@device_status), :alt => "#{t("device")}状态统计" %>
+        </p>
+      <% else %>
+        <p>
+        统计<%=t('device')%>的运行状态。现在还没有<%=t('device')%>，<%= link_to "添加一个", new_device_path %>
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

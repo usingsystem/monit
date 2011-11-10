@@ -1,0 +1,8 @@
+To start:
+./smartactl start
+
+To get status:
+./smartactl status
+
+To stop:
+./smartactl stop

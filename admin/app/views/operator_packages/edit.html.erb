@@ -1,0 +1,31 @@
+<% tip= action_name=="new" ? t("new") : t("edit")%>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => tip} %>
+      <%=  tip + t("packages") %>
+    <% end %>
+    <% board_content do %>
+      <% form_for(@package, :url=>operator_package_path(@operator,@package),:builder => ::UIFormBuilder, :html => { :class => "form",:method=>:put }) do |f| %>
+        <%= redirect_tag %>
+        <% field_set_tag "基本设置" do %>
+          <%= f.text_field :name, :required => true %>
+  　　　　　<%= f.select :category,[["选择类型", ""]]+Package.category.collect{|cate|[I18n.t("package_category.#{cate}"),Package.category.index(cate)]},:required=>true %>
+          <%= f.text_field :max_services, :required => true ,:style=>"width:50px",:append=>"个"%>
+          <%= f.text_field :max_hosts, :required => true,:style=>"width:50px",:append=>"个" %>
+          <%= f.text_field :min_check_interval, :required => true,:style=>"width:50px",:append=>"秒"%>
+          <%= f.text_field :multi_regional, :required => true,:style=>"width:50px",:append=>"个" %>
+          <%= f.select :report,[["选择类型",],["日报",0],["周报",1],["月报",2]],:required=> true %>
+          <%= f.text_field :customer_support,:style=>"width:50px" %>
+          <%= f.text_field :data_retention, :required=> true,:style=>"width:50px", :append=>"个月" %>
+          <%= f.text_field :sms_num,:style=>"width:50px", :append=>"条" %>
+          <%= f.text_field :special_features %>
+          <%= f.text_field :charge, :required => true,:style=>"width:50px",:append=>"元" %>
+          <%= f.text_field :year_charge, :required => true ,:style=>"width:50px",:append=>"元"%>
+        <% end %>
+        <%= f.submit tip %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+

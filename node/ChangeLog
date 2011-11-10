@@ -1,0 +1,9 @@
+2010/03/06
+git rm -r src/amqp src/elog src/sesnmp
+
+2010/02/20
+monit_plugin.erl: string "\n" of output
+
+2010/02/15
+node initial release
+

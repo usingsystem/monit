@@ -1,0 +1,66 @@
+<%
+  more = params.has_key? :more
+%>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      <%= icon_status("site", @site.status_name) %><%=h @site.name %>
+    <% end %>
+    <% board_content do %>
+    <%= tabs [["avail", "可用率报表", site_avail_path(@site), true]], 'base' %>
+      <div class="details">
+        <div class="ui-actions">
+          <span>
+            <span>
+              <%= link_to(icon("edit") + "修改", edit_site_url(@site),:class=>controlled("sites/edit"))%>
+              <%= link_to("添加服务", new_site_service_path(@site),:class=>controlled("services/new"))%>
+              <%= link_to("通知设置", edit_site_url(@site, :anchor => "notification"),:class=>controlled("sites/edit"))%>
+              <%#= link_to(icon("delete") + "删除", site_url(@site), :method => :delete,:confirm => "确认删除应用？", :class => "last")%>
+              <%= link_to(icon("delete") + "删除", confirm_site_url(@site), :class => "last " + controlled("sites/destroy"))%>
+            </span>
+          </span>
+        </div>
+        <p>
+        <b><%= Site.human_attribute_name('url') + t("monit_ui.label_suffix") %></b>
+        <span><%= extlink_to(@site.url, @site.url) %></span>
+        </p>
+        <p>
+        <b><%= Site.human_attribute_name('status') + t("monit_ui.label_suffix") %></b>
+        <span><%=@site.human_status_name %></span>
+        </p>
+        <p>
+        <b><%= Site.human_attribute_name('summary') + t("monit_ui.label_suffix") %></b>
+        <span><%=h @site.summary %></span>
+        </p>
+        <p>
+        <b><%= Site.human_attribute_name('ctrl_service') + t("monit_ui.label_suffix") %></b>
+        <span> <%=(@site.ctrl_service ? link_to(@site.ctrl_service.name, @site.ctrl_service,:class=>controlled("services/show")) : "无") %> <%= inlink_to "修改", ctrl_site_path(@site),:class=>controlled("sites/ctrl") %></span>
+        </p>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= @site.name %>的服务
+    <% end %>
+    <% board_content do %>
+      <% if @services.size > 0%>
+        <%= render :partial => 'services/table' %>
+      <% else %>
+        <% form_tag new_service_path, :method => :get do %>
+          <p>
+          </p>
+          <p class="auto-padding">
+          <%=hidden_field_tag "site_id", @site.id %>
+          <%=button_wrap(submit_tag '添加服务', :name => nil,:class=>controlled("services/new")) %>
+          </p>
+        <% end %>
+      <%end%>
+    <% end %>
+  <% end %>
+</div>
+

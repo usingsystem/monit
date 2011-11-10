@@ -1,0 +1,28 @@
+<div class="wrap clearfix">
+   <div style="float: left;width: 35%;">
+    <% if @app_view and @app_view.rows.size %>
+      <%=render :partial => "templates/#{@app_view.template}", :locals => {:view => @app_view } %>
+    <% end %>
+  </div>
+  <div  class="datagrid" style="float: right;width:60%;">
+  <table  cellspacing="0">
+    <thead>
+      <tr>
+        <%=th_tag "应用类型" %>
+        <%=th_tag "数量"%>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @app_types.size > 0 %>
+        <% @app_types.each do |type| %>
+          <tr>
+            <%=td_tag h(type.name) %>
+            <%=td_tag h(type.count)%>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+

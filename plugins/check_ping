@@ -1,0 +1,53 @@
+#!/usr/bin/env lua
+
+-- check ping
+
+-- author: ery.lee@gmail.com from monit.cn
+
+require("plugin")
+
+-- do check
+function check(opts) 
+  output = os.cmd("ping".." -c "..opts["packets"].." -w "..opts["timeout"].." "..opts["host"])
+  pl = string.match(output, "%s(%d+%%) packet loss")
+  if not pl then
+    print("UNKNOWN - ping error\n")
+    print(output)
+    return
+  end
+  if pl == "100%" then
+    print("CRITICAL - packet loss = "..pl.."\n")
+    return
+  end
+  rtmin,rta,rtmax=string.match(output, "([0-9]+.[0-9]+)/([0-9]+.[0-9]+)/([0-9]+.[0-9]+)/([0-9]+.[0-9]+) ms")
+  if pl == "0%" then
+    print(string.format("OK - packet loss = %s, rta = %sms\n", pl, rta))
+  else
+    print(string.format("WARNING - packet loss = %s, rta = %sms\n", pl, rta))
+  end
+  print("metric:pl: "..pl)
+  print("metric:rta: "..rta.."ms")
+  print("metric:rtmin: "..rtmin.."ms")
+  print("metric:rtmax: "..rtmax.."ms")
+end
+
+-- usage
+function usage() 
+  print("Usage: check_ping --host=Host --packets=Packets --timeout=Timeout")
+end
+
+-- parse arguments
+opts = getopt(arg, {"host", "packets", "timeout"})
+opts["packets"] = opts["packets"] or "4"
+opts["timeout"] = opts["timeout"] or "8"
+if not opts["host"] then
+  print("UNKNOWN - miss argument = 'host'\n")
+  usage()
+  return
+end
+
+ok, err = pcall(check, opts)
+if not ok then
+  print("UNKNOWN - plugin internal error\n")
+  print(err)
+end

@@ -1,0 +1,38 @@
+<anychart>
+  <dashboard>
+    <view type="Dashboard">
+      <title><text>1x3 with Panel Layout Sample</text></title>
+      <vbox height="100%" width="100%">
+        <view type="gauge" source="gauge" height="50%" width="100%"/>
+
+        <view type="Panel" width="100%" height="50%">
+          <title><text>Grouping Panel Title</text></title>
+          <hbox height="100%" width="100%">           
+            <view type="chart" source="chart2" width="33.33%" height="100%" />
+            <view type="chart" source="chart3" width="33.33%" height="100%"/>
+            <view type="chart" source="chart4" width="33.33%" height="100%"/>
+          </hbox>       
+        </view>
+      </vbox>
+    </view>   
+  </dashboard>  
+  <gauges>
+    <gauge name="gauge">
+      <circular width="40" height="80" x="0" y="0">
+        <scale minimum="0" maximum="100" major_interval="10" minor_interval="2" />
+      </circular>
+      <circular width="40" height="80" x="33.3" y="0">
+      </circular>
+      <circular width="40" height="80" x="66.6" y="0">
+      </circular>
+    </gauge>
+  </gauges>
+  <charts>
+    <chart name="chart1">
+    </chart>
+    <chart name="chart2"/>    
+    <chart name="chart3"/>
+    <chart name="chart4"/>    
+  </charts>
+</anychart>
+

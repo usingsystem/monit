@@ -1,0 +1,62 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("all") } %>
+      <%= t(@type[:name]) + t("notification") %>
+    <% end %>
+    <% board_content do %>
+      <div class="filters clearfix">
+        <%= status_tabs @status_tab, @current_status_name, {} %>
+      </div>
+      <table class="grid" cellspacing="0">
+        <thead>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <%=th_tag (Notification.human_attribute_name 'created_at'), :class => "time" %>
+            <%=th_tag (Notification.human_attribute_name 'method'), :style=> "width: 250px" %>
+            <%=th_tag (Notification.human_attribute_name 'user_id'), :style=> "width: 100px" %>
+            <%=th_tag (Notification.human_attribute_name 'title') %>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th class="first">&nbsp;</th>
+            <th colspan="4">
+              <% if @notifications && @notifications.length > 0 %>
+                <div class="page clearfix">
+                  <div class="stat">显示<%=@notifications.total_entries %>个<%= t('notification') %>中的<%=@notifications.size %>个</div>
+                  <%=will_paginate @notifications%>
+                </div>
+              <%end%>
+            </th>
+            <th class="last">&nbsp;</th>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% if @notifications.size > 0 %>
+            <% @notifications.each do |notification| %>
+              <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'") %>>
+                <%=td_tag "", :class => "first" %>
+                <%=td_tag format_time(notification.created_at) %>
+                <%=td_tag "[#{notification.human_method_name}] #{notification.address}" %>
+                <%=td_tag notification.contact %>
+                <%=td_tag notification.title %>
+                <%=td_tag "", :class => "last" %>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr class="first">
+              <% td_tag :colspan => 6 do %>
+                <p class="notice">
+                暂无<%= t('notification') %>
+                </p>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+</div>
+

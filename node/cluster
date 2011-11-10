@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ $# != 2 ]; then
+  echo "usage: cluster node1 node2"
+  exit
+fi
+NODE1=$1
+NODE2=$2
+
+erl -noinput -sname monit_node_ctl -pa ./ebin -s monit_node_ctl -extra $NODE1 cluster $NODE2

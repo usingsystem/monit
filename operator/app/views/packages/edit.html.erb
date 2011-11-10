@@ -1,0 +1,25 @@
+<% tip= action_name=="new" ? t("new") : t("edit")%>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => tip} %>
+      <%=  tip + t("packages") %>
+    <% end %>
+    <% board_content do %>
+      <% form_for(@package, :builder => ::UIFormBuilder, :html => { :class => "form" }) do |f| %>
+        <%= redirect_tag %>
+        <% field_set_tag "基本设置" do %>
+          <%= f.text_field :name, :required => true %>
+  　　　　　<%= f.select :category,[["选择类型", ""]]+Package.category.collect{|cate|[I18n.t("package_category.#{cate}"),Package.category.index(cate)]},:required=>true %>
+          <%= f.text_field :max_services, :required => true ,:style=>"width:40px",:append=>"个"%>
+          <%= f.text_field :max_hosts, :required => true,:style=>"width:40px",:append=>"个" %>
+          <%= f.text_field :min_check_interval, :required => true,:style=>"width:40px",:prepend=>"每分钟",:append=>"次"%>
+          <%= f.text_field :charge, :required => true,:style=>"width:40px",:append=>"元" %>
+          <%= f.text_field :year_charge, :required => true ,:style=>"width:40px",:append=>"元"%>
+        <% end %>
+        <%= f.submit tip %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+

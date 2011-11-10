@@ -1,0 +1,64 @@
+#!/usr/bin/env lua
+
+-- check mysql slow by "show global status like 'Slow_%'"
+-- author: ery.lee@gmail.com from monit.cn
+
+require("plugin")
+
+-- do check
+function check(opts) 
+  require "luasql.mysql"
+  env = assert (luasql.mysql())
+  con = assert (env:connect("mysql", opts["username"], opts["password"], opts["host"], tonumber(opts["port"])))
+  -- retrieve variables
+  variables = {}
+  cur = assert (con:execute"show global variables like '%slow%'")
+  row = cur:fetch ({}, "a")
+  while row do
+    variables[row.Variable_name] = row.Value
+    row = cur:fetch ({}, "a")
+  end
+  -- retrieve status
+  metrics = {}
+  cur = assert (con:execute"show global status like 'Slow_%'")
+  row = cur:fetch ({}, "a")
+  while row do
+    metrics[string.lower(row.Variable_name)] = row.Value
+    row = cur:fetch (row, "a")
+  end
+  -- print result
+  print(string.format("OK - slow queries = %s, slow launch threads = %s\n", metrics["slow_queries"], metrics["slow_launch_threads"]))
+  for k,v in pairs(variables) do
+    print(string.format("entry:variable:%s: %s", k, v))
+  end
+  for k,v in pairs(metrics) do
+    print(string.format("metric:%s: %s", k, v))
+  end
+  -- close everything
+  cur:close()
+  con:close()
+  env:close()
+end
+
+-- usage
+function usage() 
+  print("usage: check_mysql_bytes --host=Host --username=User --password=Password --port=Port")
+end
+
+-- parse arguments
+opts = getopt(arg, {"host", "password", "username", "port"})
+if not opts["port"] then opts["port"] = "3306" end
+for i, o in ipairs({"host", "password", "username"}) do
+  if not opts[o] then
+    print(string.format("UNKNOWN - miss argument = '%s'\n", o))
+    usage()
+    return
+  end
+end
+
+status, err = pcall(check, opts) 
+if not status then
+  print("UNKNOWN - plugin internal error\n")
+  print(err)
+end
+

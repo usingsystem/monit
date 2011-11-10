@@ -1,0 +1,25 @@
+<div class="datagrid" style=" margin-top: 8px">
+  <h5>磁盘占用率TopN</h5>
+  <table cellspacing="0">
+    <thead>
+      <tr>
+        <%=th_tag "主机"%>
+        <%=th_tag "磁盘占用率"%>
+      </tr>
+    </thead>
+    <% if @disk %>
+      <tbody>
+        <% if @disk.size > 0 %>
+          <% @disk.each do |type| %>
+            <tr>
+              <%=td_tag type["name"]+"-"+type["service"]%>
+              <%=td_tag ('%.2f' %(type["usage"]))+'%'%>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    <%end%>
+  </table>
+</div>
+
+

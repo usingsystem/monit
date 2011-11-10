@@ -1,0 +1,55 @@
+<table class="table" cellspacing="0">
+  <thead>
+    <tr>
+      <%#=th_tag "", :class => "first" %>
+      <%=th_tag (Alert.human_attribute_name 'first_time'), :style => "width: 70px" %>
+      <%=th_tag (Alert.human_attribute_name 'level'), :style=> "width: 50px" %>
+      <%=th_tag (Alert.human_attribute_name 'name'), :style => "width: 120px" %>
+      <%=th_tag (Alert.human_attribute_name 'occur_count'), :style => "width: 60px" %>
+      <%=th_tag (Alert.human_attribute_name 'last_time'), :style => "width: 80px" %>
+      <%=th_tag (Alert.human_attribute_name 'summary') %>
+      <%#=th_tag "", :class => "last" %>
+    </tr>
+  </thead>
+  <!--
+  <tfoot>
+    <tr>
+      <th class="first">&nbsp;</th>
+      <th colspan="6">
+        <% if @alerts && @alerts.length > 0 %>
+          <div class="page clearfix">
+            <div class="stat">显示<%=@alerts.total_entries %>个告警中的<%=@alerts.size %>个</div>
+            <%=will_paginate @alerts%>
+          </div>
+        <%end%>
+      </th>
+      <th class="last">&nbsp;</th>
+    </tr>
+  </tfoot>
+  -->
+  <tbody>
+    <% if @alerts.size > 0 %>
+      <% @alerts.each do |alert| %>
+        <tr>
+          <%#=td_tag "", :class => "first" %>
+          <td><%=alert.first_time.strftime("%m-%d %H:%M:%S")%></td>
+          <%=td_tag h(t("status.alert." + alert.level_name)), :class => "status status-alert-" + alert.level_name %>
+          <%=td_tag alert.name %>
+          <%=td_tag alert.occur_count %>
+          <%=td_tag alert.last_time %>
+          <%=td_tag alert.summary %>
+          <%#=td_tag "", :class => "last" %>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <% td_tag :colspan => 8 do %>
+          <p class="notice">
+          暂无告警
+          </p>
+        <% end %>
+      </tr>
+
+    <% end %>
+  </tbody>
+</table>

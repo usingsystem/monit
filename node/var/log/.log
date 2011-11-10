@@ -1,0 +1,11 @@
+
+=ERROR REPORT==== 2010-02-17 16:19:21 ===
+Could not start the network driver: econnrefused
+
+=INFO REPORT==== 2010-02-17 16:19:21 ===
+    application: monit_node
+    exited: {bad_return,{{monit_node_app,start,[normal,[]]},
+                         {'EXIT',{{badmatch,{error,shutdown}},
+                                  [{monit_node_app,start,2},
+                                   {application_master,start_it_old,4}]}}}}
+    type: temporary

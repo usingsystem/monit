@@ -1,0 +1,78 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("delete") } %>
+      <%= t('delete') + t('hosts') %>
+    <% end %>
+    <% board_content do %>
+      <% if @host.is_support_agent? %>
+        <p class="notice">
+        <%=link_to @host.name, @host %>因装有代理而不能删除，您需要先将代理转移到其它主机或先删除代理。
+        </p>
+        <div class="auto-padding">
+          <% form_tag edit_agent_path(@host.has_agent), :method => :get do %>
+            <p>
+            <%=button_wrap(submit_tag '转移代理', :name => nil) %>
+            </p>
+          <% end %>
+          <p class="gray">
+          或
+          </p>
+          <% form_tag confirm_agent_path(@host.has_agent), :method => :get do %>
+            <p>
+            <%=button_wrap(submit_tag '删除代理', :name => nil) %>
+            </p>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="notice">
+        您正在删除 <%= @host.name %>
+        </p>
+        <div class="columns3 columns clearfix">
+          <div class="column">
+            <div class="column-inner list">
+              <h4>将同时删除的服务：</h4>
+              <ul class="ol">
+                <%
+                  services = @host.services
+                %>
+                <% if services.size > 0 %>
+                  <% services.each do |service| %>
+                    <li><%= service.name%></li>
+                  <% end %>
+                <% else %>
+                  <li class="gray"><%= @host.name %>上暂无服务。</li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+          <div class="column">
+            <div class="column-inner list">
+              <h4>将同时删除的应用：</h4>
+              <ul class="ol">
+                <%
+                  apps = @host.apps
+                %>
+                <% if apps.size > 0 %>
+                  <% apps.each do |app| %>
+                    <li><%= link_to app.name, app %></li>
+                  <% end %>
+                <% else %>
+                  <li class="gray"><%= @host.name %>上暂无应用。</li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+          <div class="column">
+            <div class="column-inner list">
+              <% form_for(@host, :builder => ::UIFormBuilder, :html => { :class => "form", :method => :delete }) do |f| %>
+                <%= redirect_tag %>
+                <%=button_wrap(submit_tag '确认' + t('delete'), :name => nil) %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,4 @@
+#!/bin/sh
+ROOT_PATH=$(dirname "$(cd "$(dirname "$0")"; pwd)")
+echo Monit root path: ${ROOT_PATH}
+

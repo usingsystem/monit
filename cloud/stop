@@ -1,0 +1,3 @@
+#!/bin/bash
+
+erl -noinput -sname monit_ctl -pa ./ebin -s monit_ctl -extra monit stop

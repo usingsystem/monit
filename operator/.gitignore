@@ -1,0 +1,5 @@
+nbproject/
+log/
+tmp/**/*
+config/cassandra.yml
+config/database.yml

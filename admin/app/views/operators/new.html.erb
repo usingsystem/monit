@@ -1,0 +1,26 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("add") } %>
+      添加<%= t("operator") %>
+    <% end %>
+    <% board_content do %>
+<div class="entry-left">
+    <div>
+      <%# @operator.password = @operator.password_confirmation = nil %>
+      <% form_for @operator, :builder => ::UIFormBuilder, :url => operators_path do |f| -%>
+        <%= f.hidden_field :footer %>
+        <%= f.hidden_field :page_contact %>
+        <%= f.hidden_field :page_about %>
+        <%= hidden_field_tag :code, params[:code] %>
+        <%= f.text_field :host, :required => true, :help => "填写域名作为 登录账号" %>
+        <%= f.text_field :title,:required => true, :help => "网站名称，如：monit监控云" %>
+        <%= f.password_field :password ,:required => true,:help=>"如不修改，默认密码为6个8.(888888)"%>
+        <%= f.password_field :password_confirmation ,:required => true %>
+        <%= f.submit '添加', :hl => true %>
+      <% end -%>
+    </div>
+  </div>
+   <% end %>
+  <% end %>
+</div>

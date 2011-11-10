@@ -1,0 +1,40 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("delete") } %>
+      <%= t('delete') + t('agents') %>
+    <% end %>
+    <% board_content do %>
+      <p class="notice">
+      您正在删除<%= link_to @agent.name, @agent %>
+      </p>
+      <div class="columns columns clearfix">
+        <div class="column">
+          <div class="column-inner list">
+
+            <h4>将同时删除此代理监控的服务：</h4>
+            <ul class="ol">
+              <%
+                services = @agent.services
+              %>
+              <% if services.size > 0 %>
+                <% services.each do |service| %>
+                  <li><%= link_to service.name, service %></li>
+                <% end %>
+              <% else %>
+                <li class="gray"><%= @agent.name %>上暂无服务。</li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <div class="column">
+          <div class="column-inner list">
+            <% form_for(@agent, :builder => ::UIFormBuilder, :html => { :class => "form", :method => :delete }) do |f| %>
+              <%=button_wrap(submit_tag '确认' + t('delete'), :name => nil) %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

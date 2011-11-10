@@ -1,0 +1,24 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("edit") } %>
+      <%= t('edit') + t('site') + "主控服务" %>
+    <% end %>
+    <% board_content do %>
+      <div class="notice">
+        <p>您正在修改<%= link_to @site.name, @site %>的主控服务</p>
+        <p>主控服务将影响该<%= t('site') %>状态</p>
+      </div>
+      <% form_tag(ctrl_update_site_path(@site), :method => "put", :class => "select-form" ) do |f| %>
+        <% @site.services.each do |service| %>
+          <p>
+          <%= radio_button_tag(:ctrl, service.id, service.is_ctrl?)  + label_tag(:ctrl, (service.name), :for => ("ctrl_" + service.id.to_s))  %>
+          </p>
+        <%end%>
+        <p class="actions">
+        <span class="button-wrap"><%= submit_tag t('update'), :name => nil %></span>
+        </p>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

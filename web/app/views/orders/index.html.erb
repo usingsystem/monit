@@ -1,0 +1,64 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("all") } %>
+      我的定单
+    <% end %>
+    <% board_content do %>
+      <table class="grid" cellspacing="0">
+        <thead>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <%=th_tag sort_link_to("out_trade_no", Order.human_attribute_name("out_trade_no"),params), :style => "width:110px;" %>
+            <%=th_tag sort_link_to("status", Order.human_attribute_name("status"), params), :style => "width:60px;" %>
+            <%=th_tag Order.human_attribute_name('total_fee'), :style => "width:60px;" %>
+            <%=th_tag Order.human_attribute_name 'body'  %>
+            <%=th_tag Order.human_attribute_name('pay_mode'), :style => "width: 70px;" %>
+            <%=th_tag Order.human_attribute_name('paid_at'), :class => "time" %>
+            <%=th_tag Order.human_attribute_name('created_at'), :class => "time" %>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <th colspan="7">
+              <% if @orders && @orders.length > 0 %>
+                <div class="page clearfix">
+                  <div class="stat">显示<%=@orders.total_entries %>个<%= t("orders") %>中的<%=@orders.size %>个</div>
+                  <%=will_paginate @orders%>
+                </div>
+              <%end%>
+            </th>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% if @orders.size > 0 %>
+            <% @orders.each do |order| %>
+              <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'") %>>
+                <%=td_tag "", :class => "first" %>
+                <%=td_tag link_to(order.out_trade_no, order) %>
+                <%=td_tag (order.is_paid ? order.human_status_name : link_to(order.human_status_name, order) ) %>
+                <%=td_tag order.total_fee %>
+                <%=td_tag order.body %>
+                <%=td_tag order.human_pay_mode_name %>
+                <%=td_tag format_time(order.paid_at, true) %>
+                <%=td_tag format_time(order.created_at, true) %>
+                <%=td_tag "", :class => "last" %>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr class="first">
+              <% td_tag :colspan => 9 do %>
+                <p class="notice">
+                当前没有数据
+                </p>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+</div>

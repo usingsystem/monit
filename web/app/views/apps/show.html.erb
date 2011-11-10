@@ -1,0 +1,70 @@
+<%
+  more = params.has_key? :more
+%>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      <%= icon_status("app", @app.status_name) %><%=h @app.name %>
+    <% end %>
+    <% board_content do %>
+    <%= tabs [["base", "详细信息", {:controller => 'apps',:action=>'show',:id=>@app.id}],["config", "参数信息", {:controller => 'apps',:action=>'config',:id=>@app.id}], ["avail", "可用率报表", app_avail_path(@app), true]], 'base' %>
+      <div class="details">
+        <div class="ui-actions">
+          <span>
+            <span>
+              <%= link_to(icon("edit") + "修改", edit_app_url(@app),:class=>controlled("apps/edit"))%>
+              <%= link_to("添加服务", new_app_service_path(@app),:class=>controlled("services/new"))%>
+              <%= link_to("通知设置", edit_app_url(@app, :anchor => "notification"),:class=>controlled("apps/edit"))%>
+              <%#= link_to(icon("delete") + "删除", app_url(@app), :method => :delete,:confirm => "确认删除应用？", :class => "last")%>
+              <%= link_to(icon("delete") + "删除", confirm_app_url(@app), :class => "last " + controlled("apps/destroy"))%>
+            </span>
+          </span>
+        </div>
+        <p>
+        <b><%= App.human_attribute_name('host_id') + t("monit_ui.label_suffix") %></b>
+        <%=link_to(h(@app.host.name), @app.host,:class=>controlled("hosts/show")) %>
+        </p>
+        <p>
+        <b><%= App.human_attribute_name('type_id') + t("monit_ui.label_suffix") %></b>
+        <%=type_link_to(h(@app.type.name), {:controller => "apps", :action => "index"}) %>
+        </p>
+        <p>
+        <b><%= App.human_attribute_name('status') + t("monit_ui.label_suffix") %></b>
+        <span><%=@app.human_status_name %></span>
+        </p>
+        <p>
+        <b><%= App.human_attribute_name('summary') + t("monit_ui.label_suffix") %></b>
+        <span><%=h @app.summary %></span>
+        </p>
+        <p>
+        <b><%= App.human_attribute_name('ctrl_service') + t("monit_ui.label_suffix") %></b>
+        <span> <%=(@app.ctrl_service ? link_to(@app.ctrl_service.name, @app.ctrl_service,:class=>controlled("services/show")) : "无") %> <%= inlink_to "修改", ctrl_app_path(@app),:class=>controlled("apps/ctrl") %></span>
+        </p>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= @app.name %>的服务
+    <% end %>
+    <% board_content do %>
+      <% if @services.size > 0%>
+        <%= render :partial => 'services/table' %>
+      <% else %>
+        <% form_tag new_service_path, :method => :get do %>
+          <p>
+          </p>
+          <p class="auto-padding">
+          <%=hidden_field_tag "app_id", @app.id %>
+          <%=button_wrap(submit_tag '添加服务', :name => nil) %>
+          </p>
+        <% end %>
+      <%end%>
+    <% end %>
+  <% end %>
+</div>
+

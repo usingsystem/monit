@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<%=I18n.locale%>" lang="<%=I18n.locale%>">
+  <%content_for :head do %>
+    <%=stylesheet_link_tag 'index',:media=>'all' %>
+  <% end %>
+  <%=render :partial=>'layouts/head'%>
+  <body>
+    <div id="wrapper">
+      <!--header-->
+      <div id="header" class="clearfix">
+        <h2 id="logo">
+          <%=link_to (image_tag "index_logo.png", :alt => t('production_name')) + "<em>In the cloud</em>", "/" %>
+          <%#=link_to t('production_name') + "<em>In the cloud</em>", "/" %>
+        </h2>
+        <% if logged_in? %>
+          <div id="unused">
+            <%=link_to current_user.host, "/" %>
+            <span class="pipe"> · </span>
+            <%=link_to t("logout"), logout_url %>
+          </div>
+        <% else %>
+          <div id="login-button">
+            <%=link_to t('signup'), signup_url %>
+            <%=link_to t('login'), login_url %>
+          </div>
+          <div id="unused">
+            <!--
+            <%=link_to "介绍", "http://blog.monit.cn/?p=10" %>
+            <span class="pipe"> </span>
+            -->
+            <%=link_to '博客', "http://blog.monit.cn/" %>
+            <span class="pipe"> · </span>
+            <%=link_to "反馈", ideas_path %>
+          </div>
+        <% end %>
+      </div>
+      <!--header end-->
+      <%=yield%>
+      <%=render :partial=>'layouts/footer'%>
+    </div>
+    <%=render :partial=>'layouts/analytics'%>
+  </body>
+</html>
+

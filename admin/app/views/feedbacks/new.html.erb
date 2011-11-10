@@ -1,0 +1,32 @@
+<%= render :partial => 'welcome/header', :locals => { :title => t('feedback') } %>
+<div id="doc-wrap">
+  <div id="doc" class="clearfix">
+    <% if !flash[:notice].blank? %>
+      <p class="notice notice-success"><%= flash[:notice] %><%= link_to '返回首页', '/' %></p>
+    <% elsif @error_message %>
+      <p class="notice notice-error"><%= @error_message %></p>
+    <% else %>
+      <p class="notice">您好，欢迎提出宝贵建议和意见！您留下的每个字都将被用来改善我们的服务。</p>
+    <% end %>
+    <% form_for :feedback, @feedback, :url => feedback_path, :html => {:id => "feedback_form"} do |f| -%>
+      <%= f.hidden_field :referer %>
+      <p>
+      <%= f.label 'subject', "问题类型：" %>
+      <%= f.select 'subject', ['错误', '建议', '问题', '其他'] %>
+      </p>
+      <p>
+      <%= f.label 'email', "Email：" %>
+      <%= f.text_field 'email' %>
+      </p>
+      <p>
+      <%= f.label 'comment', "内容：" %>
+      <%= f.text_area 'comment' %>
+      </p>
+      <p>
+      <label>&nbsp;</label>
+      <%= f.submit "确定" %>
+      </p>
+    <% end -%>
+  </div>
+</div>
+

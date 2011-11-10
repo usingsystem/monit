@@ -1,0 +1,433 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+MAX_HISTORY_ENTRIES	monit_flap.erl	/^-define(MAX_HISTORY_ENTRIES, 20).$/;"	d
+SERVER	monit_object.erl	/^-define(SERVER, ?MODULE).$/;"	d
+STATUS_BADRPC	monit_ctl.erl	/^-define(STATUS_BADRPC,  3).$/;"	d
+STATUS_ERROR	monit_ctl.erl	/^-define(STATUS_ERROR,   1).$/;"	d
+STATUS_SUCCESS	monit_ctl.erl	/^-define(STATUS_SUCCESS, 0).$/;"	d
+STATUS_USAGE	monit_ctl.erl	/^-define(STATUS_USAGE,   2).$/;"	d
+action	monit_ctl.erl	/^action(User, ["list", "apps" | Args0]) ->$/;"	f	module:monit_ctl
+action	monit_ctl.erl	/^action(User, ["list", "hosts" | Args0]) ->$/;"	f	module:monit_ctl
+action	monit_ctl.erl	/^action(User, ["list", "services" | Args0]) ->$/;"	f	module:monit_ctl
+action	monit_ctl.erl	/^action(User, ["show", "app", Id]) ->$/;"	f	module:monit_ctl
+action	monit_ctl.erl	/^action(User, ["show", "host", Id]) ->$/;"	f	module:monit_ctl
+action	monit_ctl.erl	/^action(User, ["show", "service", Id]) ->$/;"	f	module:monit_ctl
+action	monit_ctl.erl	/^action(_User, _Args) ->$/;"	f	module:monit_ctl
+add	monit_object.erl	/^add(Object) when is_record(Object, monit_object) ->$/;"	f	module:monit_object
+add_listeners	monit_agent_hub.erl	/^add_listeners() ->$/;"	f	module:monit_agent_hub
+attach	monit_object_event.erl	/^attach(Hook, Listener) when is_pid(Listener) ->$/;"	f	module:monit_object_event
+binary_to_atom	monit_i18n.erl	/^binary_to_atom(B) ->$/;"	f	module:monit_i18n
+boolean_s	monit_service.erl	/^boolean_s(0) -> "false";$/;"	f	module:monit_service
+boolean_s	monit_service.erl	/^boolean_s(1) -> "true".$/;"	f	module:monit_service
+boolean_val	monit_status.erl	/^boolean_val(false) -> 0.$/;"	f	module:monit_status
+boolean_val	monit_status.erl	/^boolean_val(true) -> 1;$/;"	f	module:monit_status
+cache_agents	monit_agent_hub.erl	/^cache_agents() ->$/;"	f	module:monit_agent_hub
+cache_disco_types	monit_disco.erl	/^cache_disco_types() ->$/;"	f	module:monit_disco
+calc_changes	monit_flap.erl	/^calc_changes([S, S|T], Changes) ->$/;"	f	module:monit_flap
+calc_changes	monit_flap.erl	/^calc_changes([_S1, S2|T], Changes) ->$/;"	f	module:monit_flap
+calc_changes	monit_flap.erl	/^calc_changes([_S], Changes) ->$/;"	f	module:monit_flap
+callback	monit_agent_hub.erl	/^callback(Hook, Pid) ->$/;"	f	module:monit_agent_hub
+check	monit_flap.erl	/^check({status, Status}) ->$/;"	f	module:monit_flap
+check_flapping	monit_flap.erl	/^check_flapping(Uuid, Status, State) ->$/;"	f	module:monit_flap
+check_flapping	monit_status.erl	/^check_flapping(StatusData) ->$/;"	f	module:monit_status
+check_flapping1	monit_flap.erl	/^check_flapping1(Uuid, Status, {OldIsFlapping, Q}, #state{flap_low_threshold = LowThreshold, $/;"	f	module:monit_flap
+check_i18n	monit_status.erl	/^check_i18n(Service, StatusData) ->$/;"	f	module:monit_status
+check_last	monit_metric.erl	/^check_last(MetricCF, Uuid) ->$/;"	f	module:monit_metric
+check_metrics	monit_status.erl	/^check_metrics(Service, StatusData) ->$/;"	f	module:monit_status
+class_id	monit_object_type.erl	/^class_id(app) -> 2;$/;"	f	module:monit_object_type
+class_id	monit_object_type.erl	/^class_id(business) -> 5.$/;"	f	module:monit_object_type
+class_id	monit_object_type.erl	/^class_id(device) -> 4;$/;"	f	module:monit_object_type
+class_id	monit_object_type.erl	/^class_id(host) -> 1;$/;"	f	module:monit_object_type
+class_id	monit_object_type.erl	/^class_id(service) -> 0;$/;"	f	module:monit_object_type
+class_id	monit_object_type.erl	/^class_id(site) -> 3;$/;"	f	module:monit_object_type
+class_name	monit_object_type.erl	/^class_name(0) -> service;$/;"	f	module:monit_object_type
+class_name	monit_object_type.erl	/^class_name(1) -> host;$/;"	f	module:monit_object_type
+class_name	monit_object_type.erl	/^class_name(2) -> app;$/;"	f	module:monit_object_type
+class_name	monit_object_type.erl	/^class_name(3) -> site;$/;"	f	module:monit_object_type
+class_name	monit_object_type.erl	/^class_name(4) -> device;$/;"	f	module:monit_object_type
+class_name	monit_object_type.erl	/^class_name(5) -> business.$/;"	f	module:monit_object_type
+class_tab	monit_object_type.erl	/^class_tab(0) -> services;$/;"	f	module:monit_object_type
+class_tab	monit_object_type.erl	/^class_tab(1) -> hosts;$/;"	f	module:monit_object_type
+class_tab	monit_object_type.erl	/^class_tab(2) -> apps;$/;"	f	module:monit_object_type
+class_tab	monit_object_type.erl	/^class_tab(3) -> sites;$/;"	f	module:monit_object_type
+class_tab	monit_object_type.erl	/^class_tab(4) -> devices;$/;"	f	module:monit_object_type
+class_tab	monit_object_type.erl	/^class_tab(5) -> business.$/;"	f	module:monit_object_type
+code_change	monit_agent_hub.erl	/^code_change(_OldVsn, State, _Extra) ->$/;"	f	module:monit_agent_hub
+code_change	monit_bot.erl	/^code_change(_OldVsn, State, _Extra) ->$/;"	f	module:monit_bot
+code_change	monit_disco.erl	/^code_change(_OldVsn, State, _Extra) ->$/;"	f	module:monit_disco
+code_change	monit_flap.erl	/^code_change(_OldVsn, State, _Extra) ->$/;"	f	module:monit_flap
+code_change	monit_i18n.erl	/^code_change(_OldVsn, State, _Extra) ->$/;"	f	module:monit_i18n
+code_change	monit_last.erl	/^code_change(_OldVsn, State, _Extra) ->$/;"	f	module:monit_last
+code_change	monit_metric.erl	/^code_change(_OldVsn, State, _Extra) ->$/;"	f	module:monit_metric
+code_change	monit_node_hub.erl	/^code_change(_OldVsn, State, _Extra) ->$/;"	f	module:monit_node_hub
+code_change	monit_object.erl	/^code_change(_OldVsn, State, _Extra) ->$/;"	f	module:monit_object
+code_change	monit_object_event.erl	/^code_change(_OldVsn, State, _Extra) ->$/;"	f	module:monit_object_event
+code_change	monit_object_type.erl	/^code_change(_OldVsn, State, _Extra) ->$/;"	f	module:monit_object_type
+code_change	monit_service.erl	/^code_change(_OldVsn, State, _Extra) ->$/;"	f	module:monit_service
+code_change	monit_status.erl	/^code_change(_OldVsn, State, _Extra) ->$/;"	f	module:monit_status
+compensate	monit_metric.erl	/^compensate(MetricCF, Uuid, MissedPoints, EmptyColumns) ->$/;"	f	module:monit_metric
+connect	monit_agent_hub.erl	/^connect() ->$/;"	f	module:monit_agent_hub
+create_disco_tasks	monit_disco.erl	/^create_disco_tasks(Type, Host) ->$/;"	f	module:monit_disco
+delete	monit_object.erl	/^delete(Uuid) when is_binary(Uuid) or is_list(Uuid) ->$/;"	f	module:monit_object
+delete	monit_object.erl	/^delete({Class, Id}) -> $/;"	f	module:monit_object
+delete_last	monit_last.erl	/^delete_last(Uuid) ->$/;"	f	module:monit_last
+detach	monit_object_event.erl	/^detach(Hook, Listener) when is_pid(Listener) ->$/;"	f	module:monit_object_event
+disco_type	monit_disco.erl	/^-record(disco_type, {id, object_type, command, args, service_type, external}).$/;"	r
+dispatch	monit_disco.erl	/^dispatch(AgentId, Task) ->$/;"	f	module:monit_disco
+dispatch	monit_disco.erl	/^dispatch(Task) ->$/;"	f	module:monit_disco
+dispatch	monit_node_hub.erl	/^dispatch(Type, #monit_object{id = ObjectId, uuid = Uuid, attrs = Service}) ->$/;"	f	module:monit_node_hub
+do_disco	monit_disco.erl	/^do_disco(AgentId, Type, Mo) ->$/;"	f	module:monit_disco
+do_disco	monit_disco.erl	/^do_disco(Type, Mo) ->$/;"	f	module:monit_disco
+do_init	monit_agent_hub.erl	/^do_init(Args) ->$/;"	f	module:monit_agent_hub
+do_init	monit_bot.erl	/^do_init(Args) ->$/;"	f	module:monit_bot
+do_query	monit_ctl.erl	/^do_query(User, Args, Fun) ->$/;"	f	module:monit_ctl
+do_query	monit_ctl.erl	/^do_query(User, Fun) ->$/;"	f	module:monit_ctl
+find_agent	monit_agent_hub.erl	/^find_agent(Id) when is_integer(Id) ->$/;"	f	module:monit_agent_hub
+find_agent	monit_agent_hub.erl	/^find_agent(Node, Domain) ->$/;"	f	module:monit_agent_hub
+find_disco_types	monit_disco.erl	/^find_disco_types(Type, HostType) ->$/;"	f	module:monit_disco
+find_disco_types2	monit_disco.erl	/^find_disco_types2([], Acc) ->$/;"	f	module:monit_disco
+find_disco_types2	monit_disco.erl	/^find_disco_types2([{ObjectType, HostType} | T], Acc) ->$/;"	f	module:monit_disco
+find_object	monit_node_hub.erl	/^find_object(Class, [#monit_object{class = Class} = Object | _T]) ->$/;"	f	module:monit_node_hub
+find_object	monit_node_hub.erl	/^find_object(Class, [_H|T]) ->$/;"	f	module:monit_node_hub
+find_object	monit_node_hub.erl	/^find_object(_Class, []) ->$/;"	f	module:monit_node_hub
+find_user	monit_bot.erl	/^find_user(Id) when is_integer(Id) ->$/;"	f	module:monit_bot
+find_user	monit_bot.erl	/^find_user(Node, Domain) ->$/;"	f	module:monit_bot
+get_locale	monit_i18n.erl	/^get_locale(Country, Language, Group, Res) when is_atom(Country) $/;"	f	module:monit_i18n
+get_locale	monit_i18n.erl	/^get_locale(Country, Language, Res) when is_atom(Country) $/;"	f	module:monit_i18n
+get_locale	monit_i18n.erl	/^get_locale(Res) when is_binary(Res) ->$/;"	f	module:monit_i18n
+get_sasl_error_logger_type	monit_ctl.erl	/^get_sasl_error_logger_type () ->$/;"	f	module:monit_ctl
+handle_call	monit_agent_hub.erl	/^handle_call(Req, _From, State) ->$/;"	f	module:monit_agent_hub
+handle_call	monit_agent_hub.erl	/^handle_call(connect, _From, #state{jid = JID, password = Password, $/;"	f	module:monit_agent_hub
+handle_call	monit_agent_hub.erl	/^handle_call(stop, _From, #state{session = Session} = State) ->$/;"	f	module:monit_agent_hub
+handle_call	monit_agent_hub.erl	/^handle_call({callback, Hook, Pid}, _From, State) ->$/;"	f	module:monit_agent_hub
+handle_call	monit_bot.erl	/^handle_call(Req, _From, State) ->$/;"	f	module:monit_bot
+handle_call	monit_bot.erl	/^handle_call(stop, _From, State) ->$/;"	f	module:monit_bot
+handle_call	monit_disco.erl	/^handle_call(Req, _From, State) ->$/;"	f	module:monit_disco
+handle_call	monit_flap.erl	/^handle_call(Request, _From, State) ->$/;"	f	module:monit_flap
+handle_call	monit_flap.erl	/^handle_call({check, StatusData}, _From, State) ->$/;"	f	module:monit_flap
+handle_call	monit_i18n.erl	/^handle_call(Request, _From, State) ->$/;"	f	module:monit_i18n
+handle_call	monit_i18n.erl	/^handle_call({get_locale, Res}, _From, #state{country = C, language = L} = State) ->$/;"	f	module:monit_i18n
+handle_call	monit_last.erl	/^handle_call(Request, _From, State) ->$/;"	f	module:monit_last
+handle_call	monit_metric.erl	/^handle_call(Request, _From, State) ->$/;"	f	module:monit_metric
+handle_call	monit_node_hub.erl	/^handle_call(Req, _From, State) ->$/;"	f	module:monit_node_hub
+handle_call	monit_node_hub.erl	/^handle_call(stop, _From, State) ->$/;"	f	module:monit_node_hub
+handle_call	monit_object.erl	/^handle_call(Req, _From, State) ->$/;"	f	module:monit_object
+handle_call	monit_object.erl	/^handle_call(stop, _From, State) ->$/;"	f	module:monit_object
+handle_call	monit_object.erl	/^handle_call({add, Object}, _From, State) ->$/;"	f	module:monit_object
+handle_call	monit_object.erl	/^handle_call({delete, Uuid}, _From, State) ->$/;"	f	module:monit_object
+handle_call	monit_object.erl	/^handle_call({delete, {Class, Id}}, _From, State) ->$/;"	f	module:monit_object
+handle_call	monit_object.erl	/^handle_call({update, Object}, _From, State) ->$/;"	f	module:monit_object
+handle_call	monit_object_event.erl	/^handle_call(Req, _From, State) ->$/;"	f	module:monit_object_event
+handle_call	monit_object_event.erl	/^handle_call(stop, _From, State) ->$/;"	f	module:monit_object_event
+handle_call	monit_object_event.erl	/^handle_call({attach, Hook, Listener}, _From, State) ->$/;"	f	module:monit_object_event
+handle_call	monit_object_event.erl	/^handle_call({detach, Hook, Listener}, _From, State) ->$/;"	f	module:monit_object_event
+handle_call	monit_object_type.erl	/^handle_call(Req, _From, State) ->$/;"	f	module:monit_object_type
+handle_call	monit_object_type.erl	/^handle_call(stop, _From, State) ->$/;"	f	module:monit_object_type
+handle_call	monit_service.erl	/^handle_call(_Request, _From, State) ->$/;"	f	module:monit_service
+handle_call	monit_status.erl	/^handle_call(Request, _From, State) ->$/;"	f	module:monit_status
+handle_cast	monit_agent_hub.erl	/^handle_cast(Msg, State) ->$/;"	f	module:monit_agent_hub
+handle_cast	monit_agent_hub.erl	/^handle_cast({send, Packet}, #state{session = Session} = State) ->$/;"	f	module:monit_agent_hub
+handle_cast	monit_agent_hub.erl	/^handle_cast({uncallback, Hook, Pid}, State) ->$/;"	f	module:monit_agent_hub
+handle_cast	monit_bot.erl	/^handle_cast(Msg, State) ->$/;"	f	module:monit_bot
+handle_cast	monit_bot.erl	/^handle_cast(stop, #state{session = Session} = State) ->$/;"	f	module:monit_bot
+handle_cast	monit_disco.erl	/^handle_cast(Msg, State) ->$/;"	f	module:monit_disco
+handle_cast	monit_disco.erl	/^handle_cast({dispatch, AgentId, Task}, State) ->$/;"	f	module:monit_disco
+handle_cast	monit_disco.erl	/^handle_cast({dispatch, Task}, State) ->$/;"	f	module:monit_disco
+handle_cast	monit_flap.erl	/^handle_cast(_Msg, State) ->$/;"	f	module:monit_flap
+handle_cast	monit_i18n.erl	/^handle_cast(_Msg, State) ->$/;"	f	module:monit_i18n
+handle_cast	monit_last.erl	/^handle_cast(Msg, State) ->$/;"	f	module:monit_last
+handle_cast	monit_last.erl	/^handle_cast({insert, Last}, State) ->$/;"	f	module:monit_last
+handle_cast	monit_metric.erl	/^handle_cast(Msg, State) ->$/;"	f	module:monit_metric
+handle_cast	monit_metric.erl	/^handle_cast({insert, {Service, Timestamp, Metrics}}, $/;"	f	module:monit_metric
+handle_cast	monit_node_hub.erl	/^handle_cast(Msg, State) ->$/;"	f	module:monit_node_hub
+handle_cast	monit_object.erl	/^handle_cast(Msg, State) ->$/;"	f	module:monit_object
+handle_cast	monit_object_event.erl	/^handle_cast(Msg, State) ->$/;"	f	module:monit_object_event
+handle_cast	monit_object_event.erl	/^handle_cast({notify, Hook, Event}, State) ->$/;"	f	module:monit_object_event
+handle_cast	monit_object_type.erl	/^handle_cast(Msg, State) ->$/;"	f	module:monit_object_type
+handle_cast	monit_service.erl	/^handle_cast(_Msg, State) ->$/;"	f	module:monit_service
+handle_cast	monit_status.erl	/^handle_cast(Msg, State) ->$/;"	f	module:monit_status
+handle_info	monit_agent_hub.erl	/^handle_info(#received_packet{packet_type=iq, type_attr = Type, $/;"	f	module:monit_agent_hub
+handle_info	monit_agent_hub.erl	/^handle_info(#received_packet{packet_type=message, $/;"	f	module:monit_agent_hub
+handle_info	monit_agent_hub.erl	/^handle_info(#received_packet{packet_type=presence, $/;"	f	module:monit_agent_hub
+handle_info	monit_agent_hub.erl	/^handle_info(Info, State) ->$/;"	f	module:monit_agent_hub
+handle_info	monit_agent_hub.erl	/^handle_info(avail, #state{jid = JID, session = Session} = State) ->$/;"	f	module:monit_agent_hub
+handle_info	monit_agent_hub.erl	/^handle_info({add, service, Service, AgentId}, $/;"	f	module:monit_agent_hub
+handle_info	monit_agent_hub.erl	/^handle_info({delete, service, Uuid, AgentId}, $/;"	f	module:monit_agent_hub
+handle_info	monit_agent_hub.erl	/^handle_info({update, service, Service, AgentId}, $/;"	f	module:monit_agent_hub
+handle_info	monit_bot.erl	/^handle_info(#received_packet{packet_type=iq, from = FromJID, $/;"	f	module:monit_bot
+handle_info	monit_bot.erl	/^handle_info(#received_packet{packet_type=message, type_attr="chat", $/;"	f	module:monit_bot
+handle_info	monit_bot.erl	/^handle_info(#received_packet{packet_type=presence, $/;"	f	module:monit_bot
+handle_info	monit_bot.erl	/^handle_info(#received_packet{raw_packet=Packet} = _, State) ->$/;"	f	module:monit_bot
+handle_info	monit_bot.erl	/^handle_info(Info, State) ->$/;"	f	module:monit_bot
+handle_info	monit_bot.erl	/^handle_info(check_notifications, #state{session = Session, last_notification_id = MaxId} = State) ->$/;"	f	module:monit_bot
+handle_info	monit_disco.erl	/^handle_info(Info, State) ->$/;"	f	module:monit_disco
+handle_info	monit_disco.erl	/^handle_info(check_redisco, State) ->$/;"	f	module:monit_disco
+handle_info	monit_disco.erl	/^handle_info({deliver, <<"disco-result">>, _Properties, Payload}, State) ->$/;"	f	module:monit_disco
+handle_info	monit_disco.erl	/^handle_info({event, AgentId, {add, Type, Mo}}, State) ->$/;"	f	module:monit_disco
+handle_info	monit_disco.erl	/^handle_info({event, AgentId, {update, Type, Mo}}, State) ->$/;"	f	module:monit_disco
+handle_info	monit_disco.erl	/^handle_info({event, {add, Type, Mo}}, State) ->$/;"	f	module:monit_disco
+handle_info	monit_disco.erl	/^handle_info({event, {update, Type, Mo}}, State) ->$/;"	f	module:monit_disco
+handle_info	monit_disco.erl	/^handle_info({iq, Agent, {'monit:iq:disco#services', set, _, _Id, IQ}}, State) ->$/;"	f	module:monit_disco
+handle_info	monit_disco.erl	/^handle_info({iq, _Agent, {'monit:iq:disco#tasks', get, _, _Id, IQ}}, State) ->$/;"	f	module:monit_disco
+handle_info	monit_flap.erl	/^handle_info(_Info, State) ->$/;"	f	module:monit_flap
+handle_info	monit_i18n.erl	/^handle_info(_Info, State) ->$/;"	f	module:monit_i18n
+handle_info	monit_last.erl	/^handle_info(Info, State) ->$/;"	f	module:monit_last
+handle_info	monit_last.erl	/^handle_info({deleted, Uuid, _AgentId}, State) ->$/;"	f	module:monit_last
+handle_info	monit_last.erl	/^handle_info({deleted, Uuid}, State) ->$/;"	f	module:monit_last
+handle_info	monit_metric.erl	/^handle_info(Info, State) ->$/;"	f	module:monit_metric
+handle_info	monit_metric.erl	/^handle_info({'EXIT', Cassandra, _Reason}, #state{cassandra = Cassandra} = State) ->$/;"	f	module:monit_metric
+handle_info	monit_node_hub.erl	/^handle_info(Info, State) ->$/;"	f	module:monit_node_hub
+handle_info	monit_node_hub.erl	/^handle_info({added, service, Object}, State) ->$/;"	f	module:monit_node_hub
+handle_info	monit_node_hub.erl	/^handle_info({delete, service, Uuid}, State) ->$/;"	f	module:monit_node_hub
+handle_info	monit_node_hub.erl	/^handle_info({update, service, Object}, State) ->$/;"	f	module:monit_node_hub
+handle_info	monit_object.erl	/^handle_info(Info, State) ->$/;"	f	module:monit_object
+handle_info	monit_object_event.erl	/^handle_info(Info, State) ->$/;"	f	module:monit_object_event
+handle_info	monit_object_event.erl	/^handle_info(sync_object_changes, State) ->$/;"	f	module:monit_object_event
+handle_info	monit_object_type.erl	/^handle_info(Info, State) ->$/;"	f	module:monit_object_type
+handle_info	monit_object_type.erl	/^handle_info(reload_types, State) ->$/;"	f	module:monit_object_type
+handle_info	monit_service.erl	/^handle_info(Info, State) ->$/;"	f	module:monit_service
+handle_info	monit_service.erl	/^handle_info({deliver, <<"serivce">>, _Props, Payload}, State) ->$/;"	f	module:monit_service
+handle_info	monit_service.erl	/^handle_info({iq, Agent, {'monit:iq:service#info', get, {Node, Domain, _Res}, _Id, IQ}}, State) ->$/;"	f	module:monit_service
+handle_info	monit_service.erl	/^handle_info({iq, Agent, {'monit:iq:service#items', get, {Node, Domain, _Res}, _Id, IQ}}, State) ->$/;"	f	module:monit_service
+handle_info	monit_status.erl	/^handle_info(Info, State) ->$/;"	f	module:monit_status
+handle_info	monit_status.erl	/^handle_info({deliver, <<"status">>, _Props, Payload}, State) ->$/;"	f	module:monit_status
+handle_info	monit_status.erl	/^handle_info({status, StatusData}, State) ->$/;"	f	module:monit_status
+inform_agent	monit_agent_hub.erl	/^inform_agent(Agent, IQ, Session) ->$/;"	f	module:monit_agent_hub
+inform_service_delete	monit_agent_hub.erl	/^inform_service_delete(Agent, Uuid, JID, Session) ->$/;"	f	module:monit_agent_hub
+inform_service_update	monit_agent_hub.erl	/^inform_service_update(Agent, Service, JID, Session) ->$/;"	f	module:monit_agent_hub
+init	monit_agent_hub.erl	/^init([Args]) ->$/;"	f	module:monit_agent_hub
+init	monit_bot.erl	/^init([Args]) ->$/;"	f	module:monit_bot
+init	monit_ctl.erl	/^init() ->$/;"	f	module:monit_ctl
+init	monit_disco.erl	/^init([]) ->$/;"	f	module:monit_disco
+init	monit_flap.erl	/^init([]) ->$/;"	f	module:monit_flap
+init	monit_i18n.erl	/^init([]) ->$/;"	f	module:monit_i18n
+init	monit_last.erl	/^init([]) ->$/;"	f	module:monit_last
+init	monit_metric.erl	/^init([]) ->$/;"	f	module:monit_metric
+init	monit_node_hub.erl	/^init([]) ->$/;"	f	module:monit_node_hub
+init	monit_object.erl	/^init([]) ->$/;"	f	module:monit_object
+init	monit_object_event.erl	/^init([]) ->$/;"	f	module:monit_object_event
+init	monit_object_type.erl	/^init([]) ->$/;"	f	module:monit_object_type
+init	monit_service.erl	/^init([]) ->$/;"	f	module:monit_service
+init	monit_slave_sup.erl	/^init([]) ->$/;"	f	module:monit_slave_sup
+init	monit_status.erl	/^init([]) ->$/;"	f	module:monit_status
+init	monit_sup.erl	/^init([]) ->$/;"	f	module:monit_sup
+insert	monit_last.erl	/^insert(Last) when is_record(Last, monit_last) ->$/;"	f	module:monit_last
+insert	monit_metric.erl	/^insert(Service, Timestamp, Metrics) ->$/;"	f	module:monit_metric
+insert_into_cf	monit_status.erl	/^insert_into_cf(Service, StatusData, #state{status_cf = CF} = _State) ->$/;"	f	module:monit_status
+insert_into_db	monit_status.erl	/^insert_into_db(Service, StatusData, _State) ->$/;"	f	module:monit_status
+load	monit.erl	/^load(Class, Tab) ->$/;"	f	module:monit
+load	monit.erl	/^load(Class, Tab, First, Limit) ->$/;"	f	module:monit
+load	monit_object.erl	/^load({app, Id}) ->$/;"	f	module:monit_object
+load	monit_object.erl	/^load({device, Id}) -> $/;"	f	module:monit_object
+load	monit_object.erl	/^load({host, Id}) -> $/;"	f	module:monit_object
+load	monit_object.erl	/^load({service, Id}) ->$/;"	f	module:monit_object
+load	monit_object.erl	/^load({site, Id}) -> $/;"	f	module:monit_object
+load_types	monit_object_type.erl	/^load_types() ->$/;"	f	module:monit_object_type
+load_types	monit_object_type.erl	/^load_types(Class, Tab) ->$/;"	f	module:monit_object_type
+localize	monit_status.erl	/^localize(Command, Key) ->$/;"	f	module:monit_status
+lookup	monit_last.erl	/^lookup(Key) ->$/;"	f	module:monit_last
+lookup	monit_object.erl	/^lookup(Uuid) when is_binary(Uuid) or is_list(Uuid) ->$/;"	f	module:monit_object
+lookup	monit_object.erl	/^lookup({Class, Id}) ->$/;"	f	module:monit_object
+map2columns	monit_metric.erl	/^map2columns(Metrics) ->$/;"	f	module:monit_metric
+max	monit_status.erl	/^max(Status1, Status2) ->$/;"	f	module:monit_status
+min	monit_status.erl	/^min(X, Y) when X =< Y -> X;$/;"	f	module:monit_status
+min	monit_status.erl	/^min(_X, Y) -> Y.$/;"	f	module:monit_status
+monit	monit.erl	/^-module(monit).$/;"	m
+monit_agent_hub	monit_agent_hub.erl	/^-module(monit_agent_hub).$/;"	m
+monit_app	monit_app.erl	/^-module(monit_app).$/;"	m
+monit_bot	monit_bot.erl	/^-module(monit_bot).$/;"	m
+monit_ctl	monit_ctl.erl	/^-module(monit_ctl).$/;"	m
+monit_disco	monit_disco.erl	/^-module(monit_disco).$/;"	m
+monit_flap	monit_flap.erl	/^-module(monit_flap).$/;"	m
+monit_i18n	monit_i18n.erl	/^-module(monit_i18n).$/;"	m
+monit_last	monit_last.erl	/^-module(monit_last).$/;"	m
+monit_metric	monit_metric.erl	/^-module(monit_metric).$/;"	m
+monit_node_hub	monit_node_hub.erl	/^-module(monit_node_hub).$/;"	m
+monit_object	monit_object.erl	/^-module(monit_object).$/;"	m
+monit_object_event	monit_object_event.erl	/^-module(monit_object_event).$/;"	m
+monit_object_type	monit_object_type.erl	/^-module(monit_object_type).$/;"	m
+monit_service	monit_service.erl	/^-module(monit_service).$/;"	m
+monit_slave	monit_slave.erl	/^-module(monit_slave).$/;"	m
+monit_slave_sup	monit_slave_sup.erl	/^-module(monit_slave_sup).$/;"	m
+monit_status	monit_status.erl	/^-module(monit_status).$/;"	m
+monit_sup	monit_sup.erl	/^-module(monit_sup).$/;"	m
+need_compensate	monit_metric.erl	/^need_compensate(LastTime, Timestamp, CheckInterval) ->$/;"	f	module:monit_metric
+notify	monit.erl	/^notify(added, Class, #monit_object{agent = AgentId} = Object) ->$/;"	f	module:monit
+notify	monit_object_event.erl	/^notify(Hook, Event) ->$/;"	f	module:monit_object_event
+notify_agent_changed	monit_object_event.erl	/^notify_agent_changed(#monit_object{uuid = UUID, agent = OldAgentId, class = Class}, $/;"	f	module:monit_object_event
+notify_agent_changed	monit_object_event.erl	/^notify_agent_changed(#monit_object{uuid = UUID, agent = undefined, class = Class}, $/;"	f	module:monit_object_event
+notify_object_updated	monit_object_event.erl	/^notify_object_updated(#monit_object{agent = AgentId, class = Class} = Object) ->$/;"	f	module:monit_object_event
+notify_subtree_updated	monit_object_event.erl	/^notify_subtree_updated(#monit_object{id = {Class, ObjectId}} = Object) ->$/;"	f	module:monit_object_event
+parent_types	monit_object_type.erl	/^parent_types(Id) when is_tuple(Id) ->$/;"	f	module:monit_object_type
+parent_types	monit_object_type.erl	/^parent_types(Id, Acc) ->$/;"	f	module:monit_object_type
+parents	monit_object.erl	/^parents({Class, Id}) ->$/;"	f	module:monit_object
+parents1	monit_object.erl	/^parents1(#monit_object{parent = ParentId}, Acc) ->$/;"	f	module:monit_object
+parents1	monit_object.erl	/^parents1(#monit_object{parent = undefined}, Acc) ->$/;"	f	module:monit_object
+parse_args	monit_ctl.erl	/^parse_args(["-s", Status]) ->$/;"	f	module:monit_ctl
+parse_args	monit_ctl.erl	/^parse_args([]) ->$/;"	f	module:monit_ctl
+parse_param	monit_node_hub.erl	/^parse_param(ObjectId, S) ->$/;"	f	module:monit_node_hub
+parse_params	monit_disco.erl	/^parse_params(Task, Params0) ->$/;"	f	module:monit_disco
+parse_params	monit_node_hub.erl	/^parse_params(ObjectId, Params) ->$/;"	f	module:monit_node_hub
+parse_params	monit_node_hub.erl	/^parse_params(_ObjectId, undefined) ->$/;"	f	module:monit_node_hub
+parse_var	monit_node_hub.erl	/^parse_var(ObjectId, Var) ->$/;"	f	module:monit_node_hub
+parsevar	monit_disco.erl	/^parsevar(Task, Var) ->$/;"	f	module:monit_disco
+print_app	monit_ctl.erl	/^print_app(App) ->$/;"	f	module:monit_ctl
+print_apps	monit_ctl.erl	/^print_apps(Apps) ->$/;"	f	module:monit_ctl
+print_host	monit_ctl.erl	/^print_host(Host) ->$/;"	f	module:monit_ctl
+print_hosts	monit_ctl.erl	/^print_hosts(Hosts) ->$/;"	f	module:monit_ctl
+print_service	monit_ctl.erl	/^print_service(Service) ->$/;"	f	module:monit_ctl
+print_services	monit_ctl.erl	/^print_services(Services) ->$/;"	f	module:monit_ctl
+print_usage	monit_ctl.erl	/^print_usage() ->$/;"	f	module:monit_ctl
+probe_agent	monit_agent_hub.erl	/^probe_agent([Bjid|T], JID, Session) ->$/;"	f	module:monit_agent_hub
+probe_agent	monit_agent_hub.erl	/^probe_agent([], _JID, _Session) ->$/;"	f	module:monit_agent_hub
+probe_all_agents	monit_agent_hub.erl	/^probe_all_agents(JID, Session) ->$/;"	f	module:monit_agent_hub
+process	monit_ctl.erl	/^process(["log_rotation"]) ->$/;"	f	module:monit_ctl
+process	monit_ctl.erl	/^process(["mnesia", "info"]) ->$/;"	f	module:monit_ctl
+process	monit_ctl.erl	/^process(["mnesia", Arg]) when is_list(Arg) ->$/;"	f	module:monit_ctl
+process	monit_ctl.erl	/^process(["mnesia"]) ->$/;"	f	module:monit_ctl
+process	monit_ctl.erl	/^process(["restart"]) ->$/;"	f	module:monit_ctl
+process	monit_ctl.erl	/^process(["run"]) ->$/;"	f	module:monit_ctl
+process	monit_ctl.erl	/^process(["status"]) ->$/;"	f	module:monit_ctl
+process	monit_ctl.erl	/^process(["stop"]) ->$/;"	f	module:monit_ctl
+process	monit_ctl.erl	/^process(_) -> $/;"	f	module:monit_ctl
+process_change	monit_object_event.erl	/^process_change(?OPER_ADD, Change) ->$/;"	f	module:monit_object_event
+process_change	monit_object_event.erl	/^process_change(?OPER_DELETE, Change) ->$/;"	f	module:monit_object_event
+process_change	monit_object_event.erl	/^process_change(?OPER_UPDATE, Change) ->$/;"	f	module:monit_object_event
+process_change	monit_object_event.erl	/^process_change(Change) ->$/;"	f	module:monit_object_event
+process_change	monit_object_event.erl	/^process_change(Oper, Change) ->$/;"	f	module:monit_object_event
+process_changes	monit_object_event.erl	/^process_changes([Change | T]) ->$/;"	f	module:monit_object_event
+process_changes	monit_object_event.erl	/^process_changes([]) ->$/;"	f	module:monit_object_event
+process_data	monit_agent_hub.erl	/^process_data({Node, Domain, _}, Body) ->$/;"	f	module:monit_agent_hub
+process_disco_result	monit_disco.erl	/^process_disco_result({TaskId, error, Summary}) ->$/;"	f	module:monit_disco
+process_disco_result	monit_disco.erl	/^process_disco_result({TaskId, ok, Summary, Services}) ->$/;"	f	module:monit_disco
+process_iq	monit_agent_hub.erl	/^process_iq(IQ, _State) ->$/;"	f	module:monit_agent_hub
+process_iq	monit_agent_hub.erl	/^process_iq({NS, _Type, {Node, Domain, _}, _Id, IQ} = Packet, _State) -> $/;"	f	module:monit_agent_hub
+process_iq	monit_agent_hub.erl	/^process_iq({NS, error, {Node, Domain, _}, _Id, IQ} = Packet, _State) -> $/;"	f	module:monit_agent_hub
+process_iq	monit_bot.erl	/^process_iq(FromJID, IQ, _State) ->$/;"	f	module:monit_bot
+process_message	monit_agent_hub.erl	/^process_message({_Type, FromJID, Packet}, _State) ->$/;"	f	module:monit_agent_hub
+process_message	monit_agent_hub.erl	/^process_message({chat, FromJID, Packet}, _State) ->$/;"	f	module:monit_agent_hub
+process_message	monit_agent_hub.erl	/^process_message({normal, FromJID, Packet}, _State) ->$/;"	f	module:monit_agent_hub
+process_message	monit_bot.erl	/^process_message(FromJID, Packet, #state{jid = JID, session = Session} = _State) ->$/;"	f	module:monit_bot
+process_presence	monit_agent_hub.erl	/^process_presence({Type, FromT}, _State) ->$/;"	f	module:monit_agent_hub
+process_presence	monit_agent_hub.erl	/^process_presence({_Type, {_Node, <<"cloud.monit.cn">>, _Res}}, _State) ->$/;"	f	module:monit_agent_hub
+process_presence	monit_agent_hub.erl	/^process_presence({available, {Node, Domain, _Res}}, _State) ->$/;"	f	module:monit_agent_hub
+process_presence	monit_agent_hub.erl	/^process_presence({error, {Node, Domain, _}}, _State) ->$/;"	f	module:monit_agent_hub
+process_presence	monit_agent_hub.erl	/^process_presence({probe, {Node, Domain, _}}, #state{jid = JID, session = Session}) ->$/;"	f	module:monit_agent_hub
+process_presence	monit_agent_hub.erl	/^process_presence({unavailable, {Node, Domain, _}}, _State) ->$/;"	f	module:monit_agent_hub
+process_presence	monit_bot.erl	/^process_presence(Type, FromJID, _State) ->$/;"	f	module:monit_bot
+process_presence	monit_bot.erl	/^process_presence(_Type, {_Node, <<"bot.monit.cn">>, _}, _State) ->$/;"	f	module:monit_bot
+process_presence	monit_bot.erl	/^process_presence(available, {Node, Domain, _Res}, _State) ->$/;"	f	module:monit_bot
+process_presence	monit_bot.erl	/^process_presence(error, {Node, Domain, _}, _State) ->$/;"	f	module:monit_bot
+process_presence	monit_bot.erl	/^process_presence(probe, {Node, Domain, _} = FromJID, $/;"	f	module:monit_bot
+process_presence	monit_bot.erl	/^process_presence(unavailable, {Node, Domain, _}, _State) ->$/;"	f	module:monit_bot
+process_status	monit_status.erl	/^process_status(StatusData, State) ->$/;"	f	module:monit_status
+query_apps	monit_ctl.erl	/^query_apps(Tenant, Args) ->$/;"	f	module:monit_ctl
+query_hosts	monit_ctl.erl	/^query_hosts(Tenant, Args) ->$/;"	f	module:monit_ctl
+query_services	monit_ctl.erl	/^query_services(Tenant, Args) ->$/;"	f	module:monit_ctl
+random_seq	monit_agent_hub.erl	/^random_seq() ->$/;"	f	module:monit_agent_hub
+random_seq	monit_disco.erl	/^random_seq() ->$/;"	f	module:monit_disco
+read_locale	monit_i18n.erl	/^read_locale(Key, Res) ->$/;"	f	module:monit_i18n
+run	monit.erl	/^run() ->$/;"	f	module:monit
+send_avail_presence	monit_bot.erl	/^send_avail_presence(Session, From, To) ->$/;"	f	module:monit_bot
+send_notification	monit_bot.erl	/^send_notification(Session, Notification) ->$/;"	f	module:monit_bot
+send_packet	monit_agent_hub.erl	/^send_packet(Packet) ->$/;"	f	module:monit_agent_hub
+start	monit.erl	/^start() ->$/;"	f	module:monit
+start	monit.erl	/^start(App) ->$/;"	f	module:monit
+start	monit.erl	/^start(elog) ->$/;"	f	module:monit
+start	monit.erl	/^start(mnesia) ->$/;"	f	module:monit
+start	monit_app.erl	/^start(normal, _Args) ->$/;"	f	module:monit_app
+start	monit_ctl.erl	/^start() ->$/;"	f	module:monit_ctl
+start	monit_slave.erl	/^start() ->$/;"	f	module:monit_slave
+start	monit_slave.erl	/^start(normal, _Args) ->$/;"	f	module:monit_slave
+start1	monit_slave.erl	/^start1(App) ->$/;"	f	module:monit_slave
+start1	monit_slave.erl	/^start1(elog) ->$/;"	f	module:monit_slave
+start1	monit_slave.erl	/^start1(mnesia) ->$/;"	f	module:monit_slave
+start_child	monit_app.erl	/^start_child(SupPid, Name) ->$/;"	f	module:monit_app
+start_child	monit_app.erl	/^start_child(SupPid, Name, Opts) ->$/;"	f	module:monit_app
+start_link	monit_agent_hub.erl	/^start_link(Args) -> $/;"	f	module:monit_agent_hub
+start_link	monit_bot.erl	/^start_link(Args) -> $/;"	f	module:monit_bot
+start_link	monit_disco.erl	/^start_link() ->$/;"	f	module:monit_disco
+start_link	monit_flap.erl	/^start_link() ->$/;"	f	module:monit_flap
+start_link	monit_i18n.erl	/^start_link() ->$/;"	f	module:monit_i18n
+start_link	monit_last.erl	/^start_link() ->$/;"	f	module:monit_last
+start_link	monit_metric.erl	/^start_link() ->$/;"	f	module:monit_metric
+start_link	monit_node_hub.erl	/^start_link() ->$/;"	f	module:monit_node_hub
+start_link	monit_object.erl	/^start_link() ->$/;"	f	module:monit_object
+start_link	monit_object_event.erl	/^start_link() ->$/;"	f	module:monit_object_event
+start_link	monit_object_type.erl	/^start_link() ->$/;"	f	module:monit_object_type
+start_link	monit_service.erl	/^start_link() ->$/;"	f	module:monit_service
+start_link	monit_slave_sup.erl	/^start_link() ->$/;"	f	module:monit_slave_sup
+start_link	monit_status.erl	/^start_link() ->$/;"	f	module:monit_status
+start_link	monit_sup.erl	/^start_link() ->$/;"	f	module:monit_sup
+state	monit_agent_hub.erl	/^-record(state, {jid, password, host, port, session}).$/;"	r
+state	monit_bot.erl	/^-record(state, {jid, password, host, port, session, last_notification_id = 99999999}).$/;"	r
+state	monit_disco.erl	/^-record(state, {consumer_tag}).$/;"	r
+state	monit_flap.erl	/^-record(state, {flap_low_threshold = 20, $/;"	r
+state	monit_i18n.erl	/^-record(state, {country, language}).$/;"	r
+state	monit_metric.erl	/^-record(state, {cassandra, metric_cf}).$/;"	r
+state	monit_service.erl	/^-record(state, {consumer_tag}).$/;"	r
+state	monit_status.erl	/^-record(state, {status_cf, consumer_tag}).$/;"	r
+status_id	monit_status.erl	/^status_id(critical) -> 2;$/;"	f	module:monit_status
+status_id	monit_status.erl	/^status_id(ok) -> 0;$/;"	f	module:monit_status
+status_id	monit_status.erl	/^status_id(pending) -> 4.$/;"	f	module:monit_status
+status_id	monit_status.erl	/^status_id(unknown) -> 3;$/;"	f	module:monit_status
+status_id	monit_status.erl	/^status_id(warning) -> 1;$/;"	f	module:monit_status
+status_name	monit_status.erl	/^status_name(0) -> ok;$/;"	f	module:monit_status
+status_name	monit_status.erl	/^status_name(1) -> warning;$/;"	f	module:monit_status
+status_name	monit_status.erl	/^status_name(2) -> critical;$/;"	f	module:monit_status
+status_name	monit_status.erl	/^status_name(3) -> unknown;$/;"	f	module:monit_status
+status_name	monit_status.erl	/^status_name(4) -> pending.$/;"	f	module:monit_status
+status_type_id	monit_status.erl	/^status_type_id(permanent) -> 2.$/;"	f	module:monit_status
+status_type_id	monit_status.erl	/^status_type_id(transient) -> 1;$/;"	f	module:monit_status
+stop	monit.erl	/^stop() ->$/;"	f	module:monit
+stop	monit.erl	/^stop(App) ->$/;"	f	module:monit
+stop	monit.erl	/^stop(mnesia) ->$/;"	f	module:monit
+stop	monit_agent_hub.erl	/^stop() ->$/;"	f	module:monit_agent_hub
+stop	monit_app.erl	/^stop(_) ->$/;"	f	module:monit_app
+stop	monit_bot.erl	/^stop() ->$/;"	f	module:monit_bot
+stop	monit_node_hub.erl	/^stop() ->$/;"	f	module:monit_node_hub
+stop	monit_object.erl	/^stop() ->$/;"	f	module:monit_object
+stop	monit_object_event.erl	/^stop() ->$/;"	f	module:monit_object_event
+stop	monit_object_type.erl	/^stop() ->$/;"	f	module:monit_object_type
+stop	monit_slave.erl	/^stop() ->$/;"	f	module:monit_slave
+stop	monit_slave.erl	/^stop(_) ->$/;"	f	module:monit_slave
+stop1	monit_slave.erl	/^stop1(App) ->$/;"	f	module:monit_slave
+stop1	monit_slave.erl	/^stop1(mnesia) ->$/;"	f	module:monit_slave
+strip	monit_ctl.erl	/^strip(S) ->$/;"	f	module:monit_ctl
+terminate	monit_agent_hub.erl	/^terminate(_Reason, _State) ->$/;"	f	module:monit_agent_hub
+terminate	monit_bot.erl	/^terminate(_Reason, _State) ->$/;"	f	module:monit_bot
+terminate	monit_disco.erl	/^terminate(_Reason, #state{consumer_tag = Tag} = _State) ->$/;"	f	module:monit_disco
+terminate	monit_flap.erl	/^terminate(_Reason, _State) ->$/;"	f	module:monit_flap
+terminate	monit_i18n.erl	/^terminate(_Reason, _State) ->$/;"	f	module:monit_i18n
+terminate	monit_last.erl	/^terminate(_Reason, _State) ->$/;"	f	module:monit_last
+terminate	monit_metric.erl	/^terminate(_Reason, _State) ->$/;"	f	module:monit_metric
+terminate	monit_node_hub.erl	/^terminate(_Reason, _State) ->$/;"	f	module:monit_node_hub
+terminate	monit_object.erl	/^terminate(_Reason, _State) ->$/;"	f	module:monit_object
+terminate	monit_object_event.erl	/^terminate(_Reason, _State) ->$/;"	f	module:monit_object_event
+terminate	monit_object_type.erl	/^terminate(_Reason, _State) ->$/;"	f	module:monit_object_type
+terminate	monit_service.erl	/^terminate(_Reason, #state{consumer_tag = Tag} = _State) ->$/;"	f	module:monit_service
+terminate	monit_status.erl	/^terminate(_Reason, #state{consumer_tag = Tag} = _State) ->$/;"	f	module:monit_status
+to_list	monit_node_hub.erl	/^to_list(B) when is_binary(B) ->$/;"	f	module:monit_node_hub
+to_list	monit_node_hub.erl	/^to_list(F) when is_float(F) ->$/;"	f	module:monit_node_hub
+to_list	monit_node_hub.erl	/^to_list(I) when is_integer(I) ->$/;"	f	module:monit_node_hub
+to_list	monit_node_hub.erl	/^to_list(L) when is_list(L) ->$/;"	f	module:monit_node_hub
+to_xml_attr	monit_disco.erl	/^to_xml_attr(Attr, Val) when is_binary(Val) ->$/;"	f	module:monit_disco
+to_xml_attr	monit_disco.erl	/^to_xml_attr(Attr, Val) when is_integer(Val) ->$/;"	f	module:monit_disco
+to_xml_attr	monit_disco.erl	/^to_xml_attr(Attr, Val) when is_list(Val) ->$/;"	f	module:monit_disco
+to_xml_item	monit_service.erl	/^to_xml_item(Service) ->$/;"	f	module:monit_service
+transform	monit_disco.erl	/^transform(Task) ->$/;"	f	module:monit_disco
+uncallback	monit_agent_hub.erl	/^uncallback(Hook, Pid) ->$/;"	f	module:monit_agent_hub
+update	monit_object.erl	/^update(Object) when is_record(Object, monit_object) ->$/;"	f	module:monit_object
+update_agent	monit_agent_hub.erl	/^update_agent(Presence, Node, Domain) ->$/;"	f	module:monit_agent_hub
+update_user	monit_bot.erl	/^update_user(Presence, Node, Domain) ->$/;"	f	module:monit_bot
+val_to_list	monit_metric.erl	/^val_to_list(V) when is_atom(V) ->$/;"	f	module:monit_metric
+val_to_list	monit_metric.erl	/^val_to_list(V) when is_float(V) ->$/;"	f	module:monit_metric
+val_to_list	monit_metric.erl	/^val_to_list(V) when is_integer(V) ->$/;"	f	module:monit_metric
+val_to_list	monit_metric.erl	/^val_to_list(V) when is_list(V) ->$/;"	f	module:monit_metric
+worker_spec	monit_app.erl	/^worker_spec(Name) ->$/;"	f	module:monit_app
+worker_spec	monit_app.erl	/^worker_spec(Name, Opts) ->$/;"	f	module:monit_app
+xmpp_user	monit_bot.erl	/^-record(xmpp_user, {bjid, username, id, tenant_id, presence}).$/;"	r

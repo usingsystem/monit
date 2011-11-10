@@ -1,0 +1,29 @@
+<h1>Ui#Dashboard</h1>
+<div class="dashboard clearfix">
+  <div class="column">
+    <div class="column-inner">
+      <% board :id => nil do %>
+        <% board_header do %>
+          系统信息
+        <% end %>
+        <% board_content do %>
+          内容
+        <% end %>
+      <% end %>
+
+    </div>
+  </div>
+  <div class="column column-last">
+    <div class="column-inner">
+      <% board :id => nil do %>
+        <% board_header do %>
+          示例
+        <% end %>
+        <% board_content do %>
+          内容
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<h1>Ui#Form</h1>

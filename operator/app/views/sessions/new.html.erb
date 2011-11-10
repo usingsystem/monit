@@ -1,0 +1,45 @@
+<div class="clearfix">
+  <div class="entry-left">
+    <h3>
+      <%=icon("login") %>运营商登录
+    </h3>
+    <div>
+      <% form_for :session, :builder => ::UIFormBuilder, :url => session_path do |f| -%>
+        <% unless @error.blank? %>
+          <p class="notice notice-error">
+          <%= @error %>
+          </p>
+        <% end %>
+        <div class="form-li clearfix">
+          <%= label_tag 'host', "域名：", :class => "form-label" %>
+          <span class="form-data"><span class="text-wrap"><%=text_field_tag(:host, @login)%></span></span>
+        </div>
+        <div class="form-li clearfix">
+          <%= label_tag 'password',"密&nbsp;&nbsp;&nbsp;&nbsp;码：", :class => "form-label" %>
+          <span class="form-data"><span class="text-wrap"><%=password_field_tag(:password, nil, :style => "width: 200px;")%></span> 
+         <%= link_to "忘记密码？请联系我们。", "http://www.monit.cn/contact",:target=>"_blank" %></span>
+        </div>
+        <div class="form-li clearfix">
+          <%= label_tag 'password',"&nbsp;", :class => "form-label" %>
+          <span class="form-data gray">
+            <%= f.wrap_label(check_box_tag('remember_me', '1', @remember_me), "在这台电脑上记住我，下次自动登录", 'remember_me') %>
+          </span>
+        </div>
+        <%= f.submit '登录', :hl => true %>
+      <% end -%>
+    </div>
+  </div>
+  <div class="entry-right">
+    <h4>
+      还没有注册？
+    </h4>
+    <div>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p> <%= link_to "如果您有需要，请联系我们！", "http://www.monit.cn/contact",:target=>"_blank" %></p>
+      <%# form_tag signup_path, :method => :get do %>
+        <%#=button_wrap(submit_tag '点击注册', :name => nil) %>
+      <%# end %>
+    </div>
+  </div>
+</div>

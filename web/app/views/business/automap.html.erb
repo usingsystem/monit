@@ -1,0 +1,36 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => "监控视图" } %>
+      <%= "监控视图" %>
+    <% end %>
+    <% board_content do %>
+      <% @map_id = :automap %>
+      <div id="map-content" class="map">
+        <%= image_tag url_for(:controller => "business", :action => "automap" , :format => :png , :only_path => false), :usemap => "##{@map_id}" %>
+        <% 
+          map = render "automap.rdot", :format => "cmapx"
+          #<area shape="rect" id="node2" href="/hosts/15" title="Monit服务器" alt="" coords="507,150,557,172"/>
+          nodes = map.scan(/<area.+?href="\/([^\/"]+)\/?(.*?)".+?coords="(\d+),(\d+),(\d+),(\d+)".+?>/)
+          #["hosts", "15", "507", "150", "557", "172"]
+          nodes.each do |node|
+            if node[0] == "business"
+              #concat content_tag(:div, "#{icon("business")}<div>Monit</div>", :style => "left: #{node[2]}px; top:#{node[3]}px;", :class=>"node")
+            elsif objects = @objects[node[0].to_sym]
+              ob = objects.select{|x| x.id == node[1].to_i}[0]
+              if node[0] == "sites"
+                class_name = "type-site"
+              else
+                class_name = type_class_for(ob.type.name)
+              end
+              icon_str = icon(node[0])
+              icon_str << icon_status(node[0].singularize, ob.status_name)
+
+              concat content_tag(:div, "<span>#{icon_str }</span>#{link_to(ob.name, ob)}", :style => "left: #{node[2]}px; top:#{node[3]}px;", :class=>"node #{class_name}")
+            end
+          end
+        %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

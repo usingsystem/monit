@@ -1,0 +1,66 @@
+<%
+    id = @package.id
+    pid = @current_package && @current_package.id
+    @text = pid ? (pid > id ? "降级" : (pid == id ? "续费" : "升级")) : "升级"
+%>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "plan" %>
+<% end %>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => "新建" } %>
+      <%= "套餐" + @text %>
+    <% end %>
+    <% board_content do %>
+      <% if @need_settle %>
+        <div class="wrap">
+          <p class="notice">
+          提示：<%= @text %>套餐会立即取消当前正在使用的<strong><%= @current_package.name %></strong>套餐，退回该月未使用的¥<strong><%= @tenant.current_month_balance %></strong>（<%= @tenant.current_last_days %>天）到您当前帐户。
+          </p>
+        </div>
+      <% end %>
+      <div class="wrap plans-<%= @package.css_name %>">
+        <div class="plan planpro plan-final">
+          <div class="price">
+            <span class="symbol">￥</span>
+            <span class="amount"><%= @package.charge %></span>
+            <span class="duration">/月</span>
+          </div>
+          <h3>您选择了<strong><%= @package.human_category_name %></strong>套餐</h3>
+          <p><strong><%= @package.max_services %></strong>个服务，<strong><%= @package.max_hosts %></strong> 台主机，最低<strong><%= @package.min_check_interval/60 %></strong>分钟监测频率，该套餐每月费用￥<strong><%= @package.charge %></strong>。</p>
+        </div>
+      </div>
+      <h2 class="wrap">选择使用期</h2>
+      <div class="columns columns4 clearfix">
+        <% [{:name => "1个月", :num => 1},{:name => "3个月", :num => 3}, {:name => "半年", :num => 6}, {:name => "1年", :num => 12, :charge => @package.year_charge, :discount => @package.year_discount, :rate => @package.year_discount_rate }].each do |duration| %>
+          <div class="column">
+            <div class="column-inner">
+              <div class="plan">
+                <h3>
+                  <div class="price">
+                    <span class="symbol">￥</span><span class="amount"><%= (@package.charge * duration[:num]) %></span>
+                  </div>
+                  <%= duration[:name] %>
+                </h3>
+                <!--
+                <div class="rule"></div>
+                <ul class="bigpoints">
+                  <li> 节省￥<strong><%= duration[:discount] || "0" %></strong></li>
+                </ul>
+                -->
+                <% form_for(Order.new(:package_id => @package.id, :month_num => duration.num)) do |f| %>
+                  <%=f.hidden_field :package_id %>
+                  <%=f.hidden_field :month_num %>
+                  <p>
+                  <%=submit_tag "确定", :name => nil, :class => "button" %>
+                  </p>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

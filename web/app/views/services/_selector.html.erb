@@ -1,0 +1,10 @@
+<% field_set_tag "筛选#{t('service')}" do %>
+  <ul class="ul list-table">
+    <% @services.each do |service| %>
+      <% name = "#{service.serviceable.name}/#{service.name}" %>
+      <li title="<%=name%>">
+      <%= f.wrap_label(check_box_tag("ids[#{service.id}]", "", true), name, "ids_#{service.id}") %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

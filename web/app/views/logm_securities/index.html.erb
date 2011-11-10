@@ -1,0 +1,65 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      安全日志
+    <% end %>
+    <% board_content do %>
+    <table class="grid" cellspacing="0">
+      <thead>
+        <tr>
+          <%=th_tag "", :class => "first" %>
+          <%=th_tag sort_link_to("user_name",LogmSecurity.human_attribute_name("user_name"),params)%>
+          <%=th_tag sort_link_to("terminal_ip",LogmSecurity.human_attribute_name("terminal_ip"), params) %>
+          <%=th_tag sort_link_to("host_name",LogmSecurity.human_attribute_name("host_name"), params)%>
+          <%=th_tag sort_link_to("security_cause",LogmSecurity.human_attribute_name("security_cause"), params)%>
+          <%=th_tag sort_link_to("security_action",LogmSecurity.human_attribute_name("security_action"), params)%>
+          <%=th_tag LogmSecurity.human_attribute_name 'result'%>
+          <%=th_tag LogmSecurity.human_attribute_name 'details' %>
+          <%=th_tag sort_link_to("created_at",LogmSecurity.human_attribute_name("created_at"),params)%>
+          <%=th_tag "", :class => "last" %>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <%=th_tag "", :class => "first" %>
+          <th colspan="8">
+            <% if @logm_securities && @logm_securities.length > 0 %>
+              <div class="page clearfix">
+                <div class="stat">显示<%=@logm_securities.total_entries %>个日志中的<%=@logm_securities.size %>个</div>
+                <%=will_paginate @logm_securities%>
+              </div>
+            <%end%>
+          </th>
+          <%=th_tag "", :class => "last" %>
+        </tr>
+      </tfoot>
+      <tbody>
+        <% if @logm_securities.size > 0 %>
+          <% @logm_securities.each do |securities| %>
+            <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'") %>>
+              <%=td_tag "", :class => "first" %>
+              <%=td_tag securities.user_name%>
+              <%=td_tag securities.terminal_ip %>
+              <%=td_tag securities.host_name %>
+              <%=td_tag securities.security_cause %>
+              <%=td_tag securities.security_action %>
+              <%=td_tag securities.result%>
+              <%=td_tag securities.details%>
+              <%=td_tag format_time(securities.created_at, true) %>
+              <%=td_tag "", :class => "last" %>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr class="first">
+            <% td_tag :colspan => 10 do %>
+              <p class="notice">
+              当前没有数据
+              </p>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+<% end %>
+</div>

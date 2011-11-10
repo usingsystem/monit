@@ -1,0 +1,63 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      操作日志
+    <% end %>
+    <% board_content do %>
+    <table class="grid" cellspacing="0">
+      <thead>
+        <tr>
+          <%=th_tag "", :class => "first" %>
+          <%=th_tag sort_link_to("user_name",LogmOperation.human_attribute_name("user_name"),params), :style => "width:140px;" %>
+          <%=th_tag sort_link_to("terminal_ip",LogmOperation.human_attribute_name("terminal_ip"), params) %>
+          <%=th_tag LogmOperation.human_attribute_name 'result', :style => "width:60px;"  %>
+          <%=th_tag LogmOperation.human_attribute_name 'details', :style => "width:60px;"  %>
+          <%=th_tag sort_link_to("action",LogmOperation.human_attribute_name("action"),params)  %>
+          <%=th_tag sort_link_to("module_name",LogmOperation.human_attribute_name("module_name"),params)  %>
+          <%=th_tag sort_link_to("created_at",LogmOperation.human_attribute_name("created_at"),params) %>
+          <%=th_tag "", :class => "last" %>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <%=th_tag "", :class => "first" %>
+          <th colspan="7">
+            <% if @logm_operations && @logm_operations.length > 0 %>
+              <div class="page clearfix">
+                <div class="stat">显示<%=@logm_operations.total_entries %>个日志中的<%=@logm_operations.size %>个</div>
+                <%=will_paginate @logm_operations%>
+              </div>
+            <%end%>
+          </th>
+          <%=th_tag "", :class => "last" %>
+        </tr>
+      </tfoot>
+      <tbody>
+        <% if @logm_operations.size > 0 %>
+          <% @logm_operations.each do |operations| %>
+            <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'") %>>
+              <%=td_tag "", :class => "first" %>
+              <%=td_tag operations.user_name%>
+              <%=td_tag operations.terminal_ip %>
+              <%=td_tag operations.result%>
+              <%=td_tag operations.details%>
+              <%=td_tag operations.action%>
+              <%=td_tag operations.module_name%>    
+              <%=td_tag format_time(operations.created_at, true) %>
+              <%=td_tag "", :class => "last" %>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr class="first">
+            <% td_tag :colspan => 9 do %>
+              <p class="notice">
+              当前没有数据
+              </p>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+<% end %>
+</div>

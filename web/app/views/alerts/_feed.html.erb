@@ -1,0 +1,10 @@
+<ul class="ol feed">
+  <%@alerts.each do |alert|%>
+    <li>
+    <span title="<%= t("status.alert." + alert.level_name) %>"><%= icon_status("alert", alert.level_name) %></span>
+    <span class="datetime"><%=alert.first_time.strftime("%m-%d %H:%M:%S") %></span>
+    <%= link_to(alert.source.name, alert.source) + (alert.service ? " / " + link_to(alert.service.name, alert.service) : "") + " " + alert.human_level_name %>
+    </li>
+  <%end%>
+</ul>
+

@@ -1,0 +1,27 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("edit") } %>
+      <%= t('edit') + t('devices') %>
+    <% end %>
+    <% board_content do %>
+      <p class="notice">
+      批量更新<%=t('device')%>告警通知
+      </p>
+      <% form_for(@device, :builder => ::UIFormBuilder, :url => batch_update_devices_path, :html => { :class => "form", :method => :put }) do |f| %>
+        <%= redirect_tag %>
+        <% field_set_tag "筛选#{t('device')}" do %>
+          <ul class="ul list-table">
+            <% @devices.each do |device| %>
+              <li>
+              <%= f.wrap_label(check_box_tag("ids[#{device.id}]", "", true), device.name, "ids_#{device.id}") %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+        <%=render :partial => "notifications/setting", :locals => {:f => f, :source => "device", :types => ["down", "unreachable", "recovery"] } %>
+        <%= f.submit t('update') %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

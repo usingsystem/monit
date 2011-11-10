@@ -1,0 +1,46 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      <%= icon_status("host", @host.status_name) %><%=h @host.name %>
+    <% end %>
+    <% board_content do %>
+      <%= tabs [["base", "详细信息", {:controller => 'hosts',:action=>'show',:id=>@host.id}],["config", "配置信息", {:controller => 'hosts',:action=>'config',:id=>@host.id}]], 'config' %>
+      <%if @result%>
+        <% @result.each do |k,v| %>
+          <div class="datagrid" style="margin-top: 10px">
+            <h5><%=k%></h5>
+            <table cellspacing="0">
+              <% if v %>
+                <thead>
+                  <tr>
+                    <% v.values.first.keys.each do |column| %>
+                      <%= th_tag h(column) %>
+                    <%end%>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% v.values.each do |value| %>
+                    <tr <%= @first_false ? "" : ((@first_false = true) && " class='first'")%>>
+                      <% value.each do |k,v| %>
+                        <%= td_tag h(v) %>
+                      <%end%>
+                    </tr>
+                  <%end%>
+                </tbody>
+              <%end%>
+            </table>
+          </div>
+        <%end%>
+      <%else%>
+        暂无配置信息
+      <% end %>
+
+    <% end %>
+  <% end %>
+</div>
+
+
+
+
+

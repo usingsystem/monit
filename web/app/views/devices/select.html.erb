@@ -1,0 +1,33 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("select") } %>
+      <%= t('select') + '监控方式' %>
+    <% end %>
+    <% board_content do %>
+      <% form_tag({:action => "new" }, :method => "get", :class => "select-form" ) do |f| %>
+        <div class="columns clearfix">
+          <div class="column">
+            <p>
+            <% content_tag :label, :for => "support_remote" do %>
+              <%= radio_button_tag "support", "remote", true %>远程代理
+              <span>通过Monit服务器或者安装在其他主机上的代理程序监控此主机，远程代理可直接监控主机上的网络服务，通过SNMP可以监控主机性能。</span>
+            <% end %>
+            </p>
+          </div>
+          <div class="column column-last">
+            <p>
+            <% content_tag :label, :for => "support_local" do %>
+              <%= radio_button_tag "support", "local" %>本地代理
+              <span>在此服务器安装代理程序监控主机服务，本地代理提供了更多监控服务。</span>
+            <% end %>
+            </p>
+          </div>
+        </div>
+        <p class="actions">
+        <span class="button-wrap"><%= submit_tag t('next'), :name => nil %></span>
+        </p>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

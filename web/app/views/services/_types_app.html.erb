@@ -1,0 +1,21 @@
+<p class="notice">
+<%= link_to(h(@app.name), @app) %>
+</p>
+<% form_tag({:action => "new" }, :method => "get", :class => "select-form" ) do |f| %>
+  <% 
+    a = filter_params(params)
+    a.delete(:type_id)
+  %>
+  <% a.each do |k,v| %>
+    <%= hidden_field_tag k, v %>
+  <% end %>
+  <% @checked = @service_types.first.id if @service_types.size > 0 %>
+  <% @service_types.each do |type| %>
+    <p>
+    <%= radio_button_tag(:type_id, type.id, type.id == @checked)  + label_tag(:type_id, (type.alias + content_tag(:span, type.remark)), :for => ("type_id_" + type.id.to_s))  %>
+    </p>
+  <%end%>
+  <p class="actions">
+  <span class="button-wrap"><%= submit_tag t('next'), :name => nil %></span>
+  </p>
+<% end %>

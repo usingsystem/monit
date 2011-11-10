@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<%=I18n.locale%>" lang="<%=I18n.locale%>">
+  <%=render :partial=>'layouts/head'%>
+  <body>
+    <% if logged_in? %>
+      <%= extlink_to t('feedback'), ideas_path, :id => "feedback-trigger" %>
+    <% end %>
+    <div id="wrapper">
+      <%=render :partial=> logged_in? ? 'layouts/header' : 'layouts/header_nologin' %>
+      <div class="wrap">
+        <div id="content" class="clearfix">
+          <div id="sidebar">
+            <div id="menu">
+              <ul class="menu">
+                <% menu_item_tag('dashboard', t('dashboard'), dashboard_path) do %>
+                <% end %>
+              </ul>
+              <ul id="main-menu" class="menu">
+                <% menu_item_tag('operators', '运营商管理', {:controller => 'operators', :action => 'index'},:class=>"first" ) do %>
+                 <ul>
+                    <%= submenu_item_tag('operator-index',"所有运营商", operators_path) %>
+                    <%= submenu_item_tag('operator-new', "添加运营商", new_operator_path) %>
+                   
+                  </ul>
+                <% end %>
+                <%# menu_item_tag('orders', t('orders')+"管理", orders_path) do %>
+                <%# end %>
+                <%# menu_item_tag('packages', t('packages')+"管理", packages_path) do %>
+                <%# end %>
+                <% menu_item_tag('bills', t('bills')+"查询", bills_path, {:class => 'last'}) do %>
+                <% end %>
+              </ul>
+              <ul class="menu menu-low">
+                <%# menu_item_tag('settings', t('settings'), edit_operator_path(@operator), {:class => 'first'}) do %>
+                  <%#*<ul>%>
+                    <%#= submenu_item_tag('operator-edit', "运营商信息", edit_operator_path(@operator)) %>
+                    <%#= submenu_item_tag('operator-password', t('edit') + t('password'), edit_operator_password_path(@operator)) %>
+                  <%#*</ul>%>
+                <%# end %>
+
+                <%# menu_item_tag("ideas", "反馈查询", "", {:class => 'last'}) do %>
+                <%# end %>
+
+              </ul>
+            </div>
+          </div>
+          <div id="widebar">
+
+            <% unless flash[:notice].blank? %>
+              <div class="wrap content-notice">
+                <p class="notice notice-success">
+                  <%= flash[:notice] %>
+                </p>
+              </div>
+            <% end %>
+
+            <% unless flash[:error].blank? %>
+              <div class="wrap content-notice">
+                <p class="notice notice-error">
+                  <%= flash[:error] %>
+                </p>
+              </div>
+            <% end %>
+
+            <%=yield%>
+          </div>
+        </div>
+      </div>
+      <%=render :partial=>'layouts/footer'%>
+    </div>
+    <%=render :partial=>'layouts/analytics'%>
+  </body>
+</html>

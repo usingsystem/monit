@@ -1,0 +1,8 @@
+#!/bin/bash
+
+erl -noinput -sname monit_ctl -pa ./ebin -s monit_ctl -extra monit $@
+result=$?
+case $result in
+0) echo "Success!";;
+*) echo "Failure!";;
+esac

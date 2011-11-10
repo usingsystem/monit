@@ -1,0 +1,10 @@
+<span class="crumb-nav">
+  <%= icon("home") %>
+  <% @path.each do |p| %>
+    <%= link_to p[0], p[1] %>
+    <%= icon("carat") %>
+  <% end %>
+  <span><%= text %></span>
+</span>
+
+

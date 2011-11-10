@@ -1,0 +1,139 @@
+<% @type_name = Device.human_attribute_name 'type_id' %>
+<% @group_name = Device.human_attribute_name 'group_id' %>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("all") } %>
+      <%= Device.human_name %>
+    <% end %>
+    <% board_content do %>
+      <div class="filters clearfix">
+        <%= status_tabs @status_tab, @current_status_name, {} %>
+        <div>
+          <% form_tag(url_for(:action => "index"), :method=>:get) do%>
+            <%
+            a = filter_params(params)
+            a.delete(:type)
+            a.delete(:group)
+          %>
+            <% a.each do |k,v| %>
+              <%= hidden_field_tag k, v %>
+            <% end %>
+            <p class="last">
+              <label>显示方式：</label>
+              <span><%= link_to icon('list-current', :title => '列表'), filter_params(params, :view => nil) %> <%= link_to icon('icon', :title => '图标'), filter_params(params, :view => 'icon') %></span>
+            </p>
+            <p>
+              <label><%= @type_name %>：</label>
+              <span><%= select_tag('type','<option value=''>所有</option>' + options_from_collection_for_select(@device_types, 'name', 'name', params[:type]))%></span>
+            </p>
+            <p>
+              <label><%= @group_name %>：</label>
+              <span><%= select_tag('group', '<option value=''>所有</option>' + options_from_collection_for_select(@groups, 'name', 'name', params[:group]))%></span>
+            </p>
+            <p class="actions js-hide">
+              <%= tag('input', :type =>'submit', :value =>'过滤', :name => nil, :class => 'submit' )%>
+            </p>
+          <% end %>
+        </div>
+      </div>
+
+      <% form_tag(url_for(:action => "index"), :method => :get) do%>
+        <%= redirect_tag url_for(params) %>
+        <table class="grid" cellspacing="0">
+          <thead>
+            <tr>
+              <% th_tag :class => "actions first" do %>
+            <div class="pop-wrap">
+              <div class="pop">
+                <div class="pop-inner">
+                  <div class="ui-actions">
+                    <span>
+                      <span>
+                        <%= link_to("通知设置", edit_notification_devices_path, :class => "last")%>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <%= check_box_tag "all", "" %>
+          <% end %>
+          <%=th_tag sort_link_to("name", Device.human_attribute_name("name"), params), :style => "width:100px;" %>
+          <%=th_tag Device.human_attribute_name("status"), :style => "width:50px;" %>
+          <%=th_tag sort_link_to("addr", Device.human_attribute_name("addr"), params), :style => "width:120px;" %>
+          <%=th_tag @type_name, :style => "width:80px;" %>
+          <%=th_tag @group_name, :style => "width:80px;" %>
+          <%#=th_tag Device.human_attribute_name("dev_type") %>
+          <%#=th_tag Device.human_attribute_name("dev_vendor") %>
+      <%#=th_tag Device.human_attribute_name("app_num"), :style => "width:60px;" %>
+          <%=th_tag sort_link_to("last_check", Device.human_attribute_name("last_check"), params), :class => "time" %>
+          <%=th_tag Device.human_attribute_name("service_num"), :style => "width:60px;" %>
+          <%=th_tag Device.human_attribute_name("summary") %>
+          <%=th_tag "", :class => "last" %>
+          </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <%=th_tag "", :class => "first" %>
+              <th colspan="8">
+                <% if @devices && @devices.length > 0 %>
+                  <div class="page clearfix">
+                    <div class="stat">显示<%=@devices.total_entries %>个<%=t('device')%>中的<%=@devices.size %>个</div>
+                    <%=will_paginate @devices%>
+                  </div>
+                <%end%>
+              </th>
+              <%=th_tag "", :class => "last" %>
+            </tr>
+          </tfoot>
+          <tbody>
+            <% if @devices.size > 0 %>
+              <% @devices.each do |device| %>
+                <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'") %>>
+                  <% td_tag :class => "actions first" do %>
+                <div class="pop-wrap">
+                  <div class="pop">
+                    <div class="pop-inner">
+                      <%= link_to(icon("delete2", :title => "删除"), confirm_device_url(device, redirect_object), :class => controlled("devices/destroy"))%>
+                      <%= link_to(icon("edit2", :title => "修改"), edit_device_url(device, redirect_object), :class=>controlled("devices/edit"))%>
+                    </div>
+                  </div>
+                </div>
+                <%= check_box_tag "ids[#{device.id}]", "" %>
+              <% end %>
+              <%=td_tag link_to(h(device.name), device,:class=>controlled("devices/show")) %>
+              <%=td_tag h(t("status.device." + device.status_name)), :class => "status status-device-" + device.status_name %>
+              <%=td_tag h(device.addr) %>
+              <%=td_tag type_link_to(h(device.type.name), filter_params(params)) %>
+              <% if device.group.nil? %>
+              <%=td_tag inlink_to("设置分组", edit_device_url(device, redirect_object),:class=>controlled("devices/edit"))%>
+              <%else%>
+              <%=td_tag group_link_to(h(device.group.name),filter_params(params)) %>
+              <%end%>
+              <%#=td_tag h(device.dev_type) %>
+              <%#=td_tag h(device.dev_vendor) %>
+              <%=td_tag format_time(device.last_check, true) %>
+          <%#=td_tag link_to(h(device.apps.size), :controller => "apps", :device_id => device.id) %>
+              <%=td_tag link_to(h(device.services.size), {:controller => "services", :device_id => device.id},:class=>controlled("services/show")) %>
+              <%=td_tag(content_tag :div, device.summary, :class => "truncate") %>
+
+              <%=td_tag "", :class => "last" %>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr class="first">
+              <% td_tag :colspan => 10 do %>
+              <p class="notice">
+                列表显示<%=t('device')%>，现在还没有<%=t('device')%>，<%= link_to "添加一个", new_device_path %>
+              </p>
+            <% end %>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+

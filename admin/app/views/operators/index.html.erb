@@ -1,0 +1,98 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("all") } %>
+      <%= t("operator") %>
+    <% end %>
+    <% board_content do %>
+    <%#*<div class="filters clearfix">%>
+    <%#= status_tabs @status_tab, @current_status_name, {} %>
+    <%#*</div>%>
+
+      <table class="grid" cellspacing="0">
+        <thead>
+          <tr>
+              <% th_tag :class => "actions first" do %>
+            <div class="pop-wrap">
+              <div class="pop">
+                <div class="pop-inner">
+                  <div class="ui-actions">
+                    <span>
+                      <span>
+                        <%#= link_to("通知设置", edit_notification_hosts_path, :class => "last")%>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <%#= check_box_tag "all", "" %>
+          <% end %>
+            <%=th_tag sort_link_to("host", Operator.human_attribute_name("host"),params), :style => "width:110px;" %>
+            <%=th_tag Operator.human_attribute_name('title'), :style => "width:80px;" %>
+            <%=th_tag Operator.human_attribute_name('contact'),:style => "width:80px;"  %>
+            <%=th_tag sort_link_to("amount",Operator.human_attribute_name('amount'),params)  %>
+            <%=th_tag sort_link_to("created_at",Operator.human_attribute_name('created_at'),params)%>
+
+            <%=th_tag "操作"%>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <th colspan="6">
+              <% if @operators && @operators.length > 0 %>
+                <div class="page clearfix">
+                  <div class="stat">
+                    显示<%=@operators.total_entries %>个<%= t("operators") %>中的<%=@operators.size %>个
+                  </div>
+                  <%=will_paginate @operators%>
+                </div>
+              <%end%>
+            </th>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% if @operators.size > 0 %>
+            <% @operators.each do |operator| %>
+              <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'") %>>
+                <% td_tag :class => "actions first" do %>
+                  <div class="pop-wrap">
+                  <div class="pop">
+                    <div class="pop-inner">
+                      <%= link_to(icon("delete2", :title => "删除"), confirm_operator_path(operator))%>
+                      <%= link_to(icon("edit2", :title => "修改"), edit_operator_path(operator))%>
+                    </div>
+                  </div>
+                </div>
+         
+                <%end%>
+                <%=td_tag(link_to operator.host,operator_path(operator)) %>
+                <%=td_tag operator.title %>
+                <%=td_tag operator.contact %>
+
+                <%=td_tag operator.amount || 0 %>
+                <%=td_tag format_time(operator.created_at, true) %>
+                <%=td_tag((link_to "手动充值",{:action=>"recharge",:id=>operator.id})+" , "+(link_to "套餐管理",operator_packages_path(operator))) %>
+    
+                <%=td_tag "", :class => "last" %>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr class="first">
+              <% td_tag :colspan =>8 do %>
+            <p class="notice">
+              列表显示运营商，现在还没有相关运营商。
+            </p>
+          <% end %>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+    <% end %>
+  <% end %>
+</div>
+

@@ -1,0 +1,19 @@
+<% board do %>
+  <% board_header do %>
+    <%= t('service') %>
+  <% end %>
+  <% board_content do %>
+    <div class="show-status">
+      <% if @service_count > 0 %>
+        <%= status_link 'service', @service_status, @service_count %>
+        <p>
+        <%= image_tag status_chart(@service_status), :alt => "#{t("service")}状态统计" %>
+        </p>
+      <% else %>        
+        <p>
+        统计服务的运行状态。
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

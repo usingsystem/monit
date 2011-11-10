@@ -1,0 +1,19 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("edit") } %>
+      <%= t('edit') + t('site') %>
+    <% end %>
+    <% board_content do %>
+      <% form_for(@site, :builder => ::UIFormBuilder, :html => {:class => "form"}) do |f| %>
+        <% field_set_tag "基本设置" do %>
+          <%= f.text_field :name, :required => true, :help => "网站唯一名称" %>
+          <%= f.text_field :url, :required => true, :help => "网站地址，例如：http://www.monit.cn" %>
+          <%= f.select :group_id, [['无','']] + @groups.collect { |x| [x.name, x.id] }  %>
+        <% end %>
+        <%=render :partial => "notifications/setting", :locals => {:f => f, :source => "site", :types => ["down", "recovery"] } %>
+        <%= f.submit t('update') %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

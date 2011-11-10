@@ -1,0 +1,36 @@
+<div class="wrap">
+  <% 
+    @rules = @user.notify_rules
+  %>
+  <% board do %>
+    <% board_header do %>
+      通知设置
+    <% end %>
+    <% board_content do %>
+      <% form_for @user, :builder => ::UIFormBuilder, :url => {:action => 'update_notify'}, :html=>{:class=>'form'} do |f|%>
+        <% field_set_tag "配置Email" do %>
+          <%= f.text_field :email %>
+        <% end %>
+        <% field_set_tag "告警通知" do %>
+          <% method = NotifyRule.methods[1] %>
+          <% NotifyRule.source_types.each do |type| %>
+            <% f.wrap_field type[:name], :label => type[:title] do %>
+              <% NotifyRule.alert_severities.each do |severity| %>
+                <% 
+                  name = "#{method[:name]}_#{type[:name]}_#{severity[:name]}" 
+                  enable = @rules.select{|x| x.method == method[:id] and x.source_type == type[:id] and x.alert_severity == severity[:id]}.size > 0
+                %>
+                <%= hidden_field_tag "rules[][name]", name %>
+                <%= hidden_field_tag "rules[][method]", method[:id] %>
+                <%= hidden_field_tag "rules[][source_type]", type[:id] %>
+                <%= hidden_field_tag "rules[][alert_severity]", severity[:id] %>
+                <%= f.wrap_label check_box_tag("rules[][enable]", "1", enable, :id => name), severity[:title], name %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+        <%= f.submit "确定" %>
+      <% end %>
+    <%end%>
+  <%end%>
+</div>

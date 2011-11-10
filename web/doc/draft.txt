@@ -1,0 +1,51 @@
+问题：
+口碑，安全，价格 ，部署，内网设备
+
+
+定价：
+互联网用户：阶梯型定价，类似宽带包月 例如：10台机器一个价格， 20台机器一个价格
+企业用户：
+
+关于推广：
+面向业务的idc 例如世纪互联等
+多方合作绑定推广
+
+agent download:
+跟基调和博维也是竞争对手吧？
+
+nagios XI
+
+host、app、agent、node，发现、采集
+
+service => agent -> agent_id
+
+通知方式：email、手机短信、jabber
+
+通知内容：
+
+服务警告
+服务警告恢复
+
+服务故障
+服务故障恢复
+
+监控日报
+监控周报
+监控月报
+
+通知设置：
+type、mode、user_id
+
+通知任务：
+type、mode、user_id  alert_id
+
+
+
+
+
+is_support_remote
+
+
+ruby性能：
+http://www.rubyenterpriseedition.com/
+

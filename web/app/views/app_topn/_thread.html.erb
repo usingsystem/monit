@@ -1,0 +1,25 @@
+<div class="datagrid">
+  <h5>MYSQL线程TopN</h5>
+  <table  cellspacing="0"  >
+    <thead>
+      <tr>
+        <%=th_tag "应用"%>
+        <%=th_tag "线程"%>
+      </tr>
+    </thead>
+    <% if @app_type %>
+      <tbody>
+        <% if @app_type.size > 0 %>
+          <% @app_type.each do |type| %>
+            <tr>
+              <% if type["type"]=="线程监测"  %>
+                <%=td_tag type["name"]%>
+                <%=td_tag ('%.2f' %(type["avg"]))%>
+              <%end%>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    <%end%>
+  </table>
+</div>

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+top -l 1 -o cpu -O rsize > .log 
+head -n 7 .log

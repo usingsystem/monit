@@ -1,0 +1,30 @@
+<div class="columns columns37 clearfix">
+  <div class="column">
+    <% if @site_view and @site_view.rows.size %>
+      <%=render :partial => "templates/#{@site_view.template}", :locals => {:view => @site_view } %>
+    <% end %>
+  </div>
+  
+  <div class="column column-last">
+    <div class="datagrid">
+      <table  cellspacing="0">
+        <thead>
+          <tr>
+            <%=th_tag "应用状态" %>
+            <%=th_tag "数量"%>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @site_status.size > 0 %>
+            <% @site_status.each do |status| %>
+              <tr>
+                <%=td_tag h(status.title) %>
+                <%=td_tag h(status.num)%>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

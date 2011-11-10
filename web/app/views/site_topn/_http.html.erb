@@ -1,0 +1,23 @@
+<div class="datagrid">
+  <h5>HTTP响应时间TopN</h5>
+  <table cellspacing="0">
+    <thead>
+      <tr>
+        <%=th_tag "网站"%>
+        <%=th_tag "HTTP时间TopN"%>
+      </tr>
+    </thead>
+    <% if @http %>
+      <tbody>
+        <% if @http.size > 0 %>
+          <% @http.each do |type| %>
+            <tr>
+              <%=td_tag type["name"]%>
+              <%=td_tag ('%.2f' %(type["time"]))%>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    <%end%>
+  </table>
+</div>

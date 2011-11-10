@@ -1,0 +1,34 @@
+#!/bin/sh
+OLD=network
+NEW=device
+for j in `find . -name *${OLD}*`
+do
+	mv $j `echo $j | sed 's/'${OLD}'/'${NEW}'/g'`
+done
+
+for j in `grep etwork $(find . -name *rb) -hl`
+do
+	echo $j;
+	sed 's/network/device/g' $j > $j.back;
+	mv $j.back $j;
+	sed 's/Network/Device/g' $j > $j.back;
+	mv $j.back $j;
+done
+
+for j in `grep etwork $(find . -name *css) -hl`
+do
+	echo $j;
+	sed 's/network/device/g' $j > $j.back;
+	mv $j.back $j;
+	sed 's/Network/Device/g' $j > $j.back;
+	mv $j.back $j;
+done
+
+for j in `grep etwork $(find . -name *yml) -hl`
+do
+	echo $j;
+	sed 's/network/device/g' $j > $j.back;
+	mv $j.back $j;
+	sed 's/Network/Device/g' $j > $j.back;
+	mv $j.back $j;
+done

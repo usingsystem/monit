@@ -1,0 +1,10 @@
+<% form_for @group, :builder => ::UIFormBuilder, :html => { :class => "form" } do |f| %>
+  <%= redirect_tag %>
+  <%= f.text_field :name_alias , { :required => true }%>
+  <%= f.select :parent_id,  @parent_groups.collect { |x| [x.name, x.id] }, {}, { :required => true,:style=>"width:320px;" }  %>
+  <%= f.text_area :descr,:cols => 60, :rows => 8 %>
+  <%= f.submit ["new","create"].include?(controller.action_name) ? t("create") : t("update"), :name => nil %>
+<% end %>
+
+
+

@@ -1,0 +1,29 @@
+<div class="wrap clearfix">
+  <div style="float: left;width: 35%;">
+    <% if @host_view and @host_view.rows.size %>
+      <%=render :partial => "templates/#{@host_view.template}", :locals => {:view => @host_view } %>
+    <% else %>
+      暂无数据
+    <% end %>
+  </div>
+  <div class="datagrid" style="float: right;width:60%;">
+    <table  cellspacing="0">
+      <thead>
+        <tr>
+          <%=th_tag "主机类型" %>
+          <%=th_tag "数量"%>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @host_types.size > 0 %>
+          <% @host_types.each do |type| %>
+            <tr>
+              <%=td_tag h(type.name) %>
+              <%=td_tag h(type.count)%>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

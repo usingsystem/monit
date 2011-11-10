@@ -1,0 +1,39 @@
+<div class="clearfix">
+  <div class="entry-left">
+    <h3>
+      <%=icon("signup") %>运营商注册
+    </h3>
+    <div>
+      <% @operator.password = @operator.password_confirmation = nil %>
+      <% form_for @operator, :builder => ::UIFormBuilder, :url => operators_path do |f| -%>
+        <%= f.hidden_field :footer %>
+        <%= f.hidden_field :page_contact %>
+        <%= f.hidden_field :page_about %>
+        <%= hidden_field_tag :code, params[:code] %>
+        <%= f.text_field :host, :required => true, :help => "填写您的域名作为 登录账号" %>
+        <%= f.text_field :title,:required => true, :help => "网站名称，如：monit监控云" %>
+        <%= f.password_field :password ,:required => true %>
+        <%= f.password_field :password_confirmation ,:required => true %>
+        <%= f.submit '注册', :hl => true %>
+      <% end -%>
+    </div>
+  </div>
+  <div class="entry-right">
+    <h4>
+      运营商注册后您可以
+    </h4>
+    <ul>
+      <li>实时监控主机服务运行状态</li>
+      <li>及时得到主机服务故障通知</li>
+      <li>统计服务性能合理分配资源</li>
+    </ul>
+    <h4>
+      已有账号？
+    </h4>
+    <div>
+      <% form_tag login_path, :method => :get do %>
+        <%=button_wrap(submit_tag '返回登录', :name => nil) %>
+      <% end %>
+    </div> 
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      订单:<%=@order.out_trade_no%>
+    <% end %>
+    <% board_content do %>
+      <% if @order.pay_mode.present? %>
+        <p>
+          <b><%= Order.human_attribute_name('pay_mode')%>为 "<%=h @order.human_pay_mode_name%>"</b>
+        </p>
+      <%end%>
+      <%=detail(@order,:subject,:body,:total_fee,:is_paid,:paid_at,:paid_desc)%>
+
+    <% end %>
+  <%end%>
+</div>
+

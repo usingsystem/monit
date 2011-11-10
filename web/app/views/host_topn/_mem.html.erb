@@ -1,0 +1,25 @@
+<div class="datagrid" style=" margin-top: 8px">
+  <h5>内存使用率TopN</h5>
+  <table  cellspacing="0">
+    <thead>
+      <tr>
+        <%=th_tag "主机"%>
+        <%=th_tag "内存使用率"%>
+      </tr>
+    </thead>
+    <% if @mem %>
+      <tbody>
+        <% if @mem.size > 0 %>
+          <% @mem.each do |type| %>
+            <tr>
+              <%=td_tag type["name"]%>
+              <%=td_tag ('%.2f' %(type["usage"])+"%")%>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    <%end%>
+  </table>
+</div>
+
+

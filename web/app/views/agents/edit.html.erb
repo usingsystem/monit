@@ -1,0 +1,15 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t('edit') } %>
+      <%= t('edit') + t('agents') %>
+    <% end %>
+    <% board_content do %>
+      <% form_for(@agent, :builder => ::UIFormBuilder) do |f| %>
+        <%= f.text_field :name, :required => true %>
+        <%= f.select :host_id, [["选择主机", ""]] + @hosts.collect { |x| [x.name, x.id] }, {}, :required => true %>
+        <%= f.submit t('update') %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

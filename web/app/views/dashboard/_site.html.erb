@@ -1,0 +1,19 @@
+<% board do %>
+  <% board_header do %>
+    <%= t('site') %>
+  <% end %>
+  <% board_content do %>
+    <div class="show-status">
+      <% if @site_count > 0 %>
+        <%= status_link 'site', @site_status,@site_count %>
+        <p>
+        <%= image_tag status_chart(@site_status), :alt => "#{t("site")}状态统计" %>
+        </p>
+      <% else %>
+        <p>
+        统计<%=t('site')%>的运行状态。现在还没有<%=t('site')%>，<%= link_to "添加一个", new_site_path %>
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

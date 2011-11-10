@@ -1,0 +1,3 @@
+#!/bin/sh
+mysql -uroot -ppublic monit < monit.sql
+#mysql -uroot -ppublic -hs31 monit2 < monit.sql

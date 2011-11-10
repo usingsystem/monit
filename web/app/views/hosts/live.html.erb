@@ -1,0 +1,29 @@
+<%
+  #Multiget metric
+  Metric.current(@services)
+%>
+<%#=render :partial => "templates/#{@default_view.template}", :locals => {:view => @default_view } %>
+
+<% @services.each do |service| %>
+  <div class="wrap">
+    <% board do %>
+      <% board_header do %>
+        <%= icon_status("service", service.status_name) %><%=h service.name %>
+      <% end %>
+      <% board_content do %>
+        <%#= format_time(service.last_check) %>
+        <%
+          metric = service.metric
+          now = Time.now
+          view = service.default_view
+          if view
+            view.data = service.metric.current
+            concat render(:partial => "templates/#{view.template}", :locals => {:view => view })
+          end
+          #metric.history_views.each do |view|
+          #end
+        %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

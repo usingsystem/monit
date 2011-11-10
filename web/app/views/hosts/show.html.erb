@@ -1,0 +1,126 @@
+<%
+@agent = @host.agent
+more = params.has_key? :more
+%>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      <%= icon_status("host", @host.status_name) %><%=h @host.name %>
+    <% end %>
+    <% board_content do %>
+      <%= tabs [["base", "详细信息", {:controller => 'hosts',:action=>'show',:id=>@host.id}],["config", "配置信息", {:controller => 'hosts',:action=>'config',:id=>@host.id}], ["avail", "可用率报表", host_avail_path(@host), true]], 'base' %>
+      <div class="details clearfix">
+        <div class="details-right">
+    <%#=render :partial => "templates/#{@view.template}", :locals => {:view => @view } %>
+        </div>
+        <div class="details-left">
+          <div class="ui-actions">
+            <span>
+              <span>
+                <%= link_to(icon("edit") + "修改", edit_host_url(@host),:class=>controlled("hosts/edit"))%>
+                <%= link_to("添加服务", new_host_service_path(@host),:class=>controlled("services/new"))%>
+                <%= link_to("发现服务", redisco_host_path(@host), :method => :put,:class=>controlled("hosts/redisco"))%>
+    <%#= link_to("添加应用", {:controller=>"apps",:action=>"new","host_id"=>@host.id})%>
+    <%#= link_to(icon("delete") + "删除", host_url(@host), :method => :delete,:confirm => "确认删除主机？", :class => "last")%>
+                <%= link_to("通知设置", edit_host_url(@host, :anchor => "notification"),:class=>controlled("hosts/edit"))%>
+                <%= link_to(icon("delete") + "删除", confirm_host_url(@host), :class => "last " + controlled("hosts/destroy"))%>
+              </span>
+            </span>
+          </div>
+          <p>
+            <b><%= Host.human_attribute_name('addr') + t("monit_ui.label_suffix") %></b>
+            <%=h @host.addr %>
+          </p>
+          <p>
+            <b><%= Host.human_attribute_name('type_id') + t("monit_ui.label_suffix") %></b>
+            <%=type_link_to h(@host.type.name), {:controller => "hosts"} %>
+          </p>
+          <p>
+            <b><%= Host.human_attribute_name('status') + t("monit_ui.label_suffix") %></b>
+            <%=@host.human_status_name %>
+          </p>
+          <p>
+            <b><%= Host.human_attribute_name('summary') + t("monit_ui.label_suffix") %></b>
+            <span><%=h @host.summary %></span>
+          </p>
+          <p>
+            <b><%= Host.human_attribute_name('ctrl_service') + t("monit_ui.label_suffix") %></b>
+            <span> <%=(@ctrl_service ? link_to(@ctrl_service.name, @ctrl_service,:class=>controlled("services/show")) : "无") %> <%= inlink_to "修改", ctrl_host_path(@host),:class=>controlled("hosts/ctrl") %></span>
+          </p>
+          <p>
+            <b>SNMP：</b>
+            <%= @host.community %> <%= inlink_to "修改", edit_host_path(@host, :anchor => "snmp"),:class=>controlled("hosts/edit") %>
+            <%= inlink_to("检测", test_snmp_host_url(@host), :method => :post, :class => controlled("hosts/test_snmp"))%>
+          </p>
+          <p>
+            <b><%= Host.human_attribute_name('agent_id') + t("monit_ui.label_suffix") %></b>
+            <%= @agent.nil? ? "Monit服务器" : link_to(@agent.name, @agent) %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<% if @disco_services.size > 0 or @host.discovery_state != 1 %>
+  <div class="wrap">
+    <% board do %>
+      <% board_header do %>
+        发现
+      <% end %>
+      <% board_content do %>
+        <% if @disco_services.size > 0 %>
+          <p class="notice">
+            系统将自动发现一些可监控此主机的服务，您可以确认添加此服务。
+          </p>
+          <div class="ui-actions">
+            <span>
+              <span>
+                <%= link_to "确认所有", create_all_disco_services_path(:serviceable_type => 1, :serviceable_id => @host.id), :class=>controlled("services/create_all_disco") %>
+                <%= link_to "忽略所有", destroy_all_disco_services_path(:serviceable_type => 1, :serviceable_id => @host.id), :class => controlled("services/destroy_all_disco") %>
+              </span>
+            </span>
+          </div>
+          <%= render :partial => 'services/disco' %>
+        <% elsif @host.discovery_state != 1 %>
+          系统正在自动发现<%=@host.name%>上可监控的服务，请稍等刷新该页面。
+          <%= image_tag "indicator.gif", :alt => "Loading..." %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<%end%>
+
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      服务
+    <% end %>
+    <% board_content do %>
+      <% if @show %>
+        <% @services.each do |service| %>
+          <p>
+            <%= icon_status("service", service.status_name) %><%=h service.name %>
+            <%= format_time(service.last_check) %>
+            <%= service.current_metric.to_a.inspect %>
+          </p>
+        <% end %>
+      <% end %>
+      <%= render :partial => 'services/table' %>
+    <%end%>
+  <% end %>
+</div>
+<div class="wrap">
+  <div class="notice">
+    <p>
+      Monit正在通过SNMP协议监控您的服务器性能，您需要在服务器上运行SNMP代理，
+      <%= extlink_to "SNMP代理安装和配置方法参考这里", "http://blog.monit.cn/?tag=snmp" %>。
+    </p>
+    <% if @show %>
+      <p>
+        在该主机上安装<%= extlink_to "代理", "/agents" %>可获得更多自定义服务监控，还可以通过此代理监控局域网内主机。<%= link_to "安装代理", {:controller => "agents", :action => "new", :host_id => @host.id }, :class=>controlled("agents/new") %>
+      </p>
+    <%end%>
+  </div>
+</div>

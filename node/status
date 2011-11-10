@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ $# != 1 ]; then
+  echo "usage: status nodename"
+  exit 1
+fi
+NODE_NAME=$1
+
+erl -noinput -sname monit_node_ctl -pa ./ebin -s monit_node_ctl -extra $NODE_NAME status

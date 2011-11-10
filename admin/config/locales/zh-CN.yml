@@ -1,0 +1,540 @@
+# Chinese (China) translations for Ruby on Rails 
+# by tsechingho (http://github.com/tsechingho)
+
+"zh-CN":
+  years: "年"
+  months: "月"
+  weeks: "周"
+  days: "天"
+  hours: "小时"
+  minutes: "分"
+  seconds: "秒"
+  production_name: "Monit"
+  production_title: "Monit监控云"
+  monit: "Monit"
+  add: "添加"
+  delete: "删除"
+  edit: "修改"
+  select: "选择"
+  detail: "详细"
+  new: "添加"
+  next: "下一步"
+  all: "所有"
+  cancel: "取消"
+  update: "更新"
+  create: "确定"
+  logout: "退出"
+  login: "登录"
+  signup: "注册"
+  dashboard: "控制台"
+  business: "业务"
+  notification: "通知"
+  notifications: "通知"
+  system: "系统"
+  sites: "网站"
+  site: "网站"
+  network: "网络"
+  networks: "网络"
+  device: "设备"
+  devices: "设备"
+  host: "主机"
+  hosts: "主机"
+  application: "应用"
+  app: "应用"
+  apps: "应用"
+  applications: "应用"
+  service: "服务"
+  services: "服务"
+  alert: "告警"
+  alerts: "告警"
+  agent: "代理"
+  agents: "代理"
+  reports: "报表"
+  setting: "设置"
+  settings: "设置"
+  plugin: "插件"
+  plugins: "插件"
+  account: "账户"
+  tenant: "租户"
+  tenants: "租户"
+  operator: "运营商"
+  operators: "运营商"
+  bill: "账单"
+  bills: "账单"
+  order: "订单"
+  orders: "订单"
+  package: "套餐"
+  packages: "套餐"
+  operator_packages: "套餐"
+  user_info: "个人信息"
+  edit: "修改"
+  password: "密码"
+  terms: "服务条款"
+  contact: "联系我们"
+  about: "关于我们"
+  feedback: "用户反馈"
+
+  order_pay_mode:
+    nopay: "-"
+    alipay: "支付宝"
+    hand: "线下支付"
+
+  package_category:
+    free: "免费版"
+    standard: "标准监控版"
+    enterprise: "高级企业版"
+
+  status:
+    order:
+      waiting: "等待支付"
+      paid: "已支付"
+
+    device:
+      up: "正常"
+      down: "宕机"
+      pending: "未监控"
+      unreachable: "不可达"
+    host:
+      up: "正常"
+      down: "宕机"
+      pending: "未监控"
+      unreachable: "不可达"
+    site:
+      up: "正常"
+      down: "故障"
+      pending: "未监控"
+    app:
+      up: "正常"
+      down: "故障"
+      pending: "未监控"
+    service:
+      ok: "正常"
+      warning: "警告"
+      critical: "故障"
+      unknown: "未知"
+      pending: "未监控"
+    agent:
+      available: "在线"
+      unavailable: "离线"
+      busy: "繁忙"
+    alert:
+      clear: "清除"
+      critical: "故障"
+      warning: "警告"
+      information: "提醒"
+    notification:
+      device:
+        recovery: "恢复正常"
+        down: "宕机"
+        unreachable: "不可达"
+      host:
+        recovery: "恢复正常"
+        down: "宕机"
+        unreachable: "不可达"
+      site:
+        recovery: "恢复正常"
+        down: "故障"
+      app:
+        recovery: "恢复正常"
+        down: "故障"
+      service:
+        recovery: "恢复正常"
+        warning: "警告"
+        critical: "故障"
+        unknown: "未知错误"
+
+  status_type:
+    transient: "临时"
+    permanent: "永久"
+
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      short: "%b%d日"
+      long: "%Y年%b%d日"
+    day_names: [星期日, 星期一, 星期二, 星期三, 星期四, 星期五, 星期六]
+    abbr_day_names: [日, 一, 二, 三, 四, 五, 六]
+    month_names: [~, 一月, 二月, 三月, 四月, 五月, 六月, 七月, 八月, 九月, 十月, 十一月, 十二月]
+    abbr_month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+    order: [ :year, :month, :day ]
+  
+  time:
+    formats:
+      default: "%Y年%b%d日 %A %H:%M:%S %Z"
+      short: "%b%d日 %H:%M"
+      long: "%Y年%b%d日 %H:%M"
+    am: "上午"
+    pm: "下午"
+  
+  datetime:
+    distance_in_words:
+      half_a_minute: "半分钟"
+      less_than_x_seconds:
+        one: "不到一秒"
+        other: "不到 {{count}} 秒"
+      x_seconds:
+        one: "一秒"
+        other: "{{count}} 秒"
+      less_than_x_minutes:
+        one: "不到一分钟"
+        other: "不到 {{count}} 分钟"
+      x_minutes:
+        one: "一分钟"
+        other: "{{count}} 分钟"
+      about_x_hours:
+        one: "大约一小时"
+        other: "大约 {{count}} 小时"
+      x_days:
+        one: "一天"
+        other: "{{count}} 天"
+      about_x_months:
+        one: "大约一个月"
+        other: "大约 {{count}} 个月"
+      x_months:
+        one: "一个月"
+        other: "{{count}} 个月"
+      about_x_years:
+        one: "大约一年"
+        other: "大约 {{count}} 年"
+      over_x_years:
+        one: "一年多"
+        other: "{{count}} 年多"
+    prompts:
+      year:   "年"
+      month:  "月"
+      day:    "日"
+      hour:   "时"
+      minute: "分"
+      second: "秒"
+  
+  number:
+    format:
+      separator: "."
+      delimiter: ","
+      precision: 3
+    currency:
+      format:
+        format: "%u %n"
+        unit: "CN¥"
+        separator: "."
+        delimiter: ","
+        precision: 2
+    percentage:
+      format:
+        delimiter: ""
+    precision:
+      format:
+        delimiter: ""
+    human:
+      format:
+        delimiter: ""
+        precision: 1
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+  
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " 和 "
+      last_word_connector: ", 和 "
+  
+  activerecord:
+    models:
+      host: "主机"
+      device: "网络"
+      service: "服务"
+      app: "应用"
+      site: "网站"
+      order: "订单"
+
+    attributes:
+      order:
+        paid_at: 支付时间
+        created_at: 购买时间
+        subject: 标题
+        body: 内容
+        status: 状态
+        out_trade_no: 订单号
+        total_fee: 总价
+        month_num: 购买期限
+        pay_mode: 支付方式
+        is_paid: 是否支付
+      bill:
+        amount: 涉及金额
+        balance: 用户当前余额
+        summary: 使用描述
+        created_at: 产生时间
+      tenant:
+        name: 用户名
+        email: 邮箱
+        mobile: 手机
+        expired_at: 套餐到期日期
+        begin_at: 套餐开始日期
+        created_at: 注册时间
+        next_paid_at: 下月付费日期
+        month_num: 套餐时长(月)
+        balance: 帐户余额
+        is_pay_account: 是否付费帐户
+      package:
+        name: 名称
+        category: 类别
+        max_services: 最大服务数
+        max_hosts: 最大主机数
+        min_check_interval: 最低监测频率
+        multi_regional: 多地域监测
+        report: 邮件报表
+        customer_support: 客服支持
+        data_retention: 数据保存
+        sms_num: 赠送短信
+        special_features: 特殊功能
+        charge: 月付
+        year_charge: 年付
+      operator:
+        is_support_bank: 支持银行支付
+        is_support_alipay: 支持支付宝
+        created_at: 注册时间
+        page_contact: 联系我们页面
+        page_about: 关于我们页面
+        amount: 账户余额
+        login: 网站域名
+        host: 域名
+        contact: 联系人
+        descr: 描述
+        telphone: 电话
+        email: 邮箱地址
+        bank: 开户银行
+        bank_account_name: 开户名称
+        bank_account: 开户帐号
+        bank_tax_number: 税务登记号
+        bank_payment_number: 现代化支付系统行号
+        alipay_email: 支付宝帐号
+        alipay_partner: 支付宝partner
+        alipay_key: 支付宝key
+        password: 密码
+        password_confirmation: 确认密码
+        logo_url: 运营商logo
+        biglogo_url: 首页logo
+        title: 网站名称
+        footer: 底部显示
+      device:
+        name: "名称"
+        port: "SNMP代理端口"
+        snmp_ver: "SNMP协议版本"
+        community: "SNMP读团体名"
+        status: "状态"
+        addr: "IP/域名"
+        type_id: "类型"
+        manu_id: "型号"
+        summary: "状态信息"
+        service_num: "服务"
+        agent_id: "所属代理"
+        is_support_snmp: "支持SNMP读取"
+        last_check: "上次检测"
+        next_check: "下次检测"
+        check_interval: "检测频度"
+        ctrl_service: "主控服务"
+        notification_times: "重发次数"
+        notification_interval: "重发间隔"
+        first_notification_delay: "延迟"
+
+      host:
+        name: "名称"
+        port: "SNMP代理端口"
+        snmp_ver: "SNMP协议版本"
+        community: "SNMP读团体名"
+        status: "状态"
+        addr: "IP/域名"
+        type_id: "类型"
+        manu_id: "型号"
+        summary: "状态信息"
+        service_num: "服务"
+        app_num: "应用数量"
+        agent_id: "所属代理"
+        is_support_snmp: "支持SNMP读取"
+        last_check: "上次检测"
+        next_check: "下次检测"
+        check_interval: "检测频度"
+        ctrl_service: "主控服务"
+        notification_times: "重发次数"
+        notification_interval: "重发间隔"
+        first_notification_delay: "延迟"
+
+      site:
+        name: "名称"
+        url: "网址"
+        ctrl_service: "主控服务"
+        status: "状态"
+        summary: "状态信息"
+        service_num: "服务"
+        created_at: "创建时间"
+        last_check: "上次检测"
+        next_check: "下次检测"
+        check_interval: "检测频度"
+        notification_times: "重发次数"
+        notification_interval: "重发间隔"
+        first_notification_delay: "延迟"
+
+      app:
+        name: "名称"
+        status: "状态"
+        type_id: "类型"
+        host_id: "所属主机"
+        ctrl_service: "主控服务"
+        service_num: "服务"
+        summary: "状态信息"
+        created_at: "创建时间"
+        login_name: "用户名"
+        password: "口令"
+        port: "端口"
+        status_url: "状态页面"
+        last_check: "上次检测"
+        next_check: "下次检测"
+        check_interval: "检测频度"
+        notification_times: "重发次数"
+        notification_interval: "重发间隔"
+        first_notification_delay: "延迟"
+
+      service:
+        name: "名称"
+        status: "状态"
+        type_id: "类型"
+        summary: "状态信息"
+        serviceable_type: "所属资源"
+        last_check: "上次检测"
+        next_check: "下次检测"
+        check_interval: "检测频度"
+        threshold_critical: "故障阈值"
+        threshold_warning: "告警阈值"
+        port: "TCP端口"
+        agent_id: "所属代理"
+        notification_times: "重发次数"
+        notification_interval: "重发间隔"
+        first_notification_delay: "延迟"
+
+      alert:
+        name: "名称"
+        severity: "严重等级"
+        status: "状态"
+        status_type: "状态类型"
+        service: "服务名称"
+        occur_count: "发生次数"
+        occured_at: "产生时间"
+        summary: "详细"
+        source_name: "告警源"
+        changed_at: "变更时间"
+        last_check: "上次检测"
+        next_check: "下次检测"
+        last_status: "上次状态"
+
+      notification:
+        created_at: "发送时间"
+        method: "方式"
+        user_id: "用户"
+        title: "标题"
+        content: "内容"
+        summary: "摘要"
+
+      agent:
+        username: "帐号"
+        name: "名称"
+        presence: "状态"
+        password: "密码"
+        host_id: "所属主机"
+        created_at: "创建时间"
+        updated_at: "状态变更时间"
+
+      logm_operation:
+        user_name: "用户名"
+        terminal_ip: "终端IP"
+        result: "结果"
+        details: "详细"
+        action: "操作"
+        module_name: "模块名称"
+        created_at: "创建时间"
+
+      logm_security:
+        user_name: "用户名"
+        terminal_ip: "终端IP"
+        host_name: "主机名"
+        security_cause: "安全原因"
+        security_action: "操作"
+        result: "结果"
+        details: "详细"
+        created_at: "创建时间"
+
+      user:
+         login: "用户名"
+         name: "名字"
+         birthday: "生日"
+         email: "邮箱"
+         company: "公司"
+         department: "部门"
+         job: "岗位"
+         phone: "电话"
+         mobile: "手机"
+         old_password: "旧密码"
+         password: "密码"
+         password_confirmation: "确认密码"
+      service_type:
+          name: "名称"
+          alias: "Alias"
+          command: "命令"
+          check_interval: "检测频度(秒)"
+          threshold_warning: "告警阈值"
+          threshold_critical: "故障阈值"
+          serviceable_type: "主机或服务类型"
+          serviceable_id: "所属主机或应用"
+          ctl_state: "是否主控服务"
+      service_param:
+          name: "名称"
+          alias: "Alias"
+          default_value: "缺省值"
+          unit: "单位"
+          param_type: "缺省值类型"
+          type_id: "所属服务"
+      host_type:
+          name: "名称"
+          parent_id: "所属主机"
+      group:
+          name: "名称"
+          parent_id: "上级分组"
+          descr: "描述"
+          
+    errors:
+      template:
+        header: 
+          one: "有 1 个错误发生导致「{{model}}」无法被保存。"
+          other: "有 {{count}} 个错误发生导致「{{model}}」无法被保存。"
+        body: "如下字段出现错误："
+      messages:
+        record_invalid: "交验失败: {{errors}}"
+        inclusion: "不包含于列表中"
+        exclusion: "是保留关键字"
+        invalid: "是无效的"
+        confirmation: "与确认值不匹配"
+        accepted: "必须是可被接受的"
+        empty: "不能留空"
+        blank: "不能为空"
+        too_long: "过长（最长为 {{count}} 个字符）"
+        too_short: "过短（最短为 {{count}} 个字符）"
+        wrong_length: "长度非法（必须为 {{count}} 个字符）"
+        taken: "已经被使用"
+        not_a_number: "不是数字"
+        greater_than: "必须大于 {{count}}"
+        greater_than_or_equal_to: "必须大于或等于 {{count}}"
+        equal_to: "必须等于 {{count}}"
+        less_than: "必须小于 {{count}}"
+        less_than_or_equal_to: "必须小于或等于 {{count}}"
+        odd: "必须为单数"
+        even: "必须为双数"
+
+  monit_ui:
+    label_suffix: "："

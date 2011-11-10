@@ -1,0 +1,41 @@
+<% board do %>
+  <% board_header do %>
+    近期账单
+  <% end %>
+  <% board_content do %>
+
+    <div class="datagrid">
+      <table cellspacing="0">
+     
+          <% if @recent_bills.present? %>
+        <thead>
+          <tr>
+            <%= th_tag "运营商" %>
+            <%= th_tag Bill.human_attribute_name("amount") %>
+            <%= th_tag Bill.human_attribute_name("created_at") %>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <% @recent_bills.each do |bill| %>
+            <tr class="<%= cycle("odd", "even") %>">
+              <%= td_tag bill.operator.try(:host)%>
+              <%= td_tag h(bill.amount) %>
+              <%= td_tag format_time(bill.created_at) %>
+            </tr>
+          <%end%>
+            
+        </tbody>
+        <%else%>
+              <tr class="first">
+                <% td_tag :colspan =>3 do %>
+                  <p class="notice">
+                  列表显示近期账单，现在还没有账单。
+                  </p>
+                <% end %>
+              </tr>
+            <%end%>
+      </table>
+    </div>
+  <% end %>
+<% end %>

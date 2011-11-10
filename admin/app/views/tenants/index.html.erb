@@ -1,0 +1,71 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("all") } %>
+      <%= t("tenant") %>
+    <% end %>
+    <% board_content do %>
+      <div class="filters clearfix">
+        <%= package_tabs @status_tab, @current_status_name, {} %>
+      </div>
+
+      <% form_tag(url_for(:action => "index"), :method => :get) do%>
+        <%= redirect_tag url_for(params) %>
+        <table class="grid" cellspacing="0">
+          <thead>
+            <tr>
+              <% th_tag :class => "actions first" do %>
+              <%end%>
+              <%=th_tag sort_link_to("name", (Tenant.human_attribute_name 'name'), params), :style => "width:120px;" %>
+              <%=th_tag (Tenant.human_attribute_name 'email'), :style => "width: 130px;" %>
+              <%=th_tag (Tenant.human_attribute_name 'mobile'), :style => "width: 80px;" %>
+              <%=th_tag t("packages") %>
+              <%=th_tag sort_link_to("begin_at",(Tenant.human_attribute_name 'begin_at'),params),:class => "time" %>
+              <%=th_tag sort_link_to("expired_at",(Tenant.human_attribute_name 'expired_at'),params), :class => "time" %>
+              <%=th_tag "", :class => "last" %>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <%=th_tag "", :class => "first" %>
+              <th colspan="6">
+                <% if @tenants && @tenants.length > 0 %>
+                  <div class="page clearfix">
+                    <div class="stat">显示<%=@tenants.total_entries %>个租户中的<%=@tenants.size %>个</div>
+                    <%=will_paginate @tenants%>
+                  </div>
+                <%end%>
+              </th>
+              <%=th_tag "", :class => "last" %>
+            </tr>
+          </tfoot>
+          <tbody>
+         
+            <% if @tenants.size > 0 %>
+              <% @tenants.each do |tenant| %>
+                <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'") %>>
+                  <%=td_tag "",:class => "first" %>
+                  <%=td_tag h(tenant.name)+"<br />&nbsp;" %>
+                  <%=td_tag tenant.email %>
+                  <%=td_tag tenant.mobile %>
+                  <%=td_tag tenant.package ? tenant.package.title : "免费版" %>
+                  <%=td_tag format_time(tenant.begin_at,true) %>
+                  <%=td_tag format_time(tenant.expired_at,true) %>
+                  <%=td_tag "", :class => "last" %>
+                </tr>
+              <% end %>
+            <% else %>
+              <tr class="first">
+                <% td_tag :colspan =>8 do %>
+              <p class="notice">
+                列表显示租户，现在还没有租户。
+              </p>
+            <% end %>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

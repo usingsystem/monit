@@ -1,0 +1,23 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("new") } %>
+      <%= t('new') + t('applications') %>
+    <% end %>
+    <% board_content do %>
+      <p class="notice">
+        添加<%= @app.type.name %>应用
+      </p>
+      
+      <% form_for(@app, :builder => ::UIFormBuilder) do |f| %>
+        <%= f.hidden_field :type_id %>
+        <%= f.text_field :name, :required => true %>
+        <%= f.select :host_id, [["选择主机", ""]] + @hosts.collect { |x| [x.name, x.id] }, {}, :required => true %>
+        <% path = "apps/" + @app.type.view + "_form" %>
+        <%= render :partial => path, :locals => { :f => f } if partial_exist? path %>
+        <%= f.select :group_id, [['无','']] + @groups.collect { |x| [x.name, x.id] } %>
+        <%= f.submit t('create') %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

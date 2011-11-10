@@ -1,0 +1,26 @@
+<div class="datagrid">
+  <h5>MYSQL吞吐量TopN</h5>
+  <table  cellspacing="0">
+    <thead>
+      <tr>
+        <%=th_tag "应用"%>
+        <%=th_tag "吞吐量"%>
+      </tr>
+    </thead>
+    <% if @app_type %>
+      <tbody>
+        <% if @app_type.size > 0 %>
+          <% @app_type.each do |type| %>
+            <tr>
+              <% if type["type"]=="吞吐量监测" %>
+                <%=td_tag type["name"]%>
+                <%=td_tag ('%.2f' %(type["avg"]))%>
+              <%end%>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    <%end%>
+  </table>
+</div>
+

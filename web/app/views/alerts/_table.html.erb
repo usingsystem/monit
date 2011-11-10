@@ -1,0 +1,23 @@
+<table class="table" cellspacing="0">
+  <thead>
+    <tr>
+      <%=th_tag (Alert.human_attribute_name 'occured_at'), :style => "width: 70px" %>
+      <%=th_tag (Alert.human_attribute_name 'status'), :style=> "width: 50px" %>
+      <%=th_tag (Alert.human_attribute_name 'source_name'), :style => "width: 120px" %>
+      <%=th_tag (Alert.human_attribute_name 'occur_count'), :style => "width: 60px" %>
+      <%=th_tag (Alert.human_attribute_name 'summary') %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @alerts.each do |alert| %>
+      <tr>
+        <%=td_tag format_time(alert.occured_at) %>
+        <%#=td_tag h(alert.human_severity_name) %>
+        <%=td_tag h(alert.human_status_name), :class => "status status-#{alert.object_name}-" + alert.status_name %>
+        <%=td_tag alert.name %>
+        <%=td_tag alert.occur_count %>
+        <%=td_tag alert.summary %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

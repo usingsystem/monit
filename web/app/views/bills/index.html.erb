@@ -1,0 +1,58 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("all") } %>
+      我的<%= t('bill') %>
+    <% end %>
+    <% board_content do %>
+      <table class="grid" cellspacing="0">
+        <thead>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <%=th_tag sort_link_to("created_at", Bill.human_attribute_name("created_at"), params), :class => "time" %>
+            <%=th_tag sort_link_to("amount", Bill.human_attribute_name("amount"),params), :style => "width:120px;" %>
+            <%=th_tag Bill.human_attribute_name("balance"), :style => "width:120px;" %>
+            <%=th_tag sort_link_to("summary", Bill.human_attribute_name("summary"), params) %>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <th colspan="4">
+              <% if @bills && @bills.length > 0 %>
+                <div class="page clearfix">
+                  <div class="stat">显示<%=@bills.total_entries %>个<%= t("bills") %>中的<%=@bills.size %>个</div>
+                  <%=will_paginate @bills%>
+                </div>
+              <%end%>
+            </th>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% if @bills.size > 0 %>
+            <% @bills.each do |bill| %>
+              <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'") %>>
+                <%=td_tag "", :class => "first" %>
+                <%=td_tag format_time(bill.created_at, true) %>
+                <%=td_tag bill.amount > 0 ? "+ ¥#{bill.amount}" : "- ¥#{-bill.amount}" %>
+                <%=td_tag "¥#{bill.balance}" %>
+                <%=td_tag bill.summary %>
+                <%=td_tag "", :class => "last" %>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr class="first">
+              <% td_tag :colspan => 6 do %>
+                <p class="notice">
+                当前没有数据
+                </p>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+</div>

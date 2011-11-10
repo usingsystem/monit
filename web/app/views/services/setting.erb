@@ -1,0 +1,80 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      监控服务设置
+    <% end %>
+    <% board_content do %>
+      <table class="grid" cellspacing="0">
+        <thead>
+          <tr>
+            <th class="first">&nbsp;</th>
+            <th style="width:180px;">监控服务类型</th>
+            <th style="width:80px;">状态</th>
+            <th>操作</th>
+            <th class="last">&nbsp;</th>
+          </tr>
+        </thead>
+        <%@service_types.each do |service_type|%>
+          <%services = service_type.services(params[:serviceable_type], params[:serviceable_id])%>
+          <%service_length = services.length%>
+          <%if service_type.multi_services == 1%>
+            <tr>
+              <td class="first">&nbsp;</td>
+              <td><b><%=service_type.alias%></b></td>
+              <td>&nbsp;</td>
+              <td><%=link_to "新建#{service_type.alias}",
+                params.except(:authenticity_token, :id, :_method).merge({:service_type_id => service_type.id, :controller => :services, :action => :new,})%></td>
+              <td class="last">&nbsp;</td>
+            </tr>
+            <%services.each do |service|%>
+              <tr>
+                <td class="first">&nbsp;</td>
+                <td style="padding-left:20px;"><%=service.name%></td>
+                <td><%=service.is_collect == 1 ? "已监控" : "未监控"%></td>
+                <td>
+                  <%if service.is_collect == 1%>
+                    <%=link_to("修改", edit_service_url(service), :method => :put)%>
+                    <%=link_to("停止监控", stop_service_url(service), :method => :put)%>
+                    <%=link_to("删除", service_url(service), :method => :delete)%>
+                  <%else%>
+                    <%=link_to "开始监控", start_service_url(service), :method => :put%>
+                  <%end%></td>
+                <td class="last">&nbsp;</td>
+              </tr>
+            <%end%>
+          <%else%>
+            <tr>
+              <td class="first">&nbsp;</td>
+              <td><%=service_type.alias%></td>
+              <%if (service_length > 0)%>
+                <% service = service_type.services.first %>
+                <td><%=service.is_collect == 1 ? "已监控" : "已停止"%></td>
+                <td>
+                <%if service.is_collect == 1%>
+                  <%=link_to("修改", edit_service_url(service), :method => :put)%>
+                  <%=link_to("停止监控", stop_service_url(service), :method => :put)%>
+                <%else%>
+                  <%=link_to("修改")%>
+                  <%=link_to("开始监控", start_service_url(service), :method => :put)%>
+                <%end%>
+              <%else%>
+                <td>未监控</td>
+                <td><%=link_to "开始监控", :controller => :services, :action => :new%></td>
+              <%end%>
+              <td class="last">&nbsp;</td>
+            </tr>
+          <%end%>
+        <%end%>
+        <tfoot>
+          <tr>
+            <th class="first">&nbsp;</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th class="last">&nbsp;</th>
+          </tr>
+        </tfoot>
+      </table>
+    <%end%>
+  <%end%>
+</div>

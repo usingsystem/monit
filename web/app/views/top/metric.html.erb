@@ -1,0 +1,40 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      <%= @n_title %>报表
+    <% end %>
+    <% board_content do %>
+      <%= tabs @tabs, 'service' %>
+      <div class="selector-wrap">
+        <p class="selector">
+        <% @dates.each do |d| %>
+          <%= link_to d[0] ,params.merge({:date=>d[1]}), :class => (d[1]==@date ? "selected" : nil) %>
+        <% end %>
+        </p>
+        <p class="selector">
+        <% @source_types.each do |n| %>
+          <% selected = n == @source_type %>
+          <%= link_to "#{selected ? icon("carat2") : nil}#{t(n)}", services_top_path(n, :date=>@date, :source_type => n), :class =>( selected ? "selected" : nil) %>
+        <% end %>
+        </p>
+        <p class="selector">
+        <% @service_types.each do |n| %>
+          <% selected = n.id == (@service_type && @service_type.id) %>
+          <%= link_to "#{selected ? icon("carat2") : nil}#{n.alias}", service_type_top_path(n, :date=>@date), :class =>(selected ? "selected" : nil) %>
+        <% end %>
+        </p>        
+        <% if @service_metrics %>
+          <p class="selector">
+          <%= link_to t("all") + t("metric"), service_type_top_path(@service_type, :date=>@date), :class =>(params[:metric_id].blank? ? "selected" : nil) %>
+          <% @service_metrics.each do |n| %>
+            <%= link_to n.desc, service_type_metric_top_path(@service_type, n,:date=>@date), :class =>(n.id.to_s ==params[:metric_id] ? "selected" : nil) %>
+          <% end %>
+          </p>
+        <% end %>
+      </div>
+      <%=render :partial => "templates/#{@chart_view.template}", :locals => {:view => @chart_view } if @chart_view %>
+      <%=render :partial => "templates/#{@data_view.template}", :locals => {:view => @data_view } if @data_view %>
+    <% end %>
+  <%end%>
+</div>

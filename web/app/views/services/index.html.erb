@@ -1,0 +1,123 @@
+<% @type_name = Service.human_attribute_name 'type_id' %>
+<div class="wrap">
+  <% board :id => nil do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("all") } %>
+      <%= t('services') %>
+    <% end %>
+    <% board_content do %>
+      <div class="filters clearfix">
+        <%= status_tabs @status_tab, @current_status_name, {} %>
+        <div>
+          <% form_tag(url_for(params), :method=>:get) do%>
+            <%
+              a = filter_params(params)
+              a.delete(:type)
+            %>
+            <% a.each do |k,v| %> 
+              <%= hidden_field_tag k, v %>
+            <% end %>
+          <p class="last">
+            <label><%= @type_name %>：</label>
+            <span><%= select_tag('type', '<option value=''>所有</option>' + options_from_collection_for_select(@service_types, 'name', 'alias', params[:type]))%></span>
+            </p>
+            <p class="actions js-hide">
+            <%= tag('input', :type =>'submit', :value =>'过滤', :name => nil, :class => 'submit' )%>
+            </p>
+
+          <% end %>
+        </div>
+      </div>
+      <% form_tag(url_for(:action => "index"), :method => :get) do%>
+        <%= redirect_tag url_for(params) %>
+        <table class="grid" cellspacing="0">
+          <thead>
+            <tr>
+              <% th_tag :class => "actions first" do %>
+                <div class="pop-wrap">
+                  <div class="pop">
+                    <div class="pop-inner">
+                      <div class="ui-actions">
+                        <span>
+                          <span>
+                            <%= link_to("阈值设置", edit_threshold_services_path) %>
+                            <%= link_to("通知设置", edit_notification_services_path, :class => "last")%>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <%= check_box_tag "all", "" %>
+              <% end %>
+              <%=th_tag sort_link_to("name", Service.human_attribute_name("name"), params), :style => "width:100px;" %>
+              <%=th_tag sort_link_to("serviceable", Service.human_attribute_name("serviceable_type"), params), :style => "width:120px;" %>
+              <%=th_tag Service.human_attribute_name("status"), :style => "width:50px;" %>
+              <%=th_tag @type_name, :style => "width:120px;" %>
+              <%=th_tag sort_link_to("last_check", Service.human_attribute_name("last_check"), params), :class => "time" %>
+              <%#=th_tag Service.human_attribute_name("next_check"), :style => "width:80px;" %>
+              <%=th_tag Service.human_attribute_name("check_interval"), :style => "width:80px;" %>
+              <%=th_tag Service.human_attribute_name("summary") %>
+              <%=th_tag "", :class => "last" %>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <%=th_tag "", :class => "first" %>
+              <th colspan="7">
+                <% if @services && @services.length > 0 %>
+                  <div class="page clearfix">
+                    <div class="stat ">显示<%=@services.total_entries %>个<%=t('service')%>中的<%=@services.size %>个</div>
+                    <%=will_paginate @services%>
+                  </div>
+                <%end%>
+              </th>
+              <%=th_tag "", :class => "last" %>
+            </tr>
+          </tfoot>
+          <tbody>
+            <% cache_name = nil %>
+            <% if @services.size > 0 %>
+              <% @services.each do |service| %>
+                <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'") %>>
+                  <% td_tag :class => "actions first" do %>
+                    <div class="pop-wrap">
+                      <div class="pop">
+                        <div class="pop-inner">
+                          <% if service.is_ctrl? %>
+                            <%= link_to(icon("delete2", :title => "主控服务不能删除"), "javascript: void(alert('主控服务不能删除'))", :class => "disabled")%>
+                          <% else %>
+                            <%= link_to(icon("delete2", :title => "删除"), service_url(service, redirect_object),:class=>controlled("services/destroy"), :method => :delete,:confirm => "确认删除服务？")%>
+                          <% end %>
+                          <%= link_to(icon("edit2", :title => "修改"), edit_service_url(service, redirect_object),:class=>controlled("services/edit"))%>
+                        </div>
+                      </div>
+                    </div>
+                    <%= check_box_tag "ids[#{service.id}]", "" %>
+                  <% end %>
+                  <%=td_tag (link_to h(service.name), service,:class=>controlled("services/show")) %>
+                  <%=td_tag link_to(service.serviceable.name, service.serviceable) %>
+                  <%=td_tag h(t("status.service." + service.status_name)), :class => "status status-service-" + service.status_name %>
+                  <%=td_tag link_to(service.type.alias, params.merge(:type => service.type.name)) %>
+                  <%=td_tag format_time(service.last_check, true) %>
+                  <%#=td_tag h(service.next_check)%>
+                  <%=td_tag "#{service.check_interval.to_i/60}分钟" %>
+                  <%=td_tag(content_tag :div, service.summary, :class => "truncate") %>
+                  <%=td_tag "", :class => "last" %>
+                </tr>
+              <% end %>
+            <% else %>
+              <tr class="first">
+                <% td_tag :colspan => 9 do %>
+                  <p class="notice">
+                  列表显示服务，现在还没有服务
+                  </p>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

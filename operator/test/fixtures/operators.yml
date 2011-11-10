@@ -1,0 +1,11 @@
+<% SALT="NaCL" unless defined?(SALT) %>
+monit:
+  id:  1
+  host: "www.monit.cn"
+  salt: <%= SALT %>
+  crypted_password: <%=User.password_digest('public', SALT) %>
+  created_at:  <%= 5.days.ago.to_s :db  %>
+  title: monit监控云
+  
+  
+

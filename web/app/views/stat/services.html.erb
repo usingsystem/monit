@@ -1,0 +1,43 @@
+<% content_for :head do %>
+  <%=stylesheet_link_tag 'dashboard',:media=>'all' %>
+<% end %>
+<div class="dashboard cloumns clearfix">
+  <%board do%>
+    <%board_header do%>
+      统计报表
+    <%end%>
+      
+    <%board_content do %>
+      <%= tabs @tabs, 'services' %>
+      <div class="columns columns37 clearfix">
+        <div class="column">
+          <% if @service_view and @service_view.rows.size %>
+            <%=render :partial => "templates/#{@service_view.template}", :locals => {:view => @service_view } %>
+          <% end %>
+        </div>
+        <div class="column column-last">
+          <div class="datagrid">
+            <table cellspacing="0">
+              <thead>
+                <tr>
+                  <%=th_tag "服务类型"%>
+                  <%=th_tag "数量"%>
+                </tr>
+              </thead>
+              <tbody>
+                <% if @service_types.size > 0 %>
+                  <% @service_types.each do |type| %>
+                    <tr>
+                      <%=td_tag h(type.name) %>
+                      <%=td_tag h(type.count)%>
+                    </tr>
+                  <% end %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    <%end%>
+  <%end%>
+</div>

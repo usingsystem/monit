@@ -1,0 +1,3 @@
+#!/bin/sh
+ssh hidden@s "mysqldump -uroot -ppublic  -R --triggers --events monit" > monit.sql;
+

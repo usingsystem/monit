@@ -1,0 +1,23 @@
+<% form_for(@host, :builder => ::UIFormBuilder, :html => { :class => "form" }) do |f| %>
+  <%= f.hidden_field :is_support_remote %>
+  <%= f.text_field :name, :required => true, :help => "请输入名称" %>
+  <%= f.text_field :addr, :required => true  %>
+  <%= f.select :type_id, [["选择类型", ""]] + @host_types.collect { |x| [x.name, x.id] }, {}, { :required => true }  %>
+  <!--
+  <% field_set_tag "基本设置" do %>
+  <% end %>
+  -->
+  <% if @host.is_support_remote == 1 %>
+    <%= f.select :agent_id, [["Monit服务器", ""]] + @agents.collect { |x| [x.human_username, x.id] }, {} %>
+    <% field_set_tag  f.wrap_label(f.check_box(:is_support_snmp, :alt => "#support_snmp", :class => "check-trigger"), "支持SNMP", "host_is_support_snmp") do %>
+      <% content_tag :div, :id => "support_snmp", :class => @host.is_support_snmp == 1 ? nil : "js-hide" do %>
+        <%= f.text_field :port, :style => "width:100px;", :required => true %>
+        <%#= f.select :snmp_ver, [["V1", "v1"], ["V2c", "v2c"]], {}, { :required => true }  %>
+        <%= f.radio_button_group :snmp_ver, [["V1", "v1"], ["V2c", "v2c"]], { :required => true } %>
+        <%= f.text_field :community, :style => "width:200px;", :required => true %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= f.submit t('create') %>
+<% end %>

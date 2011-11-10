@@ -1,0 +1,82 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("all") } %>
+      <%= t("order") %>
+    <% end %>
+    <% board_content do %>
+      <div class="filters clearfix">
+        <%= status_tabs @status_tab, @current_status_name, {} %>
+
+        <div style="float: right;margin: 1em">
+          <%form_tag orders_path,:method=>:get do%>
+            订单号:<%=text_field_tag "out_trade_no",params[:out_trade_no]%>
+            <%=submit_tag "查询",:name=>nil%>
+          <%end%>
+        </div>
+
+      </div>
+
+      <table class="grid" cellspacing="0">
+        <thead>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <%=th_tag sort_link_to("out_trade_no", Order.human_attribute_name("out_trade_no"),params), :style => "width:110px;" %>
+            <%=th_tag sort_link_to("status", Order.human_attribute_name("status"), params), :style => "width:60px;" %>
+            <%=th_tag Order.human_attribute_name('total_fee'), :style => "width:60px;" %>
+            <%=th_tag Order.human_attribute_name 'body'  %>
+            <%=th_tag Order.human_attribute_name('pay_mode'), :style => "width: 70px;" %>
+            <%=th_tag Order.human_attribute_name('paid_at'), :class => "time" %>
+            <%=th_tag Order.human_attribute_name('created_at'), :class => "time" %>
+            <%=th_tag "操作"%>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <%=th_tag "", :class => "first" %>
+            <th colspan="8">
+              <% if @orders && @orders.length > 0 %>
+                <div class="page clearfix">
+                  <div class="stat">显示<%=@orders.total_entries %>个<%= t("orders") %>中的<%=@orders.size %>个</div>
+                  <%=will_paginate @orders%>
+                </div>
+              <%end%>
+            </th>
+            <%=th_tag "", :class => "last" %>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% if @orders.size > 0 %>
+            <% @orders.each do |order| %>
+              <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'") %>>
+                <% td_tag "", :class => "first" do %>
+                <%end%>
+                <%=td_tag order.out_trade_no + "<br />&nbsp;" %>
+                <%=td_tag (order.is_paid ? order.human_status_name : order.human_status_name ) %>
+                <%=td_tag order.total_fee %>
+                <%=td_tag order.body %>
+                <%=td_tag order.human_pay_mode_name %>
+                <%=td_tag format_time(order.paid_at, true) %>
+                <%=td_tag format_time(order.created_at, true) %>
+                <% unless order.is_paid? %>
+                  <%=td_tag button_to "线下支付",{:action=>"pay",:id=>order.id},:confirm=>"确认支付？",:method=>:put %>
+                <%end%>
+                <%=td_tag "", :class => "last" %>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr class="first">
+              <% td_tag :colspan =>10 do %>
+            <p class="notice">
+              列表显示订单，现在还没有相关订单。
+            </p>
+          <% end %>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+    <% end %>
+  <% end %>
+</div>

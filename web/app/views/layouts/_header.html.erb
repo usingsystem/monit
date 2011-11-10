@@ -1,0 +1,29 @@
+<!--header-->
+<div id="header" class="clearfix">
+  <h2 id="logo">
+    <%=link_to (@operator.logo_url.blank? ? content_tag(:span, @operator.title) : (image_tag @operator.logo_url, :alt => @operator.title)) + "<em>In the cloud</em>", "/" %>
+  </h2>
+  <div id="basic-search">
+    <% form_tag '/search', :method => :get do -%>
+      <span>
+        <label class="icon icon-search" for="basic-search-q">搜索</label>
+        <input id="basic-search-q" type="text" name="q" value="" class="text placeholder" /><input type="submit" class="submit" value="搜索" /></span>
+    <% end -%>
+  </div>
+  <div id="unused">
+    <span class="pipe" id="container">
+      <% if  @summaries.to_i > 0 %>
+        通知(<a href="/alerts"><%= @summaries.to_i %></a>)
+      <%end%>
+    </span>
+    <%=link_to current_user.login, edit_account_path %>
+    <span class="pipe"> </span>
+    <%=link_to t("logout"), logout_url %>
+  </div>
+  <p id="services-summary">
+  </p>
+</div>
+
+
+
+<!--header end-->

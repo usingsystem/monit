@@ -1,0 +1,41 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      可用率报表
+    <% end %>
+    <% board_content do %>
+      <%= tabs [["site", "网站", {:controller => 'site_availabilities'}],["host", "主机", {:controller => 'host_availabilities'}],["app", "应用", {:controller => 'app_availabilities'}],["device", "网络", {:controller => 'device_availabilities'}],["service", "服务", {:controller => 'service_availabilities'}]], 'service' %>
+      <%=render :partial=>"select"%>
+      <div class="datagrid">
+        <table cellspacing="0">
+          <thead>
+            <tr>
+              <%=th_tag "服务"%>
+              <%=th_tag "正常"%>
+              <%=th_tag "故障"%>
+              <%=th_tag "告警"%>
+              <%=th_tag "未知"%>
+              <%=th_tag "未监控"%>
+            </tr>
+          </thead>
+          <tbody>
+             <% if !@result.nil? %>
+              <% @result.each do |k,v| %>
+                <%unless k=='parent_key'%>
+                  <tr<%= @first_false ? "" : ((@first_false = true) && " class='first'")%>>
+                    <%=td_tag (link_to h(v["name"]),{:controller=>:service_availabilities,:action=>:show,:serviceid=>v["id"],:instance=>@instance,:object=>@object,:date=>@date})%>
+                    <%=td_tag ('%.1f' %(v["ok"]))+"%"%>
+                    <%=td_tag ('%.1f' %(v["critical"]))+"%"%>
+                    <%=td_tag ('%.1f' %(v["warning"]))+"%"%>
+                    <%=td_tag ('%.1f' %(v["unknown"]))+"%"%>
+                    <%=td_tag ('%.1f' %(v["pending"]))+"%"%>
+                  </tr>
+                <%end%>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  <%end%>
+</div>

@@ -1,0 +1,30 @@
+<div class="columns columns37 clearfix">
+  <div class="column">
+    <% if @object_view and @object_view.rows.size %>
+      <%=render :partial => "templates/#{@object_view.template}", :locals => {:view => @object_view } %>
+    <% end %>
+  </div>
+  
+  <div class="column column-last">
+    <div class="datagrid">
+      <table cellspacing="0">
+        <thead>
+          <tr>
+            <%=th_tag "类型" %>
+            <%=th_tag "数量"%>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @objects.length > 0 %>
+            <% @objects.each do |k,v| %>
+              <tr>
+                <%=td_tag h(k) %>
+                <%=td_tag h(v)%>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

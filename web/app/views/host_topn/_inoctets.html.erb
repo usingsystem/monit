@@ -1,0 +1,27 @@
+<% board :id => nil do %>
+  <% board_header do %>
+    接口接收流量TopN
+  <%end%>
+  <% board_content do %>
+    <table  width="90%" class="grid" cellspacing="0" >
+      <thead>
+        <tr>
+          <%=th_tag "主机"%>
+          <%=th_tag "接收（Kbps）"%>
+        </tr>
+      </thead>
+      <% if @inoctets %>
+        <tbody>
+          <% if @inoctets.size > 0 %>
+            <% @inoctets.each do |type| %>
+              <tr>
+                  <%=td_tag type["name"]+"-"+type["service"]%>
+                  <%=td_tag ('%.2f' %(type["inoctets"]))%>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      <%end%>
+    </table>
+  <% end %>
+<% end %>

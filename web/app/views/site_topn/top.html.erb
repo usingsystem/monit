@@ -1,0 +1,30 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      常用TOPN
+    <% end %>
+    <% board_content do %>
+      <%= tabs [["site", "网站TopN", {:controller => 'site_topn',:action=>:top}], ["host", "主机TopN", {:controller => 'host_topn',:action=>:top}], ["app", "应用TopN", {:controller => 'app_topn'}],["device", "网络TopN", {:controller => 'device_topn',:action=>'top'}],["service", "服务TopN", {:controller => 'service_topn'}]], 'site' %>
+      <div class="selector-wrap">
+        <p class="selector">
+          <% dates=[['最近24小时(Last 24 hours)','last24hours'],['今天(Today)','today'],['昨天(Yesterday)','yesterday'],['本周(This Week)','thisweek'],['最近7天(Last 7 days)','last7days'],['本月(This Month)','thismonth'],['最近30天(Last 30 days)','last30days']] %>
+          <% dates.each do |d| %>
+            <%= link_to d[0] ,{:controller=>:site_topn,:action=>:top,:date=>d[1],:type=>@type}, :class => (d[1]==@date ? "selected" : nil) %>
+          <% end %>
+        </p>
+        <p class="selector">
+          <% objects={'网站PING时延'=>'ping','DNS响应时间'=>'dns','HTTP响应时间'=>'http'} %>
+          <% objects.each do |k,v|%>
+            <%= link_to k, {:controller=>:site_topn,:action=>:top,:type=>v,:date=>@date}, :class => (v==@type ? "selected" : nil) %>
+          <% end %>
+        </p>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+<div class="wrap">
+  <%unless @type.nil?%>
+  <span><%=link_to "导出",:controller=>"site_topn",:action=>"top",:date=>@date,:type=>@type,:format=>"xls"%></span>
+  <%end%>
+  <%=render :partial=>@title%>
+</div>

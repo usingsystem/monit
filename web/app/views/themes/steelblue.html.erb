@@ -1,0 +1,251 @@
+<div class="wrap"><h1>Steelblue</h1></div>
+<div class="wrap content-notice">
+  <p class="notice">
+  Normal notice
+  </p>
+  <p class="notice-error">
+  Error notice
+  </p>
+  <p class="notice-success">
+  Success notice
+  </p>
+</div>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      Title
+    <% end %>
+    <% board_content do %>
+      <%= tabs [["site", "网站", {:controller => 'sites'}], ["host", "主机", {:controller => 'hosts'}], ["app", "应用", {:controller => 'apps'}]], 'site' %>
+      <div class="selector-wrap">
+        <p class="selector">
+        <% 3.times do |n| %>
+          <%= link_to "#{(n == 2 ? icon("carat2") : nil)}#{n}月", "#", :class => (n == 2 ? "selected" : nil) %>
+        <% end %>
+        </p>
+        <p class="selector">
+          <% dates=[['最近24小时(Last 24 hours)','last24hours'],['今天(Today)','today'],['昨天(Yesterday)','yesterday'],['本周(This Week)','thisweek'],['最近7天(Last 7 days)','last7days'],['本月(This Month)','thismonth'],['最近30天(Last 30 days)','last30days']] %>
+        <% dates.each do |d| %>
+          <%= link_to d[0], "#", :class => (d[1] == 'last24hours' ? "selected" : nil) %>
+        <% end %>
+        </p>
+        <p class="selector">
+        <% 10.times do |n| %>
+          <%= link_to "#{n}天", "#", :class => (n == 6 ? "selected" : nil) %>
+        <% end %>
+        </p>
+      </div>
+      <div class="datagrid">
+        <h5>统计报告</h5>
+        <table cellspacing="0">
+          <thead>
+            <tr>
+              <%= th_tag "网站" %>
+              <%= th_tag "HTTP响应时间" %>
+              <%= th_tag "PING响应时间" %>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="<%= cycle("odd", "even") %>">
+              <%= td_tag "sina.com.cn" %>
+              <%= td_tag "1000ms" %>
+              <%= td_tag "500ms" %>
+            </tr>
+            <tr class="<%= cycle("odd", "even") %>">
+              <%= td_tag "baidu.com.cn" %>
+              <%= td_tag "1000ms" %>
+              <%= td_tag "500ms" %>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      Title
+    <% end %>
+    <% board_content do %>
+      <div class="filters clearfix">
+        <%= status_tabs [["all", "Status tabs", 17, {"status"=>nil}], ["up", "正常", 15, {"status"=>"up"}], ["down", "宕机", 2, {"status"=>"down"}], ["pending", "未监控", 0, {"status"=>"pending"}], ["unreachable", "不可达", 0, {"status"=>"unreachable"}]], 'all', {} %>
+        <div>
+          <% form_tag(url_for(:action => "index"), :method=>:get) do%>
+            <p class="last">
+            <label>显示方式：</label>
+            <span><%= link_to icon('list-current', :title => '列表'), filter_params(params, :view => nil) %> <%= link_to icon('icon', :title => '图标'), filter_params(params, :view => 'icon') %></span>
+            </p>
+          <% end %>
+        </div>
+      </div>
+
+      <% form_tag(url_for(:action => "index"), :method => :get) do%>
+        <%= redirect_tag url_for(params) %>
+        <table class="grid" cellspacing="0">
+          <thead>
+            <tr>
+              <%= th_tag "", :class => "first" %>
+              <%= th_tag "Grid" %>
+              <%= th_tag "", :class => "last" %>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <%= th_tag "", :class => "first" %>
+              <% th_tag do %>
+                <%=will_paginate Service.paginate(:page => 1) %>
+              <% end %>
+              <%= th_tag "", :class => "last" %>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr class="first">
+              <%= td_tag "", :class => "first" %>
+              <%= td_tag "body" %>
+              <%= td_tag "", :class => "last" %>
+            </tr>
+          </tbody>
+        </table>
+      <% end %>
+
+    <% end %>
+  <% end %>
+</div>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      Form
+    <% end %>
+    <% board_content do %>
+      <div class="ui-actions">
+        <span>
+          <span>
+            <%= link_to(icon("edit") + "修改", "#")%>
+            <%= link_to("添加服务", "#")%>
+            <%= link_to(icon("delete") + "删除", "#", :class => "last")%>
+          </span>
+        </span>
+      </div>
+
+      <% form_for(Site.new , :builder => ::UIFormBuilder, :html => {:class => "form"}) do |f| %>
+        <% field_set_tag "基本设置" do %>
+          <%= f.text_field :name, :required => true, :help => "网站唯一名称" %>
+          <%= f.text_field :url, :required => true, :help => "网站地址，例如：http://www.monit.cn" %>
+        <% end %>
+        <%=render :partial => "notifications/setting", :locals => {:f => f, :source => "site", :types => ["down", "recovery"] } %>
+        <%= f.submit t('update') %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="cloumns clearfix">
+  <div class="column">
+    <div class="column-inner">
+      <% board do %>
+        <% board_header do %>
+          Board
+        <% end %>
+        <% board_content do %>
+          Column left
+        <% end %>
+      <% end %>
+      <% board do %>
+        <% board_header do %>
+          Board
+        <% end %>
+        <% board_content do %>
+          Column left
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="column column-last">
+    <div class="column-inner">
+      <% board do %>
+        <% board_header do %>
+          Board
+        <% end %>
+        <% board_content do %>
+          Column right
+        <% end %>
+      <% end %>
+      <% board do %>
+        <% board_header do %>
+          Board
+        <% end %>
+        <% board_content do %>
+          Column right
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="cloumns columns64 clearfix">
+  <div class="column">
+    <div class="column-inner">
+      <% board do %>
+        <% board_header do %>
+          Columns64
+        <% end %>
+        <% board_content do %>
+          Column left
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="column column-last">
+    <div class="column-inner">
+      <% board do %>
+        <% board_header do %>
+          Columns64
+        <% end %>
+        <% board_content do %>
+          Column right
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="cloumns columns3 clearfix">
+  <div class="column">
+    <div class="column-inner">
+      <% board do %>
+        <% board_header do %>
+          Columns3
+        <% end %>
+        <% board_content do %>
+          Column left
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="column">
+    <div class="column-inner">
+      <% board do %>
+        <% board_header do %>
+          Columns3
+        <% end %>
+        <% board_content do %>
+          Column center
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="column column-last">
+    <div class="column-inner">
+      <% board do %>
+        <% board_header do %>
+          Columns3
+        <% end %>
+        <% board_content do %>
+          Column right
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "plan" %>
+<% end %>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      <%= t("packages") %>
+    <% end %>
+    <% board_content do %>
+      <div class="plans">
+      <h2><%= t("package_category.standard") %></h2>
+        <div class="cloumns columns<%= @standard_packages.size %> clearfix">
+          <% @standard_packages.each do |package| %>
+            <% pid = @package && @package.id %>
+            <div class="plans-<%= pid && pid == package.id ? "yellow" : "blue" %> column">
+              <%=render "plan", :package => package, :link => order_link(pid, package.id, :class=>"button") %>
+            </div>
+          <% end %>
+        </div>
+      <h2><%= t("package_category.enterprise") %></h2>
+        <div class="cloumns columns<%= @enterprise_packages.size %> clearfix">
+          <% @enterprise_packages.each do |package| %>
+            <% pid = @package && @package.id %>
+            <div class="plans-<%= pid && pid == package.id ? "yellow" : "green" %> column">
+              <%=render "plan", :package => package, :link => order_link(pid, package.id, :class=>"button") %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,33 @@
+<% form_for @service, :builder => ::UIFormBuilder, :html => { :class => "form" } do |f| %>
+  <%= f.text_field :name , { :required => true }%>
+  <%= f.text_field :alias, { :required => true }%>
+  <%= f.text_field :command , { :required => true }%>
+  <%= f.text_field :check_interval , { :required => true }%>
+  <%= f.text_field :threshold_warning %>
+  <%= f.text_field :threshold_critical %>
+  <%= f.radio_button_group :ctl_state, [["是", 1], ["否", 0]], { :required => true ,:help=>"主机或应用的状态将根据主控的服务进行归并" }  %>
+  <%= f.radio_button_group :serviceable_type, [["主机服务", "1"], ["应用服务", "2"]], { :required => true}  %>
+  <div class="app_host">
+    <%= f.select :serviceable_id, [["选择主机或应用类型", ""]] + @host_types.collect { |x| [x.name, x.id] }, {}, { :required => true }  %>
+  </div>
+  <%= f.submit ["new","create"].include?(controller.action_name) ? t("create") : t("update"), :name => nil %>
+<% end %>
+
+<script>
+  $(function(){
+    $("#service_type_serviceable_type_2").click(function(){
+      $("#service_type_serviceable_id").empty();
+      $("#service_type_serviceable_id").append("<option  value=''>正在加载...</option>");
+      var url = "/service_types/app_host?type=2";
+      $(".app_host").load(url);
+    });
+    $("#service_type_serviceable_type_1").click(function(){
+      $("#service_type_serviceable_id").empty();
+      $("#service_type_serviceable_id").append("<option  value=''>正在加载...</option>");
+      var url = "/service_types/app_host?type=1";
+      $(".app_host").load(url);
+    });
+  });
+</script>
+
+

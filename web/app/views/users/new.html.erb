@@ -1,0 +1,21 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      添加用户
+    <% end %>
+      
+    <% board_content do %>
+      <% form_for @user, :builder => ::UIFormBuilder,:html => { :class => "form" } do |f| %>
+        <%= f.text_field :login ,:required => true%>
+        <%= f.text_field :name , :required=>true%>
+        <%= f.text_field :email, :required => true, :help => "接收故障通知信息，性能报告" %>
+        <%= f.text_field :mobile, :required=>true %>
+        <%= f.password_field :password ,:required => true%>
+        <%= f.password_field :password_confirmation,:required=>true %>
+        <%= f.select :group_id, @groups.collect { |x| [x.name, x.id] }, {}, {:style=>"width:350px;",:multiple=>"true",:name=>"user[group_id]"}  %>
+      <%= f.submit t("new"), :name => nil %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+

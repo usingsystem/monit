@@ -1,0 +1,120 @@
+<div class="wrap">
+  <% if params.has_key?:debug %>
+    <p class="notice">
+    <span>
+      Data Example: <br /><%= @current_data.to_a.inspect %> <br />
+      Metric Type: <br /><%= (@service.type.metric_types.collect{|x| x.inspect.gsub(/^#\<|\>$/,"") + "<br />" }) %>
+    </span>
+    </p>
+  <% end %>
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      <%= icon_status("service", @service.status_name) %><%=h @service.name %>
+    <% end %>
+    <% board_content do %>
+      <%= tabs [["avail", "可用率报表", service_avail_path(@service), true]], 'base' %>
+      <div class="details clearfix">
+        <div class="details-right">
+          <% if @current_views %>
+            <% @current_views.each do |view| %>
+              <%=render :partial => "templates/#{view.template}", :locals => {:view => view } %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="details-left">
+          <div class="ui-actions">
+            <span>
+              <span>
+                <%= link_to(icon("edit") + "修改", edit_service_url(@service),:class=>controlled("services/edit"))%>
+                <%= link_to("通知设置", edit_service_url(@service, :anchor => "notification"),:class=>controlled("services/edit"))%>
+                <% if @service.is_ctrl? %>
+                  <%= link_to(icon("delete") + "删除", "javascript: void(alert('主控服务不能删除'))", :title => "主控服务不能删除", :class => "disabled last")%>
+                <% else %>
+                  <%= link_to(icon("delete") + "删除", service_url(@service), :method => :delete,:confirm => "确认删除服务？", :class => "last " + controlled("services/destroy"))%>
+                <% end %>
+              </span>
+            </span>
+          </div>
+          <p>
+          <% serviceable = @service.serviceable %>
+          <b><%= "所属" + t(@service.serviceable_name) + t("monit_ui.label_suffix") %></b>
+          <%=link_to(serviceable.name, serviceable) %>
+          </p>
+          <p>
+          <b><%= Service.human_attribute_name('status') + t("monit_ui.label_suffix") %></b>
+          <span><%= @service.human_status_name %></span>
+          </p>
+          <p>
+          <b><%= Service.human_attribute_name('summary') + t("monit_ui.label_suffix") %></b>
+          <span><%=h @service.summary %></span>
+          </p>
+          <p>
+          <b><%= Service.human_attribute_name('type_id') + t("monit_ui.label_suffix") %></b>
+          <span><%= @service.type.alias %></span>
+          </p>
+          <p>
+          <b><%= Service.human_attribute_name('check_interval') + t("monit_ui.label_suffix") %></b>
+          <%=h "#{@service.check_interval.to_i/60}分钟" %>
+          </p>
+          <p>
+          <b><%= Service.human_attribute_name('threshold_warning') + t("monit_ui.label_suffix") %></b>
+          <%=h @service.threshold_warning_text %>
+          </p>
+          <p>
+          <b><%= Service.human_attribute_name('threshold_critical') + t("monit_ui.label_suffix") %></b>
+          <%=h @service.threshold_critical_text %>
+          </p>
+          <p>
+          <b><%= Service.human_attribute_name('last_check') + t("monit_ui.label_suffix") %></b>
+          <%=format_time @service.last_check %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% if @default_view %>
+    <% board do %>
+      <% board_header do %>
+        当前
+      <% end %>
+      <% board_content do %>
+        <%=render :partial => "templates/#{@default_view.template}", :locals => {:view => @default_view } %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% board do %>
+    <% board_header do %>
+      历史
+      <% if false %>
+        <% today = Date.today %>
+        [
+        <span>
+          <%=
+            link_to_unless (@date_range[:param] == today.to_s), "今天", params.merge({:date => nil}) do
+              "今天"
+            end
+          %>
+        </span>
+        <span><%= link_to_unless_current "昨天", params.merge({:date => (today - 1)}) %></span>
+        <span><%= link_to_unless_current "最近一周", params.merge({:date => "#{today - 7}~#{today}"}) %></span>
+        <span><%= link_to_unless_current "最近一月", params.merge({:date => "#{today.last_month}~#{today}"}) %></span>
+        ]
+      <% end %>
+    <% end %>
+    <% board_content do %>
+      <%#=image_tag @service.graph_url, :alt => @service.name, :class => "graph" %>
+      <% if @history_views %>
+        <% @history_views.each do |view| %>
+          <% if view.rows.size > 0 %>
+            <%=render :partial => "templates/#{view.template}", :locals => {:view => view } %>
+          <% end %>
+        <% end %>
+      <% else %>
+        暂无数据
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

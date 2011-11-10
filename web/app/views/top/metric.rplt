@@ -1,0 +1,1 @@
+<%=render "templates/#{@chart_view.template}", :view => @chart_view, :format => "rplt" %>

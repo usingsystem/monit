@@ -1,0 +1,46 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      <%#= icon_status("agent", @agent.status) %>
+      <%=h @agent.name %>
+    <% end %>
+    <% board_content do %>
+      <div class="details">
+        <div class="ui-actions">
+          <span>
+            <span>
+              <%= link_to(icon("edit") + "修改", edit_agent_url(@agent), :class=>controlled("agents/edit"))%>
+              <%#= link_to(icon("delete") + "删除", agent_url(@agent), :method => :delete,:confirm => "确认删除主机？", :class => "last")%>
+              <%= link_to(icon("delete") + "删除", confirm_agent_url(@agent), :class =>controlled("agents/destroy"))%>
+            </span>
+          </span>
+        </div>
+        <p>
+        <b><%= Agent.human_attribute_name('host_id') + t("monit_ui.label_suffix") %></b>
+        <%= link_to(@agent.host.name, @agent.host,:class=>controlled("hosts/show")) %>
+        </p>
+        <p>
+        <b><%= Agent.human_attribute_name('username') + t("monit_ui.label_suffix") %></b>
+        <%=h @agent.username %>
+        </p>
+        <p>
+        <b><%= Agent.human_attribute_name('password') + t("monit_ui.label_suffix") %></b>
+        <%=h @agent.password %>
+        </p>
+        <p>
+        <b><%= Agent.human_attribute_name('name') + t("monit_ui.label_suffix") %></b>
+        <%=h @agent.name %>
+        </p>
+        <p>
+        <b><%= Agent.human_attribute_name('presence') + t("monit_ui.label_suffix") %></b>
+        <%=h @agent.human_presence_name %>
+        </p>
+        <p>
+        <b><%= Agent.human_attribute_name('created_at') + t("monit_ui.label_suffix") %></b>
+        <%=h @agent.created_at %>
+        </p>
+      </div>
+    <% end %>
+  <% end %>
+</div>

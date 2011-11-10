@@ -1,0 +1,27 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("edit") } %>
+      <%= t('edit') + t('sites') %>
+    <% end %>
+    <% board_content do %>
+      <p class="notice">
+      批量更新<%=t('site')%>告警通知
+      </p>
+      <% form_for(@site, :builder => ::UIFormBuilder, :url => batch_update_sites_path, :html => { :class => "form", :method => :put }) do |f| %>
+        <%= redirect_tag %>
+        <% field_set_tag "筛选#{t('site')}" do %>
+          <ul class="ul list-table">
+            <% @sites.each do |site| %>
+              <li>
+              <%= f.wrap_label(check_box_tag("ids[#{site.id}]", "", true), site.name, "ids_#{site.id}") %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+        <%=render :partial => "notifications/setting", :locals => {:f => f, :source => "site", :types => ["down", "recovery"] } %>
+        <%= f.submit t('update') %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,36 @@
+<p>
+  尊贵的<%= @operator.host %>：
+</p>
+<p>
+</p>
+<p>
+  <% opt=@bill.amount>0 ? "充值了" : "消费了" %>
+
+  感谢对Monit的支持，最近您在Monit<%=opt%><%=@bill.amount.abs%>,下面是您的消费明细：
+</p>
+<table>
+  <thead>
+    <tr>
+      <th> <%=Bill.human_attribute_name 'created_at'%></th>
+      <th>运营商</th>
+      <th><%=Bill.human_attribute_name("amount")%></th>
+      <th><%=Bill.human_attribute_name("balance")%></th>
+      <th><%=Bill.human_attribute_name('summary')%></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> <%=format_time(@bill.created_at, true) %></td>
+      <td> <%=@bill.operator.try(:host) %></td>
+      <td> <%=@bill.amount > 0 ? "+ ¥#{@bill.amount}" : "- ¥#{-@bill.amount}" %></td>
+      <td> <%="¥#{@bill.balance}" %></td>
+      <td> <%= @bill.summary %></td>
+
+    </tr>
+  </tbody>
+</table>
+
+<p>&nbsp;</p>
+<p>
+  (这是一封自动产生的email，请勿回复。)
+</p>

@@ -1,0 +1,1 @@
+#require "tenant_aware"

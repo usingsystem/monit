@@ -1,0 +1,23 @@
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      租户基本信息
+    <% end %>
+    <% board_content do %>
+      <%=detail(@tenant,:name,:company,:email,:mobile,:is_pay_account,:balance,:created_at)%>
+    <% end %>
+    <br />
+    <% board_header do %>
+      套餐信息
+    <% end %>
+    <% board_content do %>
+      <p><b>
+          当前使用套餐为
+          "<%=package=@tenant.package;package ? package.title : "免费版" %>"
+        </b></p>
+      <%=detail(@tenant,:begin_at,:end_at,:current_month,:current_paid_at,:next_paid_at)%>
+    <% end %>
+  <% end %>
+</div>
+

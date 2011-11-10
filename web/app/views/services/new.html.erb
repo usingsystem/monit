@@ -1,0 +1,49 @@
+<% content_for :head do %>
+  <%=stylesheet_link_tag 'threshold',:media=>'all' %>
+<% end %>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("new") } %>
+      <%= t('new') + t('services') %>
+    <% end %>
+    <% board_content do %>
+      <p class="notice">
+      正在为<%= link_to @serviceable.name, @serviceable %>添加<%= @service_type.alias %>服务
+      </p>
+      <% form_for(@service, :builder => ::UIFormBuilder, :html => { :class => "form" }) do |f| %>
+        <%= f.hidden_field :type_id %>
+        <%= f.hidden_field :serviceable_id %>
+        <%= hidden_field_tag "host_id", @host.id if @host %>
+        <%= hidden_field_tag "app_id", @app.id if @app %>
+        <%= hidden_field_tag "site_id", @site.id if @site %>
+        <%= hidden_field_tag "device_id", @device.id if @device %>
+        <% field_set_tag "基本信息" do %>
+          <%= f.text_field :name, :required => true %>
+          <%= f.select :check_interval, @check_intervals, {}, :required => true %>
+          <%= f.select :agent_id, [["Monit服务器", ""]] + @agents.collect { |x| [x.human_username, x.id] }, {} %>
+        <% end %>
+        <% service_params = @service_type.params  %>
+        <% service_params.delete_if { |x| x.param_type != 1 and  x.param_type!=3 } %>
+        <% if @service.errors.on(:params) %>
+          <p class="notice notice-error">
+          服务<%= @service.errors.on(:params) %>
+          </p>
+        <% end %>
+        <% if service_params.size > 0  %>
+          <% field_set_tag "服务参数", :id=>"param" do %>
+            <% service_params.each do |param| %>
+              <% if param.param_type==1 %>
+              <%= f.wrap_field 'params_' + param.name , f.wrap_tag('text_field', text_field_tag('service[params]['+ param.name + ']', @service.params_object[param.name.to_sym] )), { :label => param.alias, :help => param.help, :error => param.error, :required => (param.required == 1) } %>
+             <%elsif param.param_type==3 and !@result.nil? %>
+              <%= f.wrap_field 'params_' + param.name , select_tag('service[params]['+ param.name + ']',options_for_select( @result.collect{|x|[x.keys[0],x.values[0]]}) ,{:style=>"width:350px"}), { :label => param.alias, :help => param.help, :error => param.error, :required => (param.required == 1) } %>
+            <% end %>
+          <%end%>
+          <% end %>
+        <% end %>
+        <%= render :partial => "threshold", :locals => { :f => f } %>
+        <%= f.submit t('create') %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

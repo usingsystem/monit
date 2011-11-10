@@ -1,0 +1,28 @@
+<% 
+  app_id = @app && @app.id 
+  first = true
+%>
+<% if @apps.size > 0 %>
+  <% form_tag({:action => "types" }, :method => "get", :class => "select-form" ) do |f| %>
+    <% first = true %>
+    <% @apps.each do |a| %>
+      <p>
+      <%= radio_button_tag(:app_id, a.id, first || a.id == app_id)  + label_tag(:app_id, a.name, :for => ("app_id_" + a.id.to_s))  %>
+      </p>
+      <% first = false %>
+    <%end%>
+    <p class="actions">
+    <span class="button-wrap"><%= submit_tag t('next'), :name => nil %></span>
+    </p>
+  <% end %>
+<% else %>
+  <p class="notice">
+  创建服务前需要创建一个应用
+  </p>
+  <div class="auto-padding">
+    <% form_tag new_app_path, :method => :get do %>
+      <%=button_wrap(submit_tag "新建应用", :name => nil) %>
+    <% end %>
+  </div>
+<% end %>
+

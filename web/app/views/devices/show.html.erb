@@ -1,0 +1,142 @@
+<%
+  @agent = @device.agent
+  more = params.has_key? :more
+%>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      <%= render :partial => "layouts/path", :locals => { :text => t("detail") } %>
+      <%= icon_status("device", @device.status_name) %><%=h @device.name %>
+    <% end %>
+    <% board_content do %>
+      <%= tabs [["avail", "可用率报表", device_avail_path(@device), true]], 'base' %>
+      <div class="details">
+        <div>
+          <div class="ui-actions">
+            <span>
+              <span>
+                <%= link_to(icon("edit") + "修改", edit_device_url(@device),:class=>controlled("devices/edit"))%>
+                <%= link_to("添加服务", new_device_service_path(@device),:class=>controlled("services/new"))%>
+                <%= link_to("发现服务", redisco_device_path(@device), :method => :put, :class=> controlled("devices/redisco"))%>
+                <%= link_to("通知设置", edit_device_url(@device, :anchor => "notification"),:class=>controlled("devices/edit"))%>
+                <%= link_to(icon("delete") + "删除", confirm_device_url(@device), :class => "last " + controlled("devices/destroy"))%>
+              </span>
+            </span>
+          </div>
+          <p>
+          <b><%= Device.human_attribute_name('addr') + t("monit_ui.label_suffix") %></b>
+          <%=h @device.addr %>
+          </p>
+          <p>
+          <b><%= Device.human_attribute_name('type_id') + t("monit_ui.label_suffix") %></b>
+          <%=type_link_to h(@device.type.name), {:controller => "devices"} %>
+          </p>
+          <p>
+          <b><%= Device.human_attribute_name('status') + t("monit_ui.label_suffix") %></b>
+          <%=@device.human_status_name %>
+          </p>
+          <p>
+          <b><%= Device.human_attribute_name('summary') + t("monit_ui.label_suffix") %></b>
+          <span><%=h @device.summary %></span>
+          </p>
+          <p>
+          <b><%= Device.human_attribute_name('ctrl_service') + t("monit_ui.label_suffix") %></b>
+          <span> <%=(@device.ctrl_service ? link_to(@device.ctrl_service.name, @device.ctrl_service) : "无") %> <%= inlink_to "修改", ctrl_device_path(@device) %></span>
+          </p>
+          <p>
+          <b>SNMP：</b>
+          <%= @device.community %> <%= inlink_to "修改", edit_device_path(@device, :anchor => "snmp") ,:class=>controlled("devices/edit")%>
+          <%= inlink_to("检测", test_snmp_device_url(@device), :method => :post, :class => controlled("devices/test_snmp"))%>
+          </p>
+          <p>
+          <b><%= Device.human_attribute_name('agent_id') + t("monit_ui.label_suffix") %></b>
+          <%= @agent.nil? ? "Monit服务器" : link_to(@agent.username, @agent) %>
+          </p>
+          <% unless more %>
+            <div class="link-more hide">
+              <p>
+              <%= link_to "查看更多主机信息", params.merge(:more => "") %>
+              </p>
+            </div>
+          <% else %>
+            <div class="more">
+              <%unless @device.last_time_up.nil? || @device.status==2%>
+                <p>
+                <b>最后一次正常时间:</b>
+                <%=@device.last_time_up || @device.status==2%>
+                </p>
+              <%end%>
+              <%unless @device.last_time_down.nil? || @device.status==2%>
+                <p>
+                <b>最后一次宕机时间:</b>
+                <%=@device.last_time_down %>
+                </p>
+              <%end%>
+              <p>
+              <b>最后一次采集时间:</b>
+              <%=h @device.updated_at %>
+              </p>
+              <p>
+              <b>创建时间:</b>
+              <%=h @device.created_at %>
+              </p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<% if @disco_services.size > 0 or @device.discovery_state != 1 %>
+  <div class="wrap">
+    <% board do %>
+      <% board_header do %>
+        发现
+      <% end %>
+      <% board_content do %>
+        <% if @disco_services.size > 0 %>
+          <p class="notice">
+          系统将自动发现一些可监控此主机的服务，您可以确认添加此服务。
+          </p>
+          <div class="ui-actions">
+            <span>
+              <span>
+                <%= link_to "确认所有", create_all_disco_services_path(:serviceable_type => 4, :serviceable_id => @device.id), :class=>controlled("services/create_all_disco")%>
+                <%= link_to "忽略所有", destroy_all_disco_services_path(:serviceable_type => 4, :serviceable_id => @device.id), :class => controlled("services/destroy_all_disco") %>
+              </span>
+            </span>
+          </div>
+          <%= render :partial => 'services/disco' %>
+        <% elsif @device.discovery_state != 1 %>
+          系统正在自动发现<%=@device.name%>上可监控的服务，请稍等刷新该页面。
+          <%= image_tag "indicator.gif", :alt => "Loading..." %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<%end%>
+<div class="wrap">
+  <% board do %>
+    <% board_header do %>
+      服务
+    <% end %>
+    <% board_content do %>
+      <% if @show %>
+        <% @services.each do |service| %>
+          <p>
+          <%= icon_status("service", service.status_name) %><%=h service.name %>
+          <%= format_time(service.last_check) %>
+          <%= service.current_metric.to_a.inspect %>
+          </p>
+        <% end %>
+      <% end %>
+      <%= render :partial => 'services/table' %>
+    <%end%>
+  <% end %>
+</div>
+<div class="wrap">
+  <div class="notice">
+    <p>Monit正在通过SNMP协议监控您的<%= t('device') %>性能，您需要在<%= t('device') %>上运行SNMP代理。</p>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+Rabbitmq Init:
+rabbitmqctl add_user monit public
+rabbitmqctl add_vhost /monit
+rabbitmqctl set_permissions -p /monit monit ".*" ".*" ".*"
+rabbitmqctl list_exchanges -p /monit
+
+MongoDb Init:
+use monit
+db.metric.ensureIndex({dn: 1, ts: -1})
+db.metric.hourly.ensureIndex({dn: 1, ts: -1})
+db.metric.daily.ensureIndex({dn: 1, ts: -1})
+
+db.status.ensureIndex({dn: 1, ts: -1})
+db.status.hourly.ensureIndex({dn: 1, ts: -1})
+db.status.daily.ensureIndex({dn: 1, ts: -1})
+
+
+Monit Cloud:
+
+To start:
+./start
+
+To run:
+./monit_ctl run
+
+To stop:
+./stop
